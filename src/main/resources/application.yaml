@@ -10,7 +10,7 @@ spring:
           testclient:
             client-name: Logg inn med Ansattporten
             client-id: dc24_ansattporten_testclient
-            client-secret: ${}
+            client-secret: ${CLIENT_SECRET}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/testclient"
             scope: openid, profile
