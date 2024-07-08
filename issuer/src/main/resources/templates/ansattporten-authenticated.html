@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Ansattporten - innlogging</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+<h1>Detaljar - Ansattporten innlogging</h1>
+
+<p>
+<h4>Velkommen <span th:text="${name}" ></span>!</h4>
+Du har logga på med ansattporten med pid <span style="font-weight:bold" th:text="${pid}"></span>.<br/>
+</p>
+<p>
+    ID-token:
+<div style="white-space: pre-wrap; word-wrap: break-word; max-width: 80%;" th:text="${idtoken}"></div><br/>
+</p>
+<p>
+    Authorization details:
+<div style="white-space: pre-wrap; word-wrap: break-word; max-width: 80%;" th:text="${authorizationdetails}">
+</div>
+</p>
+
+<p>
+    <a href="/logout">Logg ut</a>
+</p>
+
+</body>
+</html>
+
