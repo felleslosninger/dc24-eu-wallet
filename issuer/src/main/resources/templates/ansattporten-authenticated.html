@@ -3,29 +3,86 @@
 <head>
     <title>Ansattporten - innlogging</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-
-<h1>Detaljar - Ansattporten innlogging</h1>
-
-<p>
-<h4>Velkommen <span th:text="${name}" ></span>!</h4>
-Du har logga på med ansattporten med pid <span style="font-weight:bold" th:text="${pid}"></span>.<br/>
-</p>
-<p>
-    ID-token:
-<div style="white-space: pre-wrap; word-wrap: break-word; max-width: 80%;" th:text="${idtoken}"></div><br/>
-</p>
-<p>
-    Authorization details:
-<div style="white-space: pre-wrap; word-wrap: break-word; max-width: 80%;" th:text="${authorizationdetails}">
-</div>
-</p>
-
-<p>
-    <a href="/logout">Logg ut</a>
-</p>
-
+    <div class="container">
+        <h1>Detaljer - Ansattporten innlogging</h1>
+        <h4>Velkommen <span th:text="${name}"></span>!</h4>
+        <p>Du har logget på med ansattporten med pid <span style="font-weight:bold" th:text="${pid}"></span>.</p>
+        <p>ID-token:</p>
+        <div class="token-container" th:text="${idtoken}"></div>
+        <p>Authorization details:</p>
+        <div class="token-container" th:text="${authorizationdetails}"></div>
+        <p><a href="/logout">Logg ut</a></p>
+    </div>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e7eff9;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+    
+    .container {
+        text-align: center;
+        max-width: 800px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        background-color: white;
+        border-radius: 10px;
+    }
+    
+    h1 {
+        color: #005a9c;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+    }
+    
+    h4 {
+        color: #005a9c;
+        margin: 20px 0;
+    }
+    
+    p {
+        margin: 20px 0;
+        color: #333;
+    }
+    
+    a {
+        background-color: #008cba;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        display: inline-block;
+    }
+    
+    a:hover, a:focus {
+        background-color: #005a9c;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    div.token-container {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+</style>    
 </body>
 </html>
-
