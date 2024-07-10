@@ -21,8 +21,8 @@ public class MattrTestController {
 
     /**
      * This endpoint is for checking out your Mattr jwt. If a jwt is not shown, your
-     * .env file is probarbly wrong.
-     * @return Strign with Mattr token.
+     * .env file is probably wrong.
+     * @return String with Mattr token.
      * @throws IOException Something went wrong while sending the request.
      */
     @GetMapping("/test")
