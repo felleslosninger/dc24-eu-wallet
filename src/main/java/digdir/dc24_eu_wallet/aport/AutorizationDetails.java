@@ -1,8 +1,12 @@
 package digdir.dc24_eu_wallet.aport;
 
-
-import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Holds information from the authorization_details field in the payload
+ * of oidc id token.
+ *
+ */
 
 public class AutorizationDetails {
 

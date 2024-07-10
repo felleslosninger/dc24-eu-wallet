@@ -3,6 +3,10 @@ package digdir.dc24_eu_wallet.aport;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Holds the information from the entire payload of the oidc id token.
+ *
+ */
 
 public class TokenHead {
 
@@ -21,7 +25,12 @@ public class TokenHead {
     private long iat;
     private String jti;
 
-    public TokenHead(){
+  /**
+   * Constructs the token payload object. Initializes lists for parts that
+   * contain several elements.
+   *
+   */
+  public TokenHead(){
         amr = new ArrayList<String>();
         authorization_details = new ArrayList<>();
     }

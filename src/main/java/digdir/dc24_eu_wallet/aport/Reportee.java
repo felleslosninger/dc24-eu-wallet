@@ -1,16 +1,18 @@
 package digdir.dc24_eu_wallet.aport;
 
+/**
+ * Holds information from the Reportees field in the payload
+ * of oidc id token.
+ *
+ */
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Reportee {
-    //private ArrayList<String> Rights;
     private ArrayList<String> Rights;
     private String Authority;
     private String ID;
     private String Name;
-   // private ArrayList<String>reportees;
 
     public Reportee(){
 
