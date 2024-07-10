@@ -1,18 +1,22 @@
 package digdir.dc24_eu_wallet.web;
 
-import net.minidev.json.JSONObject;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import digdir.dc24_eu_wallet.aport.VerifiableCredential;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Collection;
+import com.auth0.jwt.JWT;
+
+import java.io.UnsupportedEncodingException;
 
 @Controller
 public class AnsattportenIntegrationController {
 
-  private Collection claims;
+  private OidcUser oidcuser;
 
   @GetMapping("/")
   public String index(){
@@ -26,7 +30,7 @@ public class AnsattportenIntegrationController {
     model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
     model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
     model.addAttribute("name", oidcUser.getFullName());
-    setClaims(oidcUser);
+    this.oidcuser = oidcUser;
     return "ansattporten-authenticated";
   }
 
@@ -35,14 +39,17 @@ public class AnsattportenIntegrationController {
     return "logout";
   }
 
-  public void setClaims(OidcUser user){
-    this.claims = claims;
+
+  @GetMapping("/informationDump")
+  public String informationDump(@AuthenticationPrincipal OidcUser oidcUser) {
+    DecodedJWT jwt = JWT.decode(oidcUser.getIdToken().getTokenValue());
+    try {
+      VerifiableCredential credential = new VerifiableCredential(oidcUser.getIdToken());
+    }catch (UnsupportedEncodingException e){
+      System.out.println(oidcUser.getIdToken().getTokenValue());
+    }
+   // return credential.printDetails();
+    return "success";
   }
-
-  public Collection getClaims(){
-    return claims;
-  }
-
-
-
 }
+
