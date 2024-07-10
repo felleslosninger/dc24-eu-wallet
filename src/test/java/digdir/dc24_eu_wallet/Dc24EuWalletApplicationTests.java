@@ -12,8 +12,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 class Dc24EuWalletApplicationTests {
 
-	@Autowired
-	private final RequestService requestService;
 
     @Test
 	void contextLoads() {
@@ -21,7 +19,7 @@ class Dc24EuWalletApplicationTests {
 
 	@Test
 	void fetchAccessTokenFromMattr() throws IOException {
-		String jwt = requestService.getJwt();
+
 	}
 
 }
