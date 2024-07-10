@@ -1,0 +1,73 @@
+/* General styles for the body element */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e7eff9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+/* Styles for the container div */
+.container {
+    text-align: center;
+    max-width: 800px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+/* Styles for the main heading */
+h1 {
+    color: #005a9c;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+/* Styles for the paragraph elements */
+p {
+    margin: 20px 0;
+    color: #333;
+}
+
+/* Additional class for bold text */
+.bold-text {
+    font-weight: bold;
+}
+
+/* Styles for the link elements */
+a {
+    background-color: #008cba;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    display: inline-block;
+}
+
+/* Styles for the link elements on hover and focus */
+a:hover, a:focus {
+    background-color: #005a9c;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles for the token container divs */
+.token-container {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    overflow-x: auto;
+}
