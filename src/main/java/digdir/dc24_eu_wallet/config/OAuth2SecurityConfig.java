@@ -43,7 +43,7 @@ public class OAuth2SecurityConfig {
         http
                 .authorizeExchange(exchanges ->
                         exchanges
-                                .pathMatchers("/", "/error", "/logout/callback").permitAll()
+                                .pathMatchers("/", "/error", "/logout/callback", "/static/**").permitAll()
                                 .anyExchange().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2

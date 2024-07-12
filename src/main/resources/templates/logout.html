@@ -3,17 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Ansattporten integration demo</title>
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <!-- Main content container -->
-    <div class="container">
-        <!-- Page heading -->
-        <h1>Ansattporten utlogging</h1>
-        <!-- Logout confirmation message -->
-        <p>Du er nå logget ut av Ansattporten.</p>
-        <!-- Link to navigate back to the home page -->
-        <p><a href="/">Tilbake</a></p>
-    </div>
+<!-- Main content container -->
+@@ -15,74 +15,5 @@ <h1>Ansattporten utlogging</h1>
+<!-- Link to navigate back to the home page -->
+<p><a href="/">Tilbake</a></p>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e7eff9;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+
+    .container {
+        text-align: center;
+        max-width: 600px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    h1 {
+        color: #005a9c;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+    }
+
+    h4 {
+        color: #005a9c;
+        margin: 20px 0;
+    }
+
+    p {
+        margin: 20px 0;
+        color: #333;
+    }
+
+    a {
+        background-color: #008cba;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        display: inline-block;
+    }
+
+    a:hover, a:focus {
+        background-color: #005a9c;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    div.token-container {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+</style>
 </body>
 </html>
