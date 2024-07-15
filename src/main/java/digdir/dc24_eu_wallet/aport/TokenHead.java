@@ -1,5 +1,8 @@
 package digdir.dc24_eu_wallet.aport;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,19 +13,43 @@ import java.util.List;
 
 public class TokenHead {
 
+    @Setter
+    @Getter
     private String sub;
     private ArrayList<String> amr;
+    @Setter
+    @Getter
     private String iss;
+    @Setter
+    @Getter
     private String pid;
+    @Setter
+    @Getter
     private String locale;
+    @Setter
+    @Getter
     private String nonce;
+    @Setter
+    @Getter
     private String aud;
+    @Setter
+    @Getter
     private String acr;
     private List<AutorizationDetails> authorization_details;
+    @Setter
+    @Getter
     private long authTime;
+    @Setter
+    @Getter
     private String name;
+    @Setter
+    @Getter
     private long exp;
+    @Setter
+    @Getter
     private long iat;
+    @Setter
+    @Getter
     private String jti;
 
   /**
@@ -35,70 +62,15 @@ public class TokenHead {
         authorization_details = new ArrayList<>();
     }
 
-  public String getSub() {
-    return sub;
-  }
-
-  public void setSub(String sub) {
-    this.sub = sub;
-  }
-
-  public List<String> getAmr() {
+    public List<String> getAmr() {
     return amr;
   }
 
   public void setAmr(ArrayList<String> amr) {
     this.amr = amr;
   }
-  public String getIss() {
-    return iss;
-  }
 
-  public void setIss(String iss) {
-    this.iss = iss;
-  }
-
-  public String getPid() {
-    return pid;
-  }
-
-  public void setPid(String pid) {
-    this.pid = pid;
-  }
-
-  public String getLocale() {
-    return locale;
-  }
-
-  public void setLocale(String locale) {
-    this.locale = locale;
-  }
-
-  public String getNonce() {
-    return nonce;
-  }
-
-  public void setNonce(String nonce) {
-    this.nonce = nonce;
-  }
-
-  public String getAud() {
-    return aud;
-  }
-
-  public void setAud(String aud) {
-    this.aud = aud;
-  }
-
-  public String getAcr() {
-    return acr;
-  }
-
-  public void setAcr(String acr) {
-    this.acr = acr;
-  }
-
-  public List<AutorizationDetails> getAuthorizationDetails() {
+    public List<AutorizationDetails> getAuthorizationDetails() {
     return authorization_details;
   }
 
@@ -106,43 +78,4 @@ public class TokenHead {
     this.authorization_details = authorization_details;
   }
 
-  public long getAuthTime() {
-    return authTime;
-  }
-
-  public void setAuthTime(long authTime) {
-    this.authTime = authTime;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public long getExp() {
-    return exp;
-  }
-
-  public void setExp(long exp) {
-    this.exp = exp;
-  }
-
-  public long getIat() {
-    return iat;
-  }
-
-  public void setIat(long iat) {
-    this.iat = iat;
-  }
-
-  public String getJti() {
-    return jti;
-  }
-
-  public void setJti(String jti) {
-    this.jti = jti;
-  }
 }
