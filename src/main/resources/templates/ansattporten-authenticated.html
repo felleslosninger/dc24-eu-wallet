@@ -3,32 +3,16 @@
 <head>
     <title>Ansattporten - innlogging</title>
     <meta charset="utf-8" />
-</head>
-<body>
-<!-- Main container for the content of this page -->
-@@ -12,7 +12,7 @@ <h1>Detaljer - Ansattporten innlogging</h1>
-<!-- Welcome message displaying hte name of the user -->
-<h4>Velkommen<span th:text="${name}"></span>!</h4>
-<!-- Display the PID (personal identifier) of the user -->
-<p>Du har logget på med ansattporten med pid<span style="font-weight:bold" th:text="${pid}"></span>.</p>
-<!-- Display the ID token -->
-<p>ID-token:</p>
-<div class="token-container" th:text="${idtoken}"></div>
-@@ -22,74 +22,5 @@ <h4>Velkommen<span th:text="${name}"></span>!</h4>
-<!-- Logout link -->
-<p><a href="/logout">Logg ut</a></p>
-</div>
 
-<style>
+    <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background-color: #e7eff9;
         margin: 0;
         padding: 20px;
         color: #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        display: grid; 
+        place-items: center;
         height: 100vh;
         box-sizing: border-box;
     }
@@ -67,6 +51,7 @@
         font-weight: bold;
         transition: transform 0.3s ease, background-color 0.3s ease;
         display: inline-block;
+        
     }
 
     a:hover, a:focus {
@@ -87,5 +72,22 @@
         overflow-x: auto;
     }
 </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main container for the content of this page -->
+        <h1>Detaljer - Ansattporten innlogging</h1>
+        <!-- Welcome message displaying hte name of the user -->
+        <h4>Velkommen <span th:text="${name}"></span>!</h4>
+        <!-- Display the PID (personal identifier) of the user -->
+        <p>Du har logget på med ansattporten med pid <span style="font-weight:bold" th:text="${pid}"></span>.</p>
+        <!-- Display the ID token -->
+        <p>ID-token:</p>
+        <div class="token-container" th:text="${idtoken}"></div>
+        <h4>Velkommen <span th:text="${name}"></span>!</h4>
+        <!-- Logout link -->
+        <p><a href="/logout">Logg ut</a></p>
+</div>
+
 </body>
 </html>
