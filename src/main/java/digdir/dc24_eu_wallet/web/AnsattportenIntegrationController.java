@@ -1,5 +1,6 @@
 package digdir.dc24_eu_wallet.web;
 
+import digdir.dc24_eu_wallet.aport.JsonDataToMattr;
 import digdir.dc24_eu_wallet.aport.TokenPayload;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -57,6 +58,8 @@ public class AnsattportenIntegrationController {
   @GetMapping("/informationDump")
   public String informationDump(@AuthenticationPrincipal OidcUser oidcUser) {
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
+    JsonDataToMattr testing = new JsonDataToMattr(credential);
+    System.out.println(testing.getJsonString());
     return "success";
   }
 }
