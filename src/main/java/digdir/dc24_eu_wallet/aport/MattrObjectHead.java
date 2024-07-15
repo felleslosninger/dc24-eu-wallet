@@ -20,7 +20,6 @@ public class MattrObjectHead {
         this.cred = new ArrayList<>();
         this.token = token;
         setChallenger();
-        //setCred(cred);
         setCred();
 
     }

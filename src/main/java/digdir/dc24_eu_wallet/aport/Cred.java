@@ -9,7 +9,6 @@ public class Cred {
     private String sub;
     @Getter
     private String pid;
-    @Getter
     private List<AutorizationDetails> authorization_details;
     private TokenHead token;
 
@@ -22,6 +21,10 @@ public class Cred {
 
     public void setAuthorization_details() {
         authorization_details = token.getAuthorizationDetails();
+    }
+
+    public List<AutorizationDetails> getAuthorization_details() {
+        return authorization_details;
     }
 
     public void setPid() {
