@@ -109,6 +109,19 @@
 			<version>2.11.0</version>
 		</dependency>
 
+		<!-- In memory database for quick testing -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.2.220</version> <!-- Use the latest version -->
+			<scope>runtime</scope>
+		</dependency>
+		<!-- Use Spring boot JPA to easy access the in memory database -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
