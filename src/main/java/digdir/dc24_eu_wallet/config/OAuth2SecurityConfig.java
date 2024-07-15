@@ -16,13 +16,28 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.logout.ServerLogoutSuccessHandler;
 
+/**
+ * Configures OAuth2 security for the application. It defines how OAuth2 authentication
+ * and authorization are handled throughout the application, including login, logout, and
+ * access control based on OAuth2 client registrations.
+ */
 @Configuration
 @EnableWebFluxSecurity
 public class OAuth2SecurityConfig {
 
+    /**
+     * For managing client registrations.
+     */
     @Autowired
     private ReactiveClientRegistrationRepository clientRegistrationRepository;
 
+    /**
+     * Configures the security filter chain, which defines how HTTP requests are handled based on
+     * their paths and authentication requirements.
+     *
+     * @param http the ServerHttpSecurity object to configure security.
+     * @return the configured SecurityWebFilterChain.
+     */
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
@@ -40,6 +55,13 @@ public class OAuth2SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Configures the OAuth2 authorization request resolver, which resolves
+     * authorization requests based on client registrations.
+     *
+     * @param clientRegistrationRepository the repository of client registrations.
+     * @return the configured authorization request resolver.
+     */
     private ServerOAuth2AuthorizationRequestResolver authorizationRequestResolver(
             ReactiveClientRegistrationRepository clientRegistrationRepository) {
 
@@ -48,6 +70,11 @@ public class OAuth2SecurityConfig {
         return  authorizationRequestResolver;
     }
 
+    /**
+     * Customizes the OAuth2 authorization request with additional parameters.
+     *
+     * @return the consumer to customize the authorization request.
+     */
     private Consumer<OAuth2AuthorizationRequest.Builder> authorizationRequestCustomizer() {
         return customizer -> customizer
                 .additionalParameters(params ->
@@ -55,6 +82,12 @@ public class OAuth2SecurityConfig {
                                 "[{\"type\":\"ansattporten:altinn:service\",\"resource\": \"urn:altinn:resource:2480:40\", \"allow_multiple_organizations\": \"true\"}]"));
     }
 
+    /**
+     * Configures the OIDC logout success handler, which manages redirection
+     * after successful logout during OIDC-based operations.
+     *
+     * @return the configured OIDC logout success handler.
+     */
     private ServerLogoutSuccessHandler oidcLogoutSuccessHandler() {
         OidcClientInitiatedServerLogoutSuccessHandler oidcLogoutSuccessHandler =
                 new OidcClientInitiatedServerLogoutSuccessHandler(this.clientRegistrationRepository);

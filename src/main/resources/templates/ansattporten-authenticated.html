@@ -3,19 +3,22 @@
 <head>
     <title>Ansattporten - innlogging</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Detaljer - Ansattporten innlogging</h1>
-        <h4>Velkommen <span th:text="${name}"></span>!</h4>
-        <p>Du har logget på med ansattporten med pid <span style="font-weight:bold" th:text="${pid}"></span>.</p>
-        <p>ID-token:</p>
-        <div class="token-container" th:text="${idtoken}"></div>
-        <p>Authorization details:</p>
-        <div class="token-container" th:text="${authorizationdetails}"></div>
-        <p><a href="/logout">Logg ut</a></p>
-    </div>
+<!-- Main container for the content of this page -->
+@@ -12,7 +12,7 @@ <h1>Detaljer - Ansattporten innlogging</h1>
+<!-- Welcome message displaying hte name of the user -->
+<h4>Velkommen<span th:text="${name}"></span>!</h4>
+<!-- Display the PID (personal identifier) of the user -->
+<p>Du har logget på med ansattporten med pid<span style="font-weight:bold" th:text="${pid}"></span>.</p>
+<!-- Display the ID token -->
+<p>ID-token:</p>
+<div class="token-container" th:text="${idtoken}"></div>
+@@ -22,74 +22,5 @@ <h4>Velkommen<span th:text="${name}"></span>!</h4>
+<!-- Logout link -->
+<p><a href="/logout">Logg ut</a></p>
+</div>
+
 <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -29,7 +32,7 @@
         height: 100vh;
         box-sizing: border-box;
     }
-    
+
     .container {
         text-align: center;
         max-width: 800px;
@@ -38,23 +41,23 @@
         background-color: white;
         border-radius: 10px;
     }
-    
+
     h1 {
         color: #005a9c;
         margin-bottom: 20px;
         font-size: 2.5rem;
     }
-    
+
     h4 {
         color: #005a9c;
         margin: 20px 0;
     }
-    
+
     p {
         margin: 20px 0;
         color: #333;
     }
-    
+
     a {
         background-color: #008cba;
         color: white;
@@ -65,13 +68,13 @@
         transition: transform 0.3s ease, background-color 0.3s ease;
         display: inline-block;
     }
-    
+
     a:hover, a:focus {
         background-color: #005a9c;
         transform: translateY(-3px);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
-    
+
     div.token-container {
         background-color: #f0f0f0;
         padding: 10px;
@@ -83,6 +86,6 @@
         max-width: 100%;
         overflow-x: auto;
     }
-</style>    
+</style>
 </body>
 </html>

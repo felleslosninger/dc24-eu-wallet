@@ -7,8 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Controller for handling integration with Ansattporten.
+ */
 @Controller
 public class AnsattportenIntegrationController {
+
+  /**
+   * Handles requests to the root URL ("/").
+   *
+   * @return the "index" view name.
+   */
 
 
   @GetMapping("/")
@@ -16,6 +25,14 @@ public class AnsattportenIntegrationController {
     return "index";
   }
 
+  /**
+   * Handles requests to the Ansattporten authentication URL ("/ansattporten_authentication").
+   * Retrieves OIDC user information and adds it to the model.
+   *
+   * @param model the model to add attributes to.
+   * @param oidcUser the authenticated OIDC user.
+   * @return the "ansattporten-authenticated" view name.
+   */
   @GetMapping("/ansattporten_authentication")
   public String user(Model model,
                      @AuthenticationPrincipal OidcUser oidcUser) {
@@ -26,6 +43,11 @@ public class AnsattportenIntegrationController {
     return "ansattporten-authenticated";
   }
 
+  /**
+   * Handles requests to the logout callback URL ("/logout/callback").
+   *
+   * @return the "logout" view name.
+   */
   @GetMapping("/logout/callback")
   public String logoutCallback() {
     return "logout";
