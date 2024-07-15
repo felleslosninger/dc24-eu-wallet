@@ -2,7 +2,6 @@ package digdir.dc24_eu_wallet.aport;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Cred {
@@ -11,7 +10,7 @@ public class Cred {
     @Getter
     private String pid;
     @Getter
-    private AutorizationDetails authorization_details;
+    private List<AutorizationDetails> authorization_details;
     private TokenHead token;
 
     public Cred(TokenHead token) {
@@ -22,7 +21,7 @@ public class Cred {
     }
 
     public void setAuthorization_details() {
-        authorization_details = token.getAuthorizationDetails().get(0);
+        authorization_details = token.getAuthorizationDetails();
     }
 
     public void setPid() {
