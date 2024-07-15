@@ -2,7 +2,9 @@ package digdir.dc24_eu_wallet.controller;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import digdir.dc24_eu_wallet.dto.ChallengerAndCred;
+import digdir.dc24_eu_wallet.dto.PresentationRequest;
 import digdir.dc24_eu_wallet.dto.PresentationResponse2;
 import digdir.dc24_eu_wallet.entities.Challengers;
 import digdir.dc24_eu_wallet.service.ChallengersService;
@@ -34,6 +36,10 @@ public class PresentationController {
   private final HttpService httpService;
   private final RequestService requestService;
 
+  Gson gson = new GsonBuilder()
+          .excludeFieldsWithoutExposeAnnotation()
+          .create();
+
   @Value("${MATTR_TENANT_URL}")
   private String url;
   @Value("${NGROK_URL}")
@@ -53,53 +59,49 @@ public class PresentationController {
   @PostMapping
   public ResponseEntity<ChallengerAndCred> postAPI(@RequestBody ChallengerAndCred wallet) {
 
-
-
-    String uniqueID = UUID.randomUUID().toString();
-    logger.info("Generating random unique id for challenger: {}", uniqueID);
-
-    logger.info("Presentation API request sent!");
-    Gson gson = new Gson();
     ResponseEntity<ChallengerAndCred> response;
+    logger.info("New PostRequest to create a Presentation Request");
 
-    response = new ResponseEntity<>(wallet, HttpStatus.OK);
+    if(wallet.isValid()){
+      logger.info("New PostRequest has a valid body.");
+      String uniqueID = UUID.randomUUID().toString();
 
-    Challengers challengers = new Challengers();
-    challengers.setChallenger(uniqueID);
-    challengers.setJsonData(gson.toJson(wallet));
+      Challengers challengers = new Challengers();
+      challengers.setChallenger(uniqueID);
+      challengers.setJsonData(gson.toJson(wallet));
 
-    System.out.println(gson.toJson(wallet));
+      logger.info("Saving Presentation Cred Data to the database");
+      challengersService.saveChallenger(challengers);
 
-    logger.info("Saving request to the database");
-    challengersService.saveChallenger(challengers);
+      logger.info("Sending request to be formatted as a QR code.");
+      sendPresentationRequest(uniqueID);
 
-    logger.info("Sending request to be formatted as a QR code.");
+      response = new ResponseEntity<>(HttpStatus.OK);
 
-    /**
-     * Using unique challenger?
-     */
-
-    sendPresentationRequest(uniqueID);
+    }else{
+      logger.warn("The Json Body is not Valid!");
+      response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
     return response;
   }
 
   private String sendPresentationRequest(String challenger){
 
-    String jsonBOdy = "{\n" +
-            "  \"challenge\": \""+challenger+"\",\n" +
-            "  \"did\": \""+didWeb+"\",\n" +
-            "  \"templateId\": \""+templateId+"\",\n" +
-            "  \"callbackUrl\": \""+ngrok+"\"\n" +
-            "}";
+    PresentationRequest presentationRequest = new PresentationRequest();
+    presentationRequest.setChallenge(challenger);
+    presentationRequest.setDid(didWeb);
+    presentationRequest.setTemplateId(templateId);
+    presentationRequest.setCallbackUrl(ngrok);
+
     String response = null;
     try {
-      response = httpService.postRequest(url + "/v2/credentials/web-semantic/presentations/requests", requestService.getJwt(), jsonBOdy);
+      response = httpService.postRequest(url + "/v2/credentials/web-semantic/presentations/requests", requestService.getJwt(), gson.toJson(presentationRequest));
     }catch (IOException ioException){
       System.out.println("hehe");
     }
 
-    Gson gson = new Gson();
+    //Gson gson = new Gson();
     PresentationResponse2 presentationResponse2 = gson.fromJson(response, PresentationResponse2.class);
 
     System.out.println(response);

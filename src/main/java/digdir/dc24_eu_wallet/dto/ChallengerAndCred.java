@@ -1,22 +1,14 @@
 package digdir.dc24_eu_wallet.dto;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChallengerAndCred {
-
-  private String challenger;
+  @Expose
   private List<Cred> cred;
-
-  public String getChallenger() {
-    return challenger;
-  }
-
-  public void setChallenger(String challenger) {
-    this.challenger = challenger;
-  }
 
   public List<Cred> getCred() {
     return cred;
@@ -26,10 +18,16 @@ public class ChallengerAndCred {
     this.cred = cred;
   }
 
+  public boolean isValid() {
+    return cred != null && !cred.isEmpty() && cred.stream().allMatch(Cred::isValid);
+  }
+
   public static class Cred{
+    @Expose
     private String sub;
+    @Expose
     private String pid;
-    private List<CredentialPost.AuthorizationDetails> authorization_details;
+    private List<AuthorizationDetails> authorization_details;
 
     public String getSub() {
       return sub;
@@ -47,20 +45,31 @@ public class ChallengerAndCred {
       this.pid = pid;
     }
 
-    public List<CredentialPost.AuthorizationDetails> getAuthorization_details() {
+    public List<AuthorizationDetails> getAuthorization_details() {
       return authorization_details;
     }
 
-    public void setAuthorization_details(List<CredentialPost.AuthorizationDetails> authorization_details) {
+    public void setAuthorization_details(List<AuthorizationDetails> authorization_details) {
       this.authorization_details = authorization_details;
+    }
+
+    public boolean isValid() {
+      return sub != null && !sub.isEmpty() &&
+              pid != null && !pid.isEmpty() &&
+              authorization_details != null && !authorization_details.isEmpty() &&
+              authorization_details.stream().allMatch(AuthorizationDetails::isValid);
     }
   }
 
   public static class AuthorizationDetails {
+    @Expose
     private String resource;
+    @Expose
     private String type;
+    @Expose
     private String resource_name;
-    private List<CredentialPost.Reportees> reportees = new ArrayList<>();
+    @Expose
+    private List<Reportees> reportees = new ArrayList<>();
 
     public String getResource() {
       return resource;
@@ -86,58 +95,73 @@ public class ChallengerAndCred {
       this.resource_name = resource_name;
     }
 
-    public List<CredentialPost.Reportees> getReportees() {
+    public List<Reportees> getReportees() {
       return reportees;
     }
 
-    public void setReportees(List<CredentialPost.Reportees> reportees) {
+    public void setReportees(List<Reportees> reportees) {
       this.reportees = reportees;
     }
-    public void addReportees(CredentialPost.Reportees reportees) {
+    public void addReportees(Reportees reportees) {
       this.reportees.add(reportees);
+    }
+
+    public boolean isValid() {
+      return resource != null && !resource.isEmpty() &&
+              type != null && !type.isEmpty() &&
+              resource_name != null && !resource_name.isEmpty() &&
+              reportees != null && !reportees.isEmpty() &&
+              reportees.stream().allMatch(Reportees::isValid);
     }
   }
 
   public static class Reportees{
-    @SerializedName("Rights")
-    private List<String> Rights;
-    @SerializedName("Authority")
-    private String Authority;
-    @SerializedName("ID")
-    private String ID;
-    @SerializedName("Name")
-    private String Name;
+    @Expose
+    private List<String> rights;
+    @Expose
+    private String authority;
+    @Expose
+    private String id;
+    @Expose
+    private String name;
 
     public List<String> getRights() {
-      return Rights;
+      return rights;
     }
 
     public void setRights(List<String> rights) {
-      Rights = rights;
+      this.rights = rights;
     }
 
     public String getAuthority() {
-      return Authority;
+      return authority;
     }
 
     public void setAuthority(String authority) {
-      Authority = authority;
+      this.authority = authority;
     }
 
     public String getID() {
-      return ID;
+      return id;
     }
 
     public void setID(String ID) {
-      this.ID = ID;
+      this.id = ID;
     }
 
     public String getName() {
-      return Name;
+      return name;
     }
 
     public void setName(String name) {
-      Name = name;
+      this.name = name;
+    }
+
+    public boolean isValid() {
+      return rights != null && !rights.isEmpty() &&
+              authority != null && !authority.isEmpty() &&
+              id != null && !id.isEmpty() &&
+              name != null && !name.isEmpty();
     }
   }
 

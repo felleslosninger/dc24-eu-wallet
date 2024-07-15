@@ -128,7 +128,7 @@ public class CredentialPost {
     private String id;
     private String sub;
     private String pid;
-    private List<AuthorizationDetails> authorization_details;
+    private List<AuthorizationDetails> authorization_details = new ArrayList<>();
 
     public String getId() {
       return id;
@@ -160,6 +160,9 @@ public class CredentialPost {
 
     public void setAuthorization_details(List<AuthorizationDetails> authorization_details) {
       this.authorization_details = authorization_details;
+    }
+    public void addAuthorization_details(AuthorizationDetails authorization_details) {
+      this.authorization_details.add(authorization_details);
     }
   }
 
