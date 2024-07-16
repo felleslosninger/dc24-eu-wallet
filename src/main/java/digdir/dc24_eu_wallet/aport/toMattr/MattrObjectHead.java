@@ -1,6 +1,8 @@
 package digdir.dc24_eu_wallet.aport.toMattr;
 
 
+import com.google.gson.Gson;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.AutorizationDetails;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
 import lombok.Getter;
@@ -16,6 +18,8 @@ import java.util.List;
  */
 
 public class MattrObjectHead {
+
+    Gson gson =  new Gson();
 
     @Getter
     private String challenger;
@@ -35,15 +39,47 @@ public class MattrObjectHead {
     public MattrObjectHead(TokenHead token) {
         this.cred = new ArrayList<>();
         this.token = token;
-        reportees = token.getAuthorizationDetails().get(0).getReportees();
-        System.out.println("Size of the array with all the reportees : "+reportees.size());
-        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(0).getName());
-        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(1).getName());
-        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(2).getName());
-        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(3).getName());
-        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(4).getName());
-        setChallenger();
-        setCred(cred);
+
+
+
+        Credential credential = new Credential();
+
+
+
+        for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
+
+
+            for (Reportee rep: ignored.getReportees()) {
+                Credential.Cred credentials = new Credential.Cred();
+                credentials.setPid(token.getPid());
+                credentials.setSub(token.getSub());
+
+                Credential.Authorization_details authorizationDetails = new Credential.Authorization_details();
+                authorizationDetails.setResource(ignored.getResource());
+                authorizationDetails.setType(ignored.getType());
+                authorizationDetails.setResource_name(ignored.getResource_name());
+
+
+                Credential.Reportees repo = new Credential.Reportees();
+                repo.setId(rep.getID());
+                repo.setAuthority(rep.getAuthority());
+                repo.setRights(rep.getRights());
+                repo.setName(rep.getName());
+
+                authorizationDetails.addReportees(repo);
+                credentials.addAuthorization_details(authorizationDetails);
+                credential.addCred(credentials);
+            }
+
+        }
+
+
+
+
+        System.out.println(gson.toJson(credential));
+
+        //setChallenger();
+        //setCred(cred);
         System.out.println("Size of the array with all the cred : "+cred.size());
     }
 

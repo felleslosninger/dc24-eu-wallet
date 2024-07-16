@@ -59,7 +59,7 @@ public class AnsattportenIntegrationController {
   public String informationDump(@AuthenticationPrincipal OidcUser oidcUser) {
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
     JsonDataToMattr testing = new JsonDataToMattr(credential);
-    System.out.println(testing.getJsonString());
+    //System.out.println(testing.getJsonString());
     return "success";
   }
 }
