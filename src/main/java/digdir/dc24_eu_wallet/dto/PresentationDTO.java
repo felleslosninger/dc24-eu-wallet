@@ -3,6 +3,13 @@ package digdir.dc24_eu_wallet.dto;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Hold Presentation data witch we get back from
+ * Mattr API callback.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class PresentationDTO {
 
   private String presentationType;

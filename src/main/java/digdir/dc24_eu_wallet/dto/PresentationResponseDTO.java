@@ -2,6 +2,13 @@ package digdir.dc24_eu_wallet.dto;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * The response from Mattr, that contains the QR-CODE
+ * String.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class PresentationResponseDTO {
 
   @Expose

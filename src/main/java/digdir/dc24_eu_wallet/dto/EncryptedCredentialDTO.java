@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * Hold data for credential witch has been encrypted.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class EncryptedCredentialDTO {
   private Jwe jwe;
 

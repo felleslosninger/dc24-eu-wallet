@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Saved data about a signed web credential.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class CredentialSignDTO {
   private String id;
   private String tag;

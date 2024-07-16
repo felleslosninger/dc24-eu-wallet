@@ -2,6 +2,13 @@ package digdir.dc24_eu_wallet.dto;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * This class contains the data witch is sent
+ * to Mattr to create the QR code.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class PresentationRequestDTO {
 
   @Expose

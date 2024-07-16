@@ -5,6 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contains the data witch is used to send
+ * an encrypted credential to the wallet.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class SendCredentialDTO {
   private String to;
   private JweMessage message;

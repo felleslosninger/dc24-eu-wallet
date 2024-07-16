@@ -2,6 +2,13 @@ package digdir.dc24_eu_wallet.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class is used to hold data about
+ * web credential befoure it will be signed.
+ *
+ * @author Daniel Neset
+ * @version 19.07.2024
+ */
 public class CredentialCardDTO {
   private Payload payload;
   private String proofType;

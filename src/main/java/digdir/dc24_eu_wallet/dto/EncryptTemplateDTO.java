@@ -3,6 +3,12 @@ package digdir.dc24_eu_wallet.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Template before the web credential is encrypted.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class EncryptTemplateDTO {
   private String senderDidUrl;
   private List<String> recipientDidUrls;

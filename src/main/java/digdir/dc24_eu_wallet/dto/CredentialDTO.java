@@ -5,6 +5,13 @@ import com.google.gson.annotations.Expose;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Information parsed from ansattporten
+ * used to create a subject used in CredentialCardDTO.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 public class CredentialDTO {
   @Expose
   private List<Cred> cred;
