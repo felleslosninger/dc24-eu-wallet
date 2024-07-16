@@ -1,7 +1,9 @@
-package digdir.dc24_eu_wallet.aport;
+package digdir.dc24_eu_wallet.aport.toMattr;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenPayload;
 
 /**
  * Responsible for creating the payload of the request to MATTR that issues something. It can be for example a right

@@ -1,7 +1,11 @@
-package digdir.dc24_eu_wallet.aport;
+package digdir.dc24_eu_wallet.aport.toMattr;
 
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.AutorizationDetails;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +44,13 @@ public class Cred {
      */
 
     public void setAuthorization_details() {
-        authorization_details = token.getAuthorizationDetails();
+        ArrayList<AutorizationDetails> details = new ArrayList<>();
+        for (Reportee reportee : token.getAuthorizationDetails().get(0).getReportees()){
+            AutorizationDetails thisSpecificAutDetail = token.getAuthorizationDetails().get(0);
+            thisSpecificAutDetail.mattrSetReportee(reportee);
+            details.add(thisSpecificAutDetail);
+        }
+        this.authorization_details = details;
     }
 
     public List<AutorizationDetails> getAuthorization_details() {

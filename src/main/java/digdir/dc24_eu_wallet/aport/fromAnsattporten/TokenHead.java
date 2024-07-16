@@ -1,4 +1,4 @@
-package digdir.dc24_eu_wallet.aport;
+package digdir.dc24_eu_wallet.aport.fromAnsattporten;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -77,5 +77,4 @@ public class TokenHead {
   public void setAuthorizationDetails(List<AutorizationDetails> authorization_details) {
     this.authorization_details = authorization_details;
   }
-
 }

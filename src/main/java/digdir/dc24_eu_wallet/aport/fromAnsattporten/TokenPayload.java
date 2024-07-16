@@ -1,9 +1,10 @@
-package digdir.dc24_eu_wallet.aport;
+package digdir.dc24_eu_wallet.aport.fromAnsattporten;
 
 import com.google.gson.Gson;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 
@@ -12,8 +13,6 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
  * ansattporten and returning it upon request.
  *
  */
-
-//todo: singleton?? Diskuter om singleton gjelder for en "session".
 
 public class TokenPayload {
 

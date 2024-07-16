@@ -1,7 +1,7 @@
 package digdir.dc24_eu_wallet.web;
 
-import digdir.dc24_eu_wallet.aport.JsonDataToMattr;
-import digdir.dc24_eu_wallet.aport.TokenPayload;
+import digdir.dc24_eu_wallet.aport.toMattr.JsonDataToMattr;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenPayload;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;

@@ -1,5 +1,6 @@
-package digdir.dc24_eu_wallet.aport;
+package digdir.dc24_eu_wallet.aport.fromAnsattporten;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,4 +78,11 @@ public class AutorizationDetails {
     public void setName(String name) {
         this.Name = name;
     }
+
+    public void mattrSetReportee(Reportee reportee){
+        this.reportees = new ArrayList<>();
+        //ArrayList <Reportee>reportees = new ArrayList<>();
+        reportees.add(reportee);
+    }
+
 }

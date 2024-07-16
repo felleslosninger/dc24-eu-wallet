@@ -1,5 +1,8 @@
-package digdir.dc24_eu_wallet.aport;
+package digdir.dc24_eu_wallet.aport.toMattr;
 
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.AutorizationDetails;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -33,7 +36,7 @@ public class MattrObjectHead {
         this.cred = new ArrayList<>();
         this.token = token;
         setChallenger();
-        setCred();
+        setCred(cred);
 
     }
 
@@ -41,8 +44,11 @@ public class MattrObjectHead {
         this.challenger = String.valueOf(Math.random());
     }
 
-    public void setCred(){
-        this.cred.add(new Cred(token));
+    public void setCred(List<Cred>cred){
+        for (Reportee reportee: token.getAuthorizationDetails().get(0).getReportees()) {
+            Cred oneCred  = new Cred(token);
+            cred.add(oneCred);
+        }
     }
 
     public List<Cred> getCred(){
