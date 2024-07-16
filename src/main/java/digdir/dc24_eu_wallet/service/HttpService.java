@@ -49,7 +49,8 @@ public class HttpService {
     post.setEntity(new StringEntity(body, ContentType.parse("UTF-8")));
 
     try (CloseableHttpResponse response = httpClient.execute(post)) {
-      return EntityUtils.toString(response.getEntity(), "UTF-8");
+      String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+      return responseBody;
     } catch (ParseException e) {
       throw new RuntimeException(e);
     }

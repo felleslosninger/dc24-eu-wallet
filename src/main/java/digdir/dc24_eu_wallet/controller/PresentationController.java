@@ -77,9 +77,9 @@ public class PresentationController {
    * @return Return ResponseEntity with credentialDTO object data and HttpStatus
    */
   @PostMapping
-  public ResponseEntity<CredentialDTO> postAPI(@RequestBody CredentialDTO credentialDTO) {
+  public ResponseEntity<String> postAPI(@RequestBody CredentialDTO credentialDTO) {
     logger.info("New PostRequest to create a Presentation Request");
-    ResponseEntity<CredentialDTO> response;
+    ResponseEntity<String> response;
 
     if(credentialDTO.isValid()){
       logger.info("New PostRequest has a valid body.");
@@ -93,11 +93,11 @@ public class PresentationController {
       challengersService.saveChallenger(challengers);
 
       logger.info("Sending request to be formatted as a QR code.");
-      String QRCode = sendPresentationRequest(uniqueID);
-      logger.info("QR CODE: {}", QRCode);
+      String qrCode = sendPresentationRequest(uniqueID);
+      logger.info("QR CODE: {}", qrCode);
 
 
-      response = new ResponseEntity<>(credentialDTO, HttpStatus.OK);
+      response = new ResponseEntity<>(qrCode, HttpStatus.OK);
     }else{
       logger.warn("The Json Body is not Valid!");
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -125,6 +125,7 @@ public class PresentationController {
 
     String response = null;
     try {
+      System.out.println("Making request");
       response = httpService.postRequest(url + "/v2/credentials/web-semantic/presentations/requests", requestService.getJwt(), body);
       PresentationResponseDTO presentationResponseDTO = gson.fromJson(response, PresentationResponseDTO.class);
       response = "url: https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + presentationResponseDTO.getDidcommUri();
