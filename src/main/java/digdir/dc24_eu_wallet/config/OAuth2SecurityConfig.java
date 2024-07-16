@@ -41,9 +41,10 @@ public class OAuth2SecurityConfig {
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchanges ->
                         exchanges
-                                .pathMatchers("/", "/error", "/logout/callback").permitAll()
+                                .pathMatchers("/", "/error", "/logout/callback", "/callback/**", "/Presentation/**").permitAll()
                                 .anyExchange().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
