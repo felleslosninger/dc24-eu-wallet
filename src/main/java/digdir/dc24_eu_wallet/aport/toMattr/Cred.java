@@ -21,6 +21,7 @@ public class Cred {
     private String pid;
     private List<AutorizationDetails> authorization_details;
     private TokenHead token;
+    private Reportee reportee;
 
     /**
      * Constructs Cred as class, and will hold information for that field in the JSON string. Initializes token,
@@ -30,9 +31,9 @@ public class Cred {
      *              logged in.
      */
 
-    public Cred(TokenHead token) {
+    public Cred(TokenHead token, Reportee reportee) {
         this.token = token;
-        setAuthorization_details();
+        setAuthorization_details(reportee);
         setPid();
         setSub();
     }
@@ -43,7 +44,18 @@ public class Cred {
      *
      */
 
-    public void setAuthorization_details() {
+    public void setAuthorization_details(Reportee reportee) {
+
+        List<AutorizationDetails> temp_authorization_details = token.getAuthorizationDetails();
+        ArrayList<Reportee> tempList = new ArrayList<>();
+        tempList.add(reportee);
+        temp_authorization_details.get(0).setReportees(tempList);
+        this.authorization_details = temp_authorization_details;
+        //this.authorization_details.get(0).mattrSetReportee(reportee);
+
+
+        /**
+
         ArrayList<AutorizationDetails> details = new ArrayList<>();
         for (Reportee reportee : token.getAuthorizationDetails().get(0).getReportees()){
             AutorizationDetails thisSpecificAutDetail = token.getAuthorizationDetails().get(0);
@@ -51,6 +63,7 @@ public class Cred {
             details.add(thisSpecificAutDetail);
         }
         this.authorization_details = details;
+         */
     }
 
     public List<AutorizationDetails> getAuthorization_details() {

@@ -22,7 +22,8 @@ public class MattrObjectHead {
     @Getter
     private List<Cred> cred;
 
-    private TokenHead token;
+    private final TokenHead token;
+    private List<Reportee> reportees;
 
     /**
      * Constructs MattrObjectHead.
@@ -32,9 +33,10 @@ public class MattrObjectHead {
 
 
     public MattrObjectHead(TokenHead token) {
-
         this.cred = new ArrayList<>();
         this.token = token;
+        this.reportees = token.getAuthorizationDetails().get(0).getReportees();
+        System.out.println("Size of the array with all the reportees : "+reportees.size());
         setChallenger();
         setCred(cred);
 
@@ -45,9 +47,8 @@ public class MattrObjectHead {
     }
 
     public void setCred(List<Cred>cred){
-        for (Reportee reportee: token.getAuthorizationDetails().get(0).getReportees()) {
-            Cred oneCred  = new Cred(token);
-            cred.add(oneCred);
+        for (Reportee reportee: reportees) {
+            cred.add(new Cred(token, reportee));
         }
     }
 
