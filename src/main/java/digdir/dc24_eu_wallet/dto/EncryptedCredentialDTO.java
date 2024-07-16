@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class JweContainer {
+public class EncryptedCredentialDTO {
   private Jwe jwe;
 
   public Jwe getJwe() {

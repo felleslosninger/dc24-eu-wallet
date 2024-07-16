@@ -11,13 +11,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
+/**
+ * This class handle the creation, receiving and sending
+ * of web cred to Mattr API and the users' wallet.
+ *
+ * @author Daniel Neset
+ * @version 16.07.2024
+ */
 @Component
 public class SendWebCred {
-
   public static final Logger logger = LoggerFactory.getLogger(SendWebCred.class);
-
   private final HttpService httpService;
   private final RequestService requestService;
   Gson gson = new Gson();
@@ -30,74 +38,80 @@ public class SendWebCred {
   @Value("${DID_WEB_EXTENSION}")
   private String didWebExt;
 
+
+  /**
+   * Constructs an SendWebCred with the required services.
+   *
+   * @param httpService The services used to post Http data.
+   * @param requestService The service fetches the access token.
+   */
   @Autowired
   public SendWebCred(HttpService httpService, RequestService requestService) {
     this.httpService = httpService;
     this.requestService = requestService;
   }
 
+
   /**
+   * This method is a center point that's handle creating Web credentials from
+   * CredentialDTO, Encrypting them and Sending to the users' wallet.
    *
-   * Each ChallengerAndCred can contain multiple creds
-   * Here we should split them and create multiple web creds
-   * This can be used in sending multiple with the encrypt method
-   *
+   * @param walletDID The wallet DID used to send Web credentials to.
+   * @param credentialDTO The credentialDTO used to fetch the custom Credentials from.
+   * @throws IOException Throws an IOException if there is something wrong with sending HTTP data.
    */
+  public void createAndSendCredentials(String walletDID, CredentialDTO credentialDTO) throws IOException {
+    logger.info("Starting Creation and Sending of Credentials to users wallet with DID: {}", walletDID);
+    logger.info("1) Create subjects from credentialDTO");
+    List<CredentialCardDTO.CredentialSubject> subjects = createSubjects(credentialDTO, walletDID);
 
+    logger.info("2) Creating Web Credentials Cards with the Subjects data");
+    List<CredentialCardDTO> credentialCardDTOS = createWebCards(subjects);
 
-  public void testMain(String holder, ChallengerAndCred cred) throws IOException {
+    logger.info("3) Sign the Web Credentials");
+    List<CredentialSignDTO> credentialSignDTOs = signWebCredentials(credentialCardDTOS);
 
+    logger.info("4) Gather all the Web Credentials in a object that will be encrypted");
+    EncryptTemplateDTO encryptPosts = encryptWebCred(credentialSignDTOs, walletDID);
 
-    //Create all the CredentialSubjects:
-    List<CredentialPost.CredentialSubject> subjects = test(cred, holder);
+    logger.info("5) Encrypt all of the Web Credentials");
+    EncryptedCredentialDTO encryptedCredentialDTO = getEncryptedCred(encryptPosts);
 
-    //Create cards from these:
-    List<CredentialPost> credentialPosts = createCard(subjects);
-
-    //Create a list of web credentials
-    List<CredentialResponse> credentialResponses = createWebCred(credentialPosts);
-
-    //Encrypt the list of web credentials
-    EncryptPost encryptPosts = encryptWebCred(credentialResponses, holder);
-
-    //Create encrypted cred
-
+    logger.info("6) Send the encrypted Web Credentials to the user");
+    sendEncryptedCred(encryptedCredentialDTO, walletDID);
   }
 
 
-
   /**
-   * This test class reformat the Credentials to a List of CredentialSubject
+   * This CreateSubjects method reformat the CredentialDTO to a List of CredentialPost.CredentialSubject
    * Each CredentialSubject will be sent and made into a web-cred that will be saved
-   * in a List that will then put them all in a encryption and then sent to the user
+   * in a List. That list will then be encrypted and later sent to the users' wallet.
+   * The good thing about this it that even if you send just a single cred or multiple, it will
+   * be able to handle all instances of this.
    *
-   * The good thing about this it that even if you send just a single cred or many, it will
-   * be able to handle all of them.
-   *
-   * @param credList A list of all credentials, taken from ChallengerAndCred
+   * @param credentialDTO A list of all credentials, taken from ChallengerAndCred
    * @return Return a list of CredentialPost.CredentialSubjects
    */
-  public List<CredentialPost.CredentialSubject> test(ChallengerAndCred credList, String holder){
+  private List<CredentialCardDTO.CredentialSubject> createSubjects(CredentialDTO credentialDTO, String walletDID){
 
-    List<CredentialPost.CredentialSubject> containers = new ArrayList<>();
+    List<CredentialCardDTO.CredentialSubject> subjectContainers = new ArrayList<>();
 
-    for (ChallengerAndCred.Cred cred: credList.getCred()) {
+    for (CredentialDTO.Cred cred: credentialDTO.getCred()) {
+      CredentialCardDTO.CredentialSubject subject = new CredentialCardDTO.CredentialSubject();
 
-      CredentialPost.CredentialSubject subject = new CredentialPost.CredentialSubject();
-      subject.setId(holder);
+      subject.setId(walletDID);
       subject.setSub(cred.getSub());
       subject.setPid(cred.getPid());
 
-
-      for (ChallengerAndCred.AuthorizationDetails authDetails: cred.getAuthorization_details()) {
-        CredentialPost.AuthorizationDetails authorizationDetails = new CredentialPost.AuthorizationDetails();
+      for (CredentialDTO.AuthorizationDetails authDetails: cred.getAuthorization_details()) {
+        CredentialCardDTO.AuthorizationDetails authorizationDetails = new CredentialCardDTO.AuthorizationDetails();
 
         authorizationDetails.setResource(authDetails.getResource());
         authorizationDetails.setType(authDetails.getType());
         authorizationDetails.setResource_name(authDetails.getResource_name());
 
-        for (ChallengerAndCred.Reportees repo: authDetails.getReportees()) {
-          CredentialPost.Reportees reportees = new CredentialPost.Reportees();
+        for (CredentialDTO.Reportees repo: authDetails.getReportees()) {
+          CredentialCardDTO.Reportees reportees = new CredentialCardDTO.Reportees();
 
           reportees.setID(repo.getID());
           reportees.setAuthority(repo.getAuthority());
@@ -108,41 +122,43 @@ public class SendWebCred {
         }
         subject.addAuthorization_details(authorizationDetails);
       }
-
+      subjectContainers.add(subject);
     }
-
-    return containers;
+    return subjectContainers;
 
   }
 
 
+  /**
+   * Create multiple Web Credential Card with the specific subject
+   * details and store them in a List.
+   *
+   * @param credentialSubjects A list of credentialSubjects;
+   * @return Return a List of CredentialPost that are ready to Signed.
+   */
+  private List<CredentialCardDTO> createWebCards(List<CredentialCardDTO.CredentialSubject> credentialSubjects){
+    List<CredentialCardDTO> credentialCardDTOS = new ArrayList<>();
 
-
-
-  private List<CredentialPost> createCard(List<CredentialPost.CredentialSubject> credentialSubjects){
-
-    List<CredentialPost> credentialPosts = new ArrayList<>();
-    for (CredentialPost.CredentialSubject subject: credentialSubjects) {
-
-      CredentialPost post = new CredentialPost();
+    for (CredentialCardDTO.CredentialSubject subject: credentialSubjects) {
+      CredentialCardDTO post = new CredentialCardDTO();
       post.setProofType("Ed25519Signature2018");
       post.setTag("external-identifier");
       post.setPersist(false);
       post.setRevocable(true);
       post.setIncludeId(true);
 
-      CredentialPost.Payload payload = new CredentialPost.Payload();
+      CredentialCardDTO.Payload payload = new CredentialCardDTO.Payload();
       payload.setName("DigDir Credential");
       payload.setDescription("Issued by Trusted Digdir");
       payload.setType(List.of("AnsattportenCredential"));
 
-      CredentialPost.CredentialBranding branding = new CredentialPost.CredentialBranding();
+      CredentialCardDTO.CredentialBranding branding = new CredentialCardDTO.CredentialBranding();
       branding.setBackgroundColor("#0a0090");
       branding.setWatermarkImageUrl("https://www.freeiconspng.com/thumbs/awesome-face-png/awesome-face-png-1.png");
 
-      CredentialPost.Issuer issuer = new CredentialPost.Issuer();
-      issuer.setId("did:web:daniel-neset-xjbzrt.vii.au01.mattr.global");
-      issuer.setName("Zealopia Business Institute");
+      CredentialCardDTO.Issuer issuer = new CredentialCardDTO.Issuer();
+      issuer.setId(didWeb);
+      issuer.setName("Digdir Business Institute");
       issuer.setIconUrl("https://i.vimeocdn.com/portrait/45096260_640x640");
 
       payload.setCredentialSubject(subject);
@@ -152,30 +168,42 @@ public class SendWebCred {
 
       post.setPayload(payload);
 
-      credentialPosts.add(post);
+      credentialCardDTOS.add(post);
     }
-    return credentialPosts;
+    return credentialCardDTOS;
   }
 
-  public List<CredentialResponse> createWebCred(List<CredentialPost> credentialPosts) throws IOException {
 
-    List<CredentialResponse> credentialResponses = new ArrayList<>();
+  /**
+   * Sign all the Web Credentials from the Object CredentialPost.
+   *
+   * @param credentialCardDTOS A list of Web Credentials ready to be signed.
+   * @return Return a list of signed Web Credentials.
+   * @throws IOException Throws IOException if an HTTP post goes wrong.
+   */
+  private List<CredentialSignDTO> signWebCredentials(List<CredentialCardDTO> credentialCardDTOS) throws IOException {
+    List<CredentialSignDTO> credentialSignDTOS = new ArrayList<>();
 
-    for (CredentialPost post: credentialPosts) {
+    for (CredentialCardDTO post: credentialCardDTOS) {
       String cred = gson.toJson(post);
       String responseBody = httpService.postRequest(url + "/v2/credentials/web-semantic/sign", requestService.getJwt(), cred);
-
-      CredentialResponse response = gson.fromJson(responseBody, CredentialResponse.class);
-      credentialResponses.add(response);
+      CredentialSignDTO response = gson.fromJson(responseBody, CredentialSignDTO.class);
+      credentialSignDTOS.add(response);
     }
-
-    return credentialResponses;
+    return credentialSignDTOS;
   }
 
-  public EncryptPost encryptWebCred(List<CredentialResponse> credentialResponses, String holder){
 
+  /**
+   * Encrypt all the signed Web Credentials.
+   *
+   * @param credentialSignDTOS All Web Credentials to be Encrypted together.
+   * @param holder The wallet DID.
+   * @return Return a EncryptedPost object that will be sent to the wallet.
+   */
+  private EncryptTemplateDTO encryptWebCred(List<CredentialSignDTO> credentialSignDTOS, String holder){
     String uniqueID = UUID.randomUUID().toString();
-    EncryptPost.Payload payload = new EncryptPost.Payload();
+    EncryptTemplateDTO.Payload payload = new EncryptTemplateDTO.Payload();
 
     payload.setId(uniqueID);
     payload.setType("https://mattr.global/schemas/verifiable-credential/offer/Direct");
@@ -183,30 +211,63 @@ public class SendWebCred {
     payload.setFrom(didWeb);
     payload.setCreated_time(System.currentTimeMillis() / 1000);
 
-    EncryptPost.Body body = new EncryptPost.Body();
-    for (CredentialResponse cred: credentialResponses) {
+    EncryptTemplateDTO.Body body = new EncryptTemplateDTO.Body();
+    for (CredentialSignDTO cred: credentialSignDTOS) {
       body.addCredentials(cred.getCredential());
     }
+
     body.setDomain(domain);
     payload.setBody(body);
-    EncryptPost encryptPost = new EncryptPost(didWebExt, Collections.singletonList(holder), payload);
 
-    return encryptPost;
-
+    return new EncryptTemplateDTO(didWebExt, Collections.singletonList(holder), payload);
   }
 
-  public void sendEncryptedCred(List<EncryptPost> encryptPosts) throws IOException {
 
+  /**
+   * Gets the data that will be encrypted and encrypt it with Mattr.
+   *
+   * @param encryptPosts The object to be encrypted.
+   * @return Return an encrypted object.
+   * @throws IOException Throws IOException if it cannot send a Post HTTP request.
+   */
+  private EncryptedCredentialDTO getEncryptedCred(EncryptTemplateDTO encryptPosts) throws IOException {
+    String encryptedPostsJson = gson.toJson(encryptPosts);
+    String responseBody = httpService.postRequest(url + "/core/v1/messaging/encrypt", requestService.getJwt(), encryptedPostsJson);
 
-    String newJson = null;
-
-
-
-    String responseBody2 = httpService.postRequest(url + "/core/v1/messaging/encrypt", requestService.getJwt(), newJson);
-
-
-
+    return gson.fromJson(responseBody, EncryptedCredentialDTO.class);
   }
 
+  private void sendEncryptedCred(EncryptedCredentialDTO encryptedCredentialDTO, String holder) throws IOException {
+    SendCredentialDTO.JweMessage jweMessage = new SendCredentialDTO.JweMessage();
+
+    jweMessage.setProtected(encryptedCredentialDTO.getJwe().getProtectedInfo());
+    jweMessage.setCiphertext(encryptedCredentialDTO.getJwe().getCiphertext());
+    jweMessage.setIv(encryptedCredentialDTO.getJwe().getIv());
+    jweMessage.setTag(encryptedCredentialDTO.getJwe().getTag());
+
+    for (EncryptedCredentialDTO.Recipient recipient: encryptedCredentialDTO.getJwe().getRecipients()) {
+      SendCredentialDTO.Header header = new SendCredentialDTO.Header();
+      SendCredentialDTO.Recipient rep = new SendCredentialDTO.Recipient();
+
+      header.setAlg(recipient.getHeader().getAlg());
+      header.setKid(recipient.getHeader().getKid());
+      header.setSkid(recipient.getHeader().getSkid());
+
+      SendCredentialDTO.Epk epk = new SendCredentialDTO.Epk();
+      epk.setKty(recipient.getHeader().getEpk().getKty());
+      epk.setCrv(recipient.getHeader().getEpk().getCrv());
+      epk.setX(recipient.getHeader().getEpk().getX());
+      header.setEpk(epk);
+
+      rep.setHeader(header);
+      rep.setEncryptedKey(recipient.getEncryptedKey());
+
+      jweMessage.addRecipients(rep);
+    }
+
+    SendCredentialDTO sendCredentialDTO = new SendCredentialDTO(holder, jweMessage);
+    String sendMessage = gson.toJson(sendCredentialDTO);
+    httpService.postRequest(url + "/core/v1/messaging/send", requestService.getJwt(), sendMessage);
+  }
 
 }

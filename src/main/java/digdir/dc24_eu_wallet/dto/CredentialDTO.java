@@ -1,12 +1,11 @@
 package digdir.dc24_eu_wallet.dto;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChallengerAndCred {
+public class CredentialDTO {
   @Expose
   private List<Cred> cred;
 
@@ -27,6 +26,7 @@ public class ChallengerAndCred {
     private String sub;
     @Expose
     private String pid;
+    @Expose
     private List<AuthorizationDetails> authorization_details;
 
     public String getSub() {

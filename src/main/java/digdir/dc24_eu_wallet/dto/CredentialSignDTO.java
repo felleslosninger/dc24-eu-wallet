@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CredentialResponse {
+public class CredentialSignDTO {
   private String id;
   private String tag;
   private Credential credential;
@@ -229,7 +229,7 @@ public class CredentialResponse {
     private String id;
     private String sub;
     private String pid;
-    private List<CredentialPost.AuthorizationDetails> authorization_details;
+    private List<CredentialCardDTO.AuthorizationDetails> authorization_details;
 
     public String getId() {
       return id;
@@ -255,11 +255,11 @@ public class CredentialResponse {
       this.pid = pid;
     }
 
-    public List<CredentialPost.AuthorizationDetails> getAuthorization_details() {
+    public List<CredentialCardDTO.AuthorizationDetails> getAuthorization_details() {
       return authorization_details;
     }
 
-    public void setAuthorization_details(List<CredentialPost.AuthorizationDetails> authorization_details) {
+    public void setAuthorization_details(List<CredentialCardDTO.AuthorizationDetails> authorization_details) {
       this.authorization_details = authorization_details;
     }
   }
@@ -268,7 +268,7 @@ public class CredentialResponse {
     private String resource;
     private String type;
     private String resource_name;
-    private List<CredentialPost.Reportees> reportees = new ArrayList<>();
+    private List<CredentialCardDTO.Reportees> reportees = new ArrayList<>();
 
     public String getResource() {
       return resource;
@@ -294,14 +294,14 @@ public class CredentialResponse {
       this.resource_name = resource_name;
     }
 
-    public List<CredentialPost.Reportees> getReportees() {
+    public List<CredentialCardDTO.Reportees> getReportees() {
       return reportees;
     }
 
-    public void setReportees(List<CredentialPost.Reportees> reportees) {
+    public void setReportees(List<CredentialCardDTO.Reportees> reportees) {
       this.reportees = reportees;
     }
-    public void addReportees(CredentialPost.Reportees reportees) {
+    public void addReportees(CredentialCardDTO.Reportees reportees) {
       this.reportees.add(reportees);
     }
   }

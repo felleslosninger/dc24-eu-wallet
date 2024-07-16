@@ -1,10 +1,16 @@
 package digdir.dc24_eu_wallet.dto;
 
-public class PresentationResponse2 {
+import com.google.gson.annotations.Expose;
 
+public class PresentationResponseDTO {
+
+  @Expose
   private String id;
+  @Expose
   private String callbackUrl;
+  @Expose
   private String expiresTime;
+  @Expose
   private String didcommUri;
 
   public String getId() {

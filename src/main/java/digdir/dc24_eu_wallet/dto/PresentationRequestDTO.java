@@ -1,10 +1,16 @@
 package digdir.dc24_eu_wallet.dto;
 
-public class PresentationRequest {
+import com.google.gson.annotations.Expose;
 
+public class PresentationRequestDTO {
+
+  @Expose
   private String challenge;
+  @Expose
   private String did;
+  @Expose
   private String templateId;
+  @Expose
   private String callbackUrl;
 
   public String getChallenge() {

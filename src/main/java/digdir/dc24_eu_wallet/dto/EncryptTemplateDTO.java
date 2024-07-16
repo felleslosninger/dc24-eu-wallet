@@ -3,12 +3,12 @@ package digdir.dc24_eu_wallet.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EncryptPost {
+public class EncryptTemplateDTO {
   private String senderDidUrl;
   private List<String> recipientDidUrls;
   private Payload payload;
 
-  public EncryptPost(String senderDidUrl, List<String> recipientDidUrls, Payload payload) {
+  public EncryptTemplateDTO(String senderDidUrl, List<String> recipientDidUrls, Payload payload) {
     this.senderDidUrl = senderDidUrl;
     this.recipientDidUrls = recipientDidUrls;
     this.payload = payload;
@@ -79,19 +79,19 @@ public class EncryptPost {
 
 
   public static class Body{
-    private List<CredentialResponse.Credential> credentials = new ArrayList<>();
+    private List<CredentialSignDTO.Credential> credentials = new ArrayList<>();
     private String domain;
 
 
-    public List<CredentialResponse.Credential> getCredentials() {
+    public List<CredentialSignDTO.Credential> getCredentials() {
       return credentials;
     }
 
-    public void setCredentials(List<CredentialResponse.Credential> credentials) {
+    public void setCredentials(List<CredentialSignDTO.Credential> credentials) {
       this.credentials = credentials;
     }
 
-    public void addCredentials(CredentialResponse.Credential credential) {
+    public void addCredentials(CredentialSignDTO.Credential credential) {
       this.credentials.add(credential);
     }
 

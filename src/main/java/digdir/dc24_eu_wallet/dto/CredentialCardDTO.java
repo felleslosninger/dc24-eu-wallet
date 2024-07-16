@@ -2,7 +2,7 @@ package digdir.dc24_eu_wallet.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CredentialPost {
+public class CredentialCardDTO {
   private Payload payload;
   private String proofType;
   private String tag;
