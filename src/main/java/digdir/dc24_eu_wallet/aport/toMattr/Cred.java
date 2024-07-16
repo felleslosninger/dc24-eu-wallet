@@ -32,6 +32,7 @@ public class Cred {
      */
 
     public Cred(TokenHead token, Reportee reportee) {
+        this.reportee = reportee;
         this.token = token;
         setAuthorization_details(reportee);
         setPid();
@@ -47,11 +48,16 @@ public class Cred {
     public void setAuthorization_details(Reportee reportee) {
 
         List<AutorizationDetails> temp_authorization_details = token.getAuthorizationDetails();
+        System.out.println(temp_authorization_details.size());
         ArrayList<Reportee> tempList = new ArrayList<>();
         tempList.add(reportee);
+        System.out.println("Size of temp list : "+tempList.size() + " plus content: "+ tempList.get(0).getName());
         temp_authorization_details.get(0).setReportees(tempList);
-        this.authorization_details = temp_authorization_details;
+        //Todo: jeg bare flytta ut this. fra forran
+        authorization_details = temp_authorization_details;
         //this.authorization_details.get(0).mattrSetReportee(reportee);
+
+        System.out.println("This is it after saying this.aut_deets  autdettes   "+ authorization_details.get(0).getReportees().get(0).getName());
 
 
         /**

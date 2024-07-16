@@ -27,8 +27,8 @@ public class JsonDataToMattr {
      */
 
     public JsonDataToMattr(TokenPayload token) {
-        this.tokenHead = token.getTokenAsObject();
-        this.mattrObjectHead = new MattrObjectHead(tokenHead);
+        tokenHead = token.getTokenAsObject();
+        mattrObjectHead = new MattrObjectHead(tokenHead);
     }
 
     /**

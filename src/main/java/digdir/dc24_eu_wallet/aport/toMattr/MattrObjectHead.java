@@ -1,6 +1,6 @@
 package digdir.dc24_eu_wallet.aport.toMattr;
 
-import digdir.dc24_eu_wallet.aport.fromAnsattporten.AutorizationDetails;
+
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
 import lombok.Getter;
@@ -35,11 +35,16 @@ public class MattrObjectHead {
     public MattrObjectHead(TokenHead token) {
         this.cred = new ArrayList<>();
         this.token = token;
-        this.reportees = token.getAuthorizationDetails().get(0).getReportees();
+        reportees = token.getAuthorizationDetails().get(0).getReportees();
         System.out.println("Size of the array with all the reportees : "+reportees.size());
+        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(0).getName());
+        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(1).getName());
+        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(2).getName());
+        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(3).getName());
+        System.out.println("This is the reportees that are registered ion MattrObjectHead  "+ reportees.get(4).getName());
         setChallenger();
         setCred(cred);
-
+        System.out.println("Size of the array with all the cred : "+cred.size());
     }
 
     public void setChallenger() {
@@ -50,9 +55,5 @@ public class MattrObjectHead {
         for (Reportee reportee: reportees) {
             cred.add(new Cred(token, reportee));
         }
-    }
-
-    public List<Cred> getCred(){
-        return cred;
     }
 }
