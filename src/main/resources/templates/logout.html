@@ -3,17 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Ansattporten integration demo</title>
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/static/style.css">
+
+    
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e7eff9;
+        margin-top: 6%;
+        padding: 20px;
+        color: #333;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+
+    .container {
+        display: grid; 
+        place-items: center;
+        
+    }
+
+
+    h1 {
+        color: #005a9c;
+        margin-bottom: 20px;
+        font-size: 5.8rem;
+        padding-bottom: 1%;
+    }
+
+
+    a {
+        background-color: #008cba;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        display: inline-block;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        font-size: 2rem;
+    }
+
+    a:hover, a:focus {
+        background-color: #005a9c;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+</style>
 </head>
 <body>
-    <!-- Main content container -->
     <div class="container">
-        <!-- Page heading -->
+        <!-- Main content container -->
         <h1>Ansattporten utlogging</h1>
-        <!-- Logout confirmation message -->
-        <p>Du er nå logget ut av Ansattporten.</p>
         <!-- Link to navigate back to the home page -->
-        <p><a href="/">Tilbake</a></p>
+        <a href="/">Tilbake</a>
     </div>
 </body>
 </html>
