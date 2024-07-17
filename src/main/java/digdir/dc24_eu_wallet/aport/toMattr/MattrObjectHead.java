@@ -15,6 +15,8 @@ import java.util.List;
  * get from the TokenHead object, and after that it will be used by GSON to transform into a JSON string based on the
  * objects structure.
  *
+ * @author LangBakk
+ * @version 17.07.2024
  */
 
 public class MattrObjectHead {
@@ -22,10 +24,7 @@ public class MattrObjectHead {
     Gson gson =  new Gson();
 
     @Getter
-    private String challenger;
-    @Getter
     private List<Cred> cred;
-
     private final TokenHead token;
     private List<Reportee> reportees;
 
@@ -34,21 +33,13 @@ public class MattrObjectHead {
      *
      * @param token token is the decoded payload part of the OIDC id token from the logged in user.
      */
-
-
     public MattrObjectHead(TokenHead token) {
         this.cred = new ArrayList<>();
         this.token = token;
 
-
-
         Credential credential = new Credential();
 
-
-
         for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
-
-
             for (Reportee rep: ignored.getReportees()) {
                 Credential.Cred credentials = new Credential.Cred();
                 credentials.setPid(token.getPid());
@@ -58,7 +49,6 @@ public class MattrObjectHead {
                 authorizationDetails.setResource(ignored.getResource());
                 authorizationDetails.setType(ignored.getType());
                 authorizationDetails.setResource_name(ignored.getResource_name());
-
 
                 Credential.Reportees repo = new Credential.Reportees();
                 repo.setId(rep.getID());
@@ -70,32 +60,9 @@ public class MattrObjectHead {
                 credentials.addAuthorization_details(authorizationDetails);
                 credential.addCred(credentials);
             }
-
         }
-
-
-
 
         System.out.println(gson.toJson(credential));
-
-        //setChallenger();
-        //setCred(cred);
-        System.out.println("Size of the array with all the cred : "+cred.size());
-        System.out.println(cred.get(0).getAuthorization_details());
-        System.out.println(cred.get(1).getAuthorization_details());
-        System.out.println(cred.get(2).getAuthorization_details());
-        System.out.println(cred.get(3).getAuthorization_details());
-        System.out.println(cred.get(4).getAuthorization_details());
     }
 
-    public void setChallenger() {
-        this.challenger = String.valueOf(Math.random());
-    }
-
-    public void setCred(List<Cred>cred){
-        for (Reportee reportee: reportees) {
-            cred.add(new Cred(token, reportee));
-            System.out.println("TESTINGTESTING"+reportee.getName());
-        }
-    }
 }

@@ -3,6 +3,13 @@ package digdir.dc24_eu_wallet.aport.toMattr;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Credential class that is used to format data so it can
+ * be used in the Mattr API.
+ *
+ * @author Daniel Neset
+ * @version 17.07.2024
+ */
 public class Credential {
   private List<Cred> cred = new ArrayList<>();
 
