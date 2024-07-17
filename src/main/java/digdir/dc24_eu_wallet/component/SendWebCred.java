@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class handle the creation, receiving and sending
@@ -72,13 +69,15 @@ public class SendWebCred {
     List<CredentialSignDTO> credentialSignDTOs = signWebCredentials(credentialCardDTOS);
 
     logger.info("4) Gather all the Web Credentials in a object that will be encrypted");
-    EncryptTemplateDTO encryptPosts = encryptWebCred(credentialSignDTOs, walletDID);
+    List<EncryptTemplateDTO> encryptPosts = encryptWebCred(credentialSignDTOs, walletDID);
 
-    logger.info("5) Encrypt all of the Web Credentials");
-    EncryptedCredentialDTO encryptedCredentialDTO = getEncryptedCred(encryptPosts);
+    for (EncryptTemplateDTO post: encryptPosts) {
+      logger.info("5) Encrypt all of the Web Credentials");
+      EncryptedCredentialDTO encryptedCredentialDTO = getEncryptedCred(post);
 
-    logger.info("6) Send the encrypted Web Credentials to the user");
-    sendEncryptedCred(encryptedCredentialDTO, walletDID);
+      logger.info("6) Send the encrypted Web Credentials to the user");
+      sendEncryptedCred(encryptedCredentialDTO, walletDID);
+    }
   }
 
 
@@ -148,8 +147,8 @@ public class SendWebCred {
       post.setIncludeId(true);
 
       CredentialCardDTO.Payload payload = new CredentialCardDTO.Payload();
-      payload.setName("DigDir Credential");
-      payload.setDescription("Issued by Trusted Digdir");
+      payload.setName("Ansattporten Credential");
+      payload.setDescription(subject.getAuthorization_details().get(0).getReportees().get(0).getName());
       payload.setType(List.of("AnsattportenCredential"));
 
       CredentialCardDTO.CredentialBranding branding = new CredentialCardDTO.CredentialBranding();
@@ -201,25 +200,43 @@ public class SendWebCred {
    * @param holder The wallet DID.
    * @return Return a EncryptedPost object that will be sent to the wallet.
    */
-  private EncryptTemplateDTO encryptWebCred(List<CredentialSignDTO> credentialSignDTOS, String holder){
-    String uniqueID = UUID.randomUUID().toString();
-    EncryptTemplateDTO.Payload payload = new EncryptTemplateDTO.Payload();
+  private List<EncryptTemplateDTO> encryptWebCred(List<CredentialSignDTO> credentialSignDTOS, String holder){
 
-    payload.setId(uniqueID);
-    payload.setType("https://mattr.global/schemas/verifiable-credential/offer/Direct");
-    payload.setTo(Collections.singletonList(holder));
-    payload.setFrom(didWeb);
-    payload.setCreated_time(System.currentTimeMillis() / 1000);
+    List<EncryptTemplateDTO> encryptTemplateDTOS = new ArrayList<>();
 
-    EncryptTemplateDTO.Body body = new EncryptTemplateDTO.Body();
+    LinkedList<CredentialSignDTO> fifo = new LinkedList<CredentialSignDTO>();
+
     for (CredentialSignDTO cred: credentialSignDTOS) {
-      body.addCredentials(cred.getCredential());
+      fifo.add(cred);
     }
 
-    body.setDomain(domain);
-    payload.setBody(body);
+    while(!fifo.isEmpty()){
+      String uniqueID = UUID.randomUUID().toString();
+      EncryptTemplateDTO.Payload payload = new EncryptTemplateDTO.Payload();
 
-    return new EncryptTemplateDTO(didWebExt, Collections.singletonList(holder), payload);
+      payload.setId(uniqueID);
+      payload.setType("https://mattr.global/schemas/verifiable-credential/offer/Direct");
+      payload.setTo(Collections.singletonList(holder));
+      payload.setFrom(didWeb);
+      payload.setCreated_time(System.currentTimeMillis() / 1000);
+
+      EncryptTemplateDTO.Body body = new EncryptTemplateDTO.Body();
+
+      for (int i = 0; i < 3; i++) {
+        if(!fifo.isEmpty()){
+          body.addCredentials(fifo.removeFirst().getCredential());
+        }else{
+          break;
+        }
+      }
+      body.setDomain(domain);
+      payload.setBody(body);
+
+      EncryptTemplateDTO encryptTemplateDTO = new EncryptTemplateDTO(didWebExt, Collections.singletonList(holder), payload);
+      encryptTemplateDTOS.add(encryptTemplateDTO);
+    }
+
+   return encryptTemplateDTOS;
   }
 
 
@@ -269,5 +286,6 @@ public class SendWebCred {
     String sendMessage = gson.toJson(sendCredentialDTO);
     httpService.postRequest(url + "/core/v1/messaging/send", requestService.getJwt(), sendMessage);
   }
+
 
 }

@@ -46,8 +46,7 @@ public class HttpService {
     HttpPost post = new HttpPost(url);
     post.setHeader("Content-type", "application/json");
     post.setHeader("Authorization", "Bearer " + token);
-    post.setEntity(new StringEntity(body, ContentType.parse("UTF-8")));
-
+    post.setEntity(new StringEntity(body, ContentType.create("application/json", "UTF-8")));
     try (CloseableHttpResponse response = httpClient.execute(post)) {
       String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
       return responseBody;
