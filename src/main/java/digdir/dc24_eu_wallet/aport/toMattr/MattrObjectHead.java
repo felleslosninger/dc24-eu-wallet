@@ -81,6 +81,11 @@ public class MattrObjectHead {
         //setChallenger();
         //setCred(cred);
         System.out.println("Size of the array with all the cred : "+cred.size());
+        System.out.println(cred.get(0).getAuthorization_details());
+        System.out.println(cred.get(1).getAuthorization_details());
+        System.out.println(cred.get(2).getAuthorization_details());
+        System.out.println(cred.get(3).getAuthorization_details());
+        System.out.println(cred.get(4).getAuthorization_details());
     }
 
     public void setChallenger() {
@@ -90,6 +95,7 @@ public class MattrObjectHead {
     public void setCred(List<Cred>cred){
         for (Reportee reportee: reportees) {
             cred.add(new Cred(token, reportee));
+            System.out.println("TESTINGTESTING"+reportee.getName());
         }
     }
 }
