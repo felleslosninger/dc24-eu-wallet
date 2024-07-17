@@ -65,6 +65,10 @@ public class CredentialCardDTO {
     this.includeId = includeId;
   }
 
+
+  /**
+   * Represents the payload containing credential information.
+   */
   public static class Payload {
     private String name;
     private String description;
@@ -131,6 +135,9 @@ public class CredentialCardDTO {
     }
   }
 
+  /**
+   * Represents the subject of a credential.
+   */
   public static class CredentialSubject {
     private String id;
     private String sub;
@@ -173,6 +180,9 @@ public class CredentialCardDTO {
     }
   }
 
+  /**
+   * Represents the authorization details of a credential subject.
+   */
   public static class AuthorizationDetails {
     private String resource;
     private String type;
@@ -215,6 +225,9 @@ public class CredentialCardDTO {
     }
   }
 
+  /**
+   * Represents the reportees associated with the authorization.
+   */
   public static class Reportees{
     private List<String> Rights;
     private String Authority;
@@ -254,6 +267,9 @@ public class CredentialCardDTO {
     }
   }
 
+  /**
+   * Represents the branding details of a credential.
+   */
   public static class CredentialBranding {
     private String backgroundColor;
     private String watermarkImageUrl;
@@ -276,6 +292,9 @@ public class CredentialCardDTO {
 
   }
 
+  /**
+   * Represents the issuer of a credential.
+   */
   public static class Issuer {
     private String id;
     private String name;
