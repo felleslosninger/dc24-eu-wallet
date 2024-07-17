@@ -17,6 +17,9 @@ public class EncryptedCredentialDTO {
     return jwe;
   }
 
+  /**
+   * Represents th JSON Web Encryption (JWE) structure.
+   */
   public static class Jwe {
     @SerializedName("protected")
     private String protectedInfo;
@@ -47,6 +50,9 @@ public class EncryptedCredentialDTO {
     }
   }
 
+  /**
+   * Represents a recipient of the JSON Web Encryption (JWE).
+   */
   public static class Recipient {
     private Header header;
     private String encrypted_key;
@@ -69,6 +75,9 @@ public class EncryptedCredentialDTO {
     }
   }
 
+  /**
+   * Represents the header of a recipient in the JSON Web Encryption (JWE).
+   */
   public static class Header {
     private String alg;
     private String kid;
@@ -93,6 +102,9 @@ public class EncryptedCredentialDTO {
     }
   }
 
+  /**
+   * Represents the Ephemeral Public Key (EPK) used in the encryption process within the JWE header.
+   */
   public static class Epk {
     private String kty;
     private String crv;
