@@ -1,5 +1,8 @@
 package digdir.dc24_eu_wallet.aport.toMattr;
 
+import com.google.gson.annotations.Expose;
+import org.springframework.web.service.annotation.PostExchange;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,7 @@ import java.util.List;
  * @version 17.07.2024
  */
 public class Credential {
+  @Expose
   private List<Cred> cred = new ArrayList<>();
 
   public List<Cred> getCred() {
@@ -26,8 +30,11 @@ public class Credential {
   }
 
   public static class Cred{
+    @Expose
     private String sub;
+    @Expose
     private String pid;
+    @Expose
     private List<Authorization_details> authorization_details = new ArrayList<>();
 
     public String getSub() {
@@ -60,9 +67,14 @@ public class Credential {
   }
 
   public static class Authorization_details{
+
+    @Expose
     private String resource;
+    @Expose
     private String type;
+    @Expose
     private String resource_name;
+    @Expose
     private List<Reportees> reportees = new ArrayList<>();
 
     public String getResource() {
@@ -103,9 +115,13 @@ public class Credential {
   }
 
   public static class Reportees{
+    @Expose
     private List<String> rights;
+    @Expose
     private String authority;
+    @Expose
     private String id;
+    @Expose
     private String name;
 
     public List<String> getRights() {

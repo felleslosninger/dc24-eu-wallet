@@ -40,8 +40,8 @@ import java.util.UUID;
  * @version 16.07.2024
  */
 @Controller
-@RequestMapping("/test")
-@Component
+//@RequestMapping("/test")
+//@Component
 public class PresentationController {
 
   public static final Logger logger = LoggerFactory.getLogger(PresentationController.class);
@@ -106,14 +106,18 @@ public class PresentationController {
 
   public String getJsonContentForMattr(OidcUser oidcUser){
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
-    JsonDataToMattr testing = new JsonDataToMattr(credential);
-    System.out.println(testing.getJsonString());
-    return testing.getJsonString();
+    MattrObjectHead head = new MattrObjectHead(credential.getTokenAsObject());
+    //JsonDataToMattr testing = new JsonDataToMattr(credential);
+    //System.out.println(testing.getJsonString());
+    //return testing.getJsonString();
+    return head.getFormattedJsonData();
   }
 
 
+  @GetMapping("/Presentation")
   public ResponseEntity<String> getAPI(@AuthenticationPrincipal OidcUser oidcUser){
     String jsoncontent = getJsonContentForMattr(oidcUser);
+    System.out.println(jsoncontent);
 
     credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
     System.out.println(gson.toJson(credentialDTO));
@@ -167,7 +171,7 @@ public class PresentationController {
    *
    * @param credentialDTO The credentialDTO object sent in.
    * @return Return ResponseEntity with credentialDTO object data and HttpStatus
-   */
+
   @PostMapping("/test")
   public ResponseEntity<String> postAPI(@AuthenticationPrincipal OidcUser oidcUser) {
 
@@ -175,6 +179,7 @@ public class PresentationController {
 
     return responseEntity;
   }
+  */
 
   /**
    * Helper class to create a Presentation Request and

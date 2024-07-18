@@ -29,6 +29,8 @@ public class JsonDataToMattr {
     public JsonDataToMattr(TokenPayload token) {
         tokenHead = token.getTokenAsObject();
         mattrObjectHead = new MattrObjectHead(tokenHead);
+        System.out.println("ckeck check check "+ mattrObjectHead.getCred());
+
     }
 
     /**
@@ -38,8 +40,9 @@ public class JsonDataToMattr {
      */
     public String getJsonString(){
         // Creates the Gson object which will format the java object to a json string.
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
+        System.out.println("mattr object head " +gson.toJson(mattrObjectHead));
         // Converts Java object to String
         return gson.toJson(mattrObjectHead);
     }

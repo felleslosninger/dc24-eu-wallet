@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Controller for handling integration with Ansattporten.
- */
+
 @Controller
 public class AnsattportenIntegrationController {
 
@@ -23,7 +23,7 @@ public class AnsattportenIntegrationController {
    * Handles requests to the root URL ("/").
    *
    * @return the "index" view name.
-   */
+
 
 
   @GetMapping("/")
@@ -55,7 +55,7 @@ public class AnsattportenIntegrationController {
    * Handles requests to the logout callback URL ("/logout/callback").
    *
    * @return the "logout" view name.
-   */
+
   @GetMapping("/logout/callback")
   public String logoutCallback() {
     return "logout";
@@ -72,4 +72,4 @@ public class AnsattportenIntegrationController {
     return "success";
   }
 }
-
+*/

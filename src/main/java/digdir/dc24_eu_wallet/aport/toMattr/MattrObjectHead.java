@@ -2,6 +2,7 @@ package digdir.dc24_eu_wallet.aport.toMattr;
 
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.AutorizationDetails;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
@@ -21,12 +22,16 @@ import java.util.List;
 
 public class MattrObjectHead {
 
-    Gson gson =  new Gson();
+    Gson gson = new Gson();
 
     @Getter
+    @Expose
     private List<Cred> cred;
     private final TokenHead token;
     private List<Reportee> reportees;
+
+
+    private Credential credential;
 
     /**
      * Constructs MattrObjectHead.
@@ -37,10 +42,18 @@ public class MattrObjectHead {
         this.cred = new ArrayList<>();
         this.token = token;
 
-        Credential credential = new Credential();
+        this.credential = new Credential();
+        String streng = new String(getFormattedJsonData());
+        System.out.println(streng);
+
+        System.out.println("This is the test data" + gson.toJson(credential));
+    }
+
+
+    public String getFormattedJsonData() {
 
         for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
-            for (Reportee rep: ignored.getReportees()) {
+            for (Reportee rep : ignored.getReportees()) {
                 Credential.Cred credentials = new Credential.Cred();
                 credentials.setPid(token.getPid());
                 credentials.setSub(token.getSub());
@@ -61,8 +74,12 @@ public class MattrObjectHead {
                 credential.addCred(credentials);
             }
         }
-
         System.out.println(gson.toJson(credential));
+        return gson.toJson(credential);
+    }
+
+    public Credential getCredential(){
+        return credential;
     }
 
 }
