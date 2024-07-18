@@ -3,6 +3,10 @@ package digdir.dc24_eu_wallet.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenPayload;
+import digdir.dc24_eu_wallet.aport.toMattr.Credential;
+import digdir.dc24_eu_wallet.aport.toMattr.JsonDataToMattr;
+import digdir.dc24_eu_wallet.aport.toMattr.MattrObjectHead;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.dto.PresentationRequestDTO;
 import digdir.dc24_eu_wallet.dto.PresentationResponseDTO;
@@ -16,11 +20,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -33,14 +39,15 @@ import java.util.UUID;
  * @author Daniel Neset
  * @version 16.07.2024
  */
-@RestController
-@RequestMapping("Presentation")
+@Controller
+@RequestMapping("/test")
 @Component
 public class PresentationController {
 
   public static final Logger logger = LoggerFactory.getLogger(PresentationController.class);
   private final ChallengersService challengersService;
   private final HttpService httpService;
+  private CredentialDTO credentialDTO;
   private final RequestService requestService;
   Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
   @Value("${MATTR_TENANT_URL}")
@@ -66,18 +73,51 @@ public class PresentationController {
     this.requestService = requestService;
   }
 
+
   /**
-   * Controller for managing creation of {@Link CredentialDTO}.
-   * The CredentialDTO is stored in the database with a unique
-   * Challenger ID that is also sent with the Mattr API Callback.
-   * The challenger ID is later used to identify what data the user
-   * should get.
+   * Handles requests to the root URL ("/").
    *
-   * @param credentialDTO The credentialDTO object sent in.
-   * @return Return ResponseEntity with credentialDTO object data and HttpStatus
+   * @return the "index" view name.
    */
-  @PostMapping
-  public ResponseEntity<String> postAPI(@RequestBody CredentialDTO credentialDTO) {
+
+
+  @GetMapping("/")
+  public String index(){
+    return "index";
+  }
+
+  /**
+   * Handles requests to the Ansattporten authentication URL ("/ansattporten_authentication").
+   * Retrieves OIDC user information and adds it to the model.
+   *
+   * @param model the model to add attributes to.
+   * @param oidcUser the authenticated OIDC user.
+   * @return the "ansattporten-authenticated" view name.
+   */
+  @GetMapping("/ansattporten_authentication")
+  public String user(Model model,
+                     @AuthenticationPrincipal OidcUser oidcUser) {
+    model.addAttribute("idtoken", oidcUser.getIdToken().getTokenValue());
+    model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
+    model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
+    model.addAttribute("name", oidcUser.getFullName());
+    return "ansattporten-authenticated";
+  }
+
+  public String getJsonContentForMattr(OidcUser oidcUser){
+    TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
+    JsonDataToMattr testing = new JsonDataToMattr(credential);
+    System.out.println(testing.getJsonString());
+    return testing.getJsonString();
+  }
+
+
+  public ResponseEntity<String> getAPI(@AuthenticationPrincipal OidcUser oidcUser){
+    String jsoncontent = getJsonContentForMattr(oidcUser);
+
+    credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
+    System.out.println(gson.toJson(credentialDTO));
+
     logger.info("New PostRequest to create a Presentation Request");
     ResponseEntity<String> response;
 
@@ -104,6 +144,36 @@ public class PresentationController {
     }
 
     return response;
+
+  }
+
+  /**
+   * Handles requests to the logout callback URL ("/logout/callback").
+   *
+   * @return the "logout" view name.
+   */
+  @GetMapping("/logout/callback")
+  public String logoutCallback() {
+    return "logout";
+  }
+
+
+  /**
+   * Controller for managing creation of {@Link CredentialDTO}.
+   * The CredentialDTO is stored in the database with a unique
+   * Challenger ID that is also sent with the Mattr API Callback.
+   * The challenger ID is later used to identify what data the user
+   * should get.
+   *
+   * @param credentialDTO The credentialDTO object sent in.
+   * @return Return ResponseEntity with credentialDTO object data and HttpStatus
+   */
+  @PostMapping("/test")
+  public ResponseEntity<String> postAPI(@AuthenticationPrincipal OidcUser oidcUser) {
+
+    ResponseEntity<String> responseEntity = getAPI(oidcUser);
+
+    return responseEntity;
   }
 
   /**

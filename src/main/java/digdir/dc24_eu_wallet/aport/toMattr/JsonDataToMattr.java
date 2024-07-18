@@ -37,8 +37,8 @@ public class JsonDataToMattr {
      * @return JSON formatted string with the content for the payload of the issuing request to MATTR.
      */
     public String getJsonString(){
-        // Pretty print to wiev it better.
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        // Creates the Gson object which will format the java object to a json string.
+        Gson gson = new GsonBuilder().create();
 
         // Converts Java object to String
         return gson.toJson(mattrObjectHead);

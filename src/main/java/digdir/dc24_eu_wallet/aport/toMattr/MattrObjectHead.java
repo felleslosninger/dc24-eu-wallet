@@ -15,7 +15,7 @@ import java.util.List;
  * get from the TokenHead object, and after that it will be used by GSON to transform into a JSON string based on the
  * objects structure.
  *
- * @author LangBakk
+ * @author Langbakk & Neset
  * @version 17.07.2024
  */
 

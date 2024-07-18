@@ -2,6 +2,10 @@ package digdir.dc24_eu_wallet.web;
 
 import digdir.dc24_eu_wallet.aport.toMattr.JsonDataToMattr;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenPayload;
+import digdir.dc24_eu_wallet.component.SendWebCred;
+import digdir.dc24_eu_wallet.service.HttpService;
+import digdir.dc24_eu_wallet.service.RequestService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class AnsattportenIntegrationController {
+
 
   /**
    * Handles requests to the root URL ("/").
@@ -34,6 +39,8 @@ public class AnsattportenIntegrationController {
    * @param oidcUser the authenticated OIDC user.
    * @return the "ansattporten-authenticated" view name.
    */
+
+  /**
   @GetMapping("/ansattporten_authentication")
   public String user(Model model,
                      @AuthenticationPrincipal OidcUser oidcUser) {
@@ -59,7 +66,9 @@ public class AnsattportenIntegrationController {
   public String informationDump(@AuthenticationPrincipal OidcUser oidcUser) {
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
     JsonDataToMattr testing = new JsonDataToMattr(credential);
-    //System.out.println(testing.getJsonString());
+
+
+
     return "success";
   }
 }
