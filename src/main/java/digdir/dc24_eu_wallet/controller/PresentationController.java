@@ -4,8 +4,6 @@ package digdir.dc24_eu_wallet.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenPayload;
-import digdir.dc24_eu_wallet.aport.toMattr.Credential;
-import digdir.dc24_eu_wallet.aport.toMattr.JsonDataToMattr;
 import digdir.dc24_eu_wallet.aport.toMattr.MattrObjectHead;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.dto.PresentationRequestDTO;
@@ -18,30 +16,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.IOException;
 import java.util.UUID;
 
 /**
- * Template Post endpoint where we can send in JSON data and
- * get a QR code in return. This is also linked to the
+ * Here we can send in JSON data and get a QR code in return. This is also linked to the
  * database and Mattr.
  *
- * @author Daniel Neset
+ * @author Daniel Neset & Solveig Langbakk
  * @version 16.07.2024
  */
 @Controller
-//@RequestMapping("/test")
-//@Component
 public class PresentationController {
 
   public static final Logger logger = LoggerFactory.getLogger(PresentationController.class);
@@ -101,26 +92,42 @@ public class PresentationController {
     model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
     model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
     model.addAttribute("name", oidcUser.getFullName());
+    model.addAttribute("qrCode", getQR(oidcUser));
     return "ansattporten-authenticated";
   }
+
+  /**
+   * Takes the token content from the logged in oidc user in ansattporten, and creates an object out of it
+   * that is used to format a new object, which is used to construct a json string on the correct format of
+   * the request MATTR need. The string will contain the information about the person that is supposed to et
+   * rights/accesses, as well as which rights/accesses that person should get.
+   *
+   * @param oidcUser logged in ansattporten oidc user
+   * @return string with JSON data ready to send to MATTR
+   */
 
   public String getJsonContentForMattr(OidcUser oidcUser){
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
     MattrObjectHead head = new MattrObjectHead(credential.getTokenAsObject());
-    //JsonDataToMattr testing = new JsonDataToMattr(credential);
-    //System.out.println(testing.getJsonString());
-    //return testing.getJsonString();
     return head.getFormattedJsonData();
   }
 
+  /**
+   * Takes the relevant information MATTR needs for issuance from the id token of the logged in ansattporten user,
+   * and creates a qr code that a user of the MATTR wallet can scan in order to get issued the different rights that
+   * person has in ansattporten. The qr code will contain information about which person these rights/accesses should
+   * be assigned to, as well as which rights/accesses it is about. The information
+   *
+   * @param oidcUser logged in oidc user on ansattporten
+   * @return url to qr code as string
+   */
 
-  @GetMapping("/Presentation")
-  public ResponseEntity<String> getAPI(@AuthenticationPrincipal OidcUser oidcUser){
+
+  public String getQR(@AuthenticationPrincipal OidcUser oidcUser){
+    String qrCode = new String();
     String jsoncontent = getJsonContentForMattr(oidcUser);
-    System.out.println(jsoncontent);
 
     credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
-    System.out.println(gson.toJson(credentialDTO));
 
     logger.info("New PostRequest to create a Presentation Request");
     ResponseEntity<String> response;
@@ -137,49 +144,16 @@ public class PresentationController {
       challengersService.saveChallenger(challengers);
 
       logger.info("Sending request to be formatted as a QR code.");
-      String qrCode = sendPresentationRequest(uniqueID);
+      qrCode = sendPresentationRequest(uniqueID);
       logger.info("QR CODE: {}", qrCode);
 
-
-      response = new ResponseEntity<>(qrCode, HttpStatus.OK);
     }else{
       logger.warn("The Json Body is not Valid!");
-      response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    return response;
+    return qrCode;
 
   }
-
-  /**
-   * Handles requests to the logout callback URL ("/logout/callback").
-   *
-   * @return the "logout" view name.
-   */
-  @GetMapping("/logout/callback")
-  public String logoutCallback() {
-    return "logout";
-  }
-
-
-  /**
-   * Controller for managing creation of {@Link CredentialDTO}.
-   * The CredentialDTO is stored in the database with a unique
-   * Challenger ID that is also sent with the Mattr API Callback.
-   * The challenger ID is later used to identify what data the user
-   * should get.
-   *
-   * @param credentialDTO The credentialDTO object sent in.
-   * @return Return ResponseEntity with credentialDTO object data and HttpStatus
-
-  @PostMapping("/test")
-  public ResponseEntity<String> postAPI(@AuthenticationPrincipal OidcUser oidcUser) {
-
-    ResponseEntity<String> responseEntity = getAPI(oidcUser);
-
-    return responseEntity;
-  }
-  */
 
   /**
    * Helper class to create a Presentation Request and
@@ -203,7 +177,7 @@ public class PresentationController {
       System.out.println("Making request");
       response = httpService.postRequest(url + "/v2/credentials/web-semantic/presentations/requests", requestService.getJwt(), body);
       PresentationResponseDTO presentationResponseDTO = gson.fromJson(response, PresentationResponseDTO.class);
-      response = "url: https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + presentationResponseDTO.getDidcommUri();
+      response = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + presentationResponseDTO.getDidcommUri();
     }catch (IOException ioException){
       logger.warn("Cannot create Presentation Request!");
     }
@@ -211,4 +185,13 @@ public class PresentationController {
     return response;
   }
 
+  /**
+   * Handles requests to the logout callback URL ("/logout/callback").
+   *
+   * @return the "logout" view name.
+   */
+  @GetMapping("/logout/callback")
+  public String logoutCallback() {
+    return "logout";
+  }
 }

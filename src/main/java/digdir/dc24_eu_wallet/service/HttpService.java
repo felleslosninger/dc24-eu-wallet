@@ -1,6 +1,7 @@
 package digdir.dc24_eu_wallet.service;
 
 import jakarta.annotation.PreDestroy;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -11,6 +12,10 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -54,6 +59,20 @@ public class HttpService {
       throw new RuntimeException(e);
     }
   }
+
+  public Image getRequestedQR(String qrCodeUrl) throws IOException {
+    Image qrImage;
+    HttpGet get = new HttpGet(qrCodeUrl);
+    get.setHeader("Content-type", "image/jpg");
+    try(CloseableHttpResponse response = httpClient.execute(get)) {
+      qrImage = ImageIO.read(response.getEntity().getContent());
+      return qrImage;
+    }catch(IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+
 
   /**
    * Destroy the object when closing the application.
