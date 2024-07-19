@@ -1,6 +1,6 @@
 # Verifiable credentials Issuing
 
-This repository contains an issuer for the Mattr api.
+This repository contains an issuer for the Mattr api. 
 
 See CONTRIBUTING.md for information about commit messages and more.
 
@@ -10,12 +10,28 @@ The verifier is in another [Repository](https://github.com/felleslosninger/dc24-
 
 ## Prerequisite
 Here is a list for needed technologies for development.
-- Ngrok, to let the callback get access to send back data.
-- Mattr API, need the API to be able to interact with their ecosystem.
+- [Ngrok](https://ngrok.com/), to let the callback get access to send back data.
+- [Mattr API](https://mattr.global/), need the API to be able to interact with their ecosystem.
 
 ## Setup environment variables
 Copy the ```.env.example``` file and rename the copy to ```.env```.
 Then add your secret variables to the ```.env``` file, not the ```.env.example``` file.
+
+```dotenv
+MATTR_AUDIENCE=""               <-- Your audience data from Mattr
+MATTR_TENANT_URL=""             <-- Your Tenent URL from Mattr
+MATTR_ISSUER=""                 <-- Your auth url from Mattr
+MATTR_CLIENT_SECRET=""          <-- Your client secret from Mattr
+MATTR_CLIENT_ID=""              <-- Your client id from Mattr
+ANSATTPORTEN_CLIENT_SECRET=""   <-- Your "ansattporten" client secret
+
+NGROK_URL="/callback"           <-- The callback URL
+DID_WEB=""                      <-- DID:web key from Mattr
+TEMPLATE_ID=""                  <-- DID.Auth Presentation Template from Mattr
+DOMAIN=""                       <-- Your domain, your Mattr tenent url without the "https://"
+DID_WEB_EXTENSION=""            <-- The unique DID:web Key found under "localMetaData->initialDidDocument->keyAgreement->id" 
+```
+
 
 What to change and what to set and where to find it.
 
@@ -29,6 +45,9 @@ Guide for maven download and installation can be found [here](https://phoenixnap
 todo
 
 ## Presentation Flow
+
+## Install and RUN:
+To be able to run this project you need the prerequisites technologies, set environment variables and 
 
 ```mermaid
 sequenceDiagram 
