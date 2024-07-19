@@ -16,7 +16,6 @@ import lombok.Getter;
  * @author Langbakk & Neset
  * @version 17.07.2024
  */
-
 public class MattrObjectHead {
 
     Gson gson = new Gson();
@@ -45,7 +44,6 @@ public class MattrObjectHead {
      *
      * @return json data in a string.
      */
-
     public String getFormattedJsonData() {
 
         for (AutorizationDetails ignored : token.getAuthorizationDetails()) {

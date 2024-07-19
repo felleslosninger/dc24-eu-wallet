@@ -15,7 +15,6 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
  * @Author Langbakk
  * @Version 10.07.2024
  */
-
 public class TokenPayload {
 
     private TokenHead tokenPayloadAsObject;
@@ -29,7 +28,6 @@ public class TokenPayload {
      * @param token Oidc id token, encoded in Base64. Contains header,
      *              payload and verify signature.
      */
-
     public TokenPayload(OidcIdToken token) {
        this.token = token;
     }
@@ -40,7 +38,6 @@ public class TokenPayload {
      * @return TokenHead, which is the object representation of the payload
      * part of the token. This is in "plain text".
      */
-
     public TokenHead getTokenAsObject(){
 
         String encodedToken = token.getTokenValue();

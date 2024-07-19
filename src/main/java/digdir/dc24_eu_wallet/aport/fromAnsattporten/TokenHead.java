@@ -12,7 +12,6 @@ import java.util.List;
  * @Author Langbakk
  * @Version 15.07.2024
  */
-
 public class TokenHead {
 
     @Setter

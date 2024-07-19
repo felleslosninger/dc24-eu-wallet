@@ -10,7 +10,6 @@ import java.util.List;
  * @author Langbakk
  * @version 16.07.2024
  */
-
 public class AutorizationDetails {
 
     private String resource;

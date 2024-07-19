@@ -30,7 +30,7 @@ import java.util.UUID;
  * database and Mattr.
  *
  * @author Daniel Neset & Solveig Langbakk
- * @version 16.07.2024
+ * @version 19.07.2024
  */
 @Controller
 public class PresentationController {
@@ -70,8 +70,6 @@ public class PresentationController {
    *
    * @return the "index" view name.
    */
-
-
   @GetMapping("/")
   public String index(){
     return "index";
@@ -105,7 +103,6 @@ public class PresentationController {
    * @param oidcUser logged in ansattporten oidc user
    * @return string with JSON data ready to send to MATTR
    */
-
   public String getJsonContentForMattr(OidcUser oidcUser){
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
     MattrObjectHead head = new MattrObjectHead(credential.getTokenAsObject());
@@ -116,13 +113,11 @@ public class PresentationController {
    * Takes the relevant information MATTR needs for issuance from the id token of the logged in ansattporten user,
    * and creates a qr code that a user of the MATTR wallet can scan in order to get issued the different rights that
    * person has in ansattporten. The qr code will contain information about which person these rights/accesses should
-   * be assigned to, as well as which rights/accesses it is about. The information
+   * be assigned to, as well as which rights/accesses it is about.
    *
    * @param oidcUser logged in oidc user on ansattporten
    * @return url to qr code as string
    */
-
-
   public String getQR(@AuthenticationPrincipal OidcUser oidcUser){
     String qrCode = new String();
     String jsoncontent = getJsonContentForMattr(oidcUser);

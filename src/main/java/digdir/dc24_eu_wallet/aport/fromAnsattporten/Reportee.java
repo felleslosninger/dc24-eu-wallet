@@ -7,7 +7,6 @@ package digdir.dc24_eu_wallet.aport.fromAnsattporten;
  * @Author Langbakk
  * @Version 10.07.2024
  */
-
 import java.util.ArrayList;
 
 public class Reportee {
