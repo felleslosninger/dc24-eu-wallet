@@ -1,22 +1,52 @@
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+
+
 # Verifiable credentials Issuing
 
-This repository contains an issuer for the Mattr api. 
+This repository contains an issuer for pre authentication in Mattr´s api. 
+
+* [Mattr Verifier](#mattr-verifier)
+* [Overview](#overview)
+  * [Prerequisite](#prerequisite)
+* [Configuration](#configuration)
+  * [.env data](#env-data)
+  * [Ngrok](#ngrok)
+  * [Mattr](#mattr)
+    * [Create DID in Postman](#create-did-in-postman) 
 
 See CONTRIBUTING.md for information about commit messages and more.
 
 
-# Mattr verifier
+## Mattr Verifier
 The verifier is in another [Repository](https://github.com/felleslosninger/dc24-wallet-verifier).
 
-## Prerequisite
+## overview
+An implementation of a credential issuing service, using Mattr's API endpoints.
+
+This service provide a way to fetch credentials from "ansattporten" using oauth2, these 
+credentials are then saved and sent to a users wallet
+
+### Prerequisite
 Here is a list for needed technologies for development.
 - [Ngrok](https://ngrok.com/), to let the callback get access to send back data.
 - [Mattr API](https://mattr.global/), need the API to be able to interact with their ecosystem.
+- [Java](https://www.oracle.com/java/technologies/downloads/#jdk22-windows), Java 22 is needed to run the backend.
+- [Maven](https://phoenixnap.com/kb/install-maven-windows),Guide for maven download and installation can be found
 
-## Setup environment variables
+
+
+## Install and RUN:
+To be able to run this project you need the prerequisites technologies, set environment variables and 
+
+## Configuration
+### .env data
 Copy the ```.env.example``` file and rename the copy to ```.env```.
 Then add your secret variables to the ```.env``` file, not the ```.env.example``` file.
-
 ```dotenv
 MATTR_AUDIENCE=""               <-- Your audience data from Mattr
 MATTR_TENANT_URL=""             <-- Your Tenent URL from Mattr
@@ -32,23 +62,76 @@ DOMAIN=""                       <-- Your domain, your Mattr tenent url without t
 DID_WEB_EXTENSION=""            <-- The unique DID:web Key found under "localMetaData->initialDidDocument->keyAgreement->id" 
 ```
 
+### Ngrok
+Ngrok need to be installed on your machine, it can also be run in a docker container.
+In short, it makes a port on your local machine accessible from the outside, and lets Mattr
+send you the callback response.
 
-What to change and what to set and where to find it.
+Follow [This](https://ngrok.com/docs/getting-started/) tutorial to get it started, and use Port 8980,
+it can be manually changed in the application.yaml file.
 
-### Java
-Java 22 is needed to run the backend. Get java 22 [here](https://www.oracle.com/java/technologies/downloads/#jdk22-windows).
 
-### Maven
-Guide for maven download and installation can be found [here](https://phoenixnap.com/kb/install-maven-windows).
+### Mattr
+How to create DID and Template ID.
 
-## Frontend Prerequisites
-todo
+#### Create DID in Postman
+- **HTTP Method** POST
+- **URL:** ``{{TENANT_URL}}/core/v1/dids``
+- **Headers:**
+  - ``Content-Type: application/json``  
+  - ``Authorization: Bearer YourAccessToken``
+- **Body:**
+```json
+{
+    "method": "web",
+    "options": 
+    {
+        "url": "{{TENANT_URL}}"
+    }
+}
+```
+In the response you should keep the value, "did" and "id" found in:
+```json
+{
+    "data": [
+        {
+            "did": "Your DID",
+            "localMetadata": {
+                "initialDidDocument": {
+                    "keyAgreement": [
+                        {
+                            "id": "Your DID_WEB_EXTENSION"
+                        }
+                    ]                
+                }
+            }
+        }
+    ]
+}
+```
+
+#### Create Presentation template in Postman
+- **HTTP Method** POST
+- **URL:** ``{{TENANT_URL}}/v2/credentials/web-semantic/presentations/templates``
+- **Headers:**
+  - ``Content-Type: application/json``
+  - ``Authorization: Bearer YourAccessToken``
+- **Body:**
+```json
+{
+  "name": "did-auth",
+  "domain": "tenant.vii.mattr.global",
+  "query": [
+    {
+      "type": "DIDAuth"
+    }
+  ]
+}
+```
+In the response keep the id field.
+
 
 ## Presentation Flow
-
-## Install and RUN:
-To be able to run this project you need the prerequisites technologies, set environment variables and 
-
 ```mermaid
 sequenceDiagram 
     box Users, Phone and Website
