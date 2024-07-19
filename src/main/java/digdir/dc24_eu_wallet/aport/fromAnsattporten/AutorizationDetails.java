@@ -7,6 +7,8 @@ import java.util.List;
  * Holds information from the authorization_details field in the payload
  * of oidc id token.
  *
+ * @author Langbakk
+ * @version 16.07.2024
  */
 
 public class AutorizationDetails {

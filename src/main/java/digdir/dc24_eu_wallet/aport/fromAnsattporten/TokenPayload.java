@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.core.oidc.OidcIdToken;
  * Responsible for decoding the Oidc id token of the user logged in to
  * ansattporten and returning it upon request.
  *
+ * @Author Langbakk
+ * @Version 10.07.2024
  */
 
 public class TokenPayload {

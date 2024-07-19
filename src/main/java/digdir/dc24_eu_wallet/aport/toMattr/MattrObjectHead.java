@@ -8,9 +8,6 @@ import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Topmost class of the payload of the request to MATTR for issuing something. This will hold information which it will
  * get from the TokenHead object, and after that it will be used by GSON to transform into a JSON string based on the
@@ -26,10 +23,7 @@ public class MattrObjectHead {
 
     @Getter
     @Expose
-    private List<Cred> cred;
     private final TokenHead token;
-    private List<Reportee> reportees;
-
 
     private Credential credential;
 
@@ -39,16 +33,18 @@ public class MattrObjectHead {
      * @param token token is the decoded payload part of the OIDC id token from the logged in user.
      */
     public MattrObjectHead(TokenHead token) {
-        this.cred = new ArrayList<>();
         this.token = token;
-
         this.credential = new Credential();
-        String streng = new String(getFormattedJsonData());
-        System.out.println(streng);
-
-        System.out.println("This is the test data" + gson.toJson(credential));
     }
 
+    /**
+     * Getter for the correctly formed string in json format for the data that we send to MATTR to issue rights
+     * and/or accesses. It goes through the object of the token payload part, and takes the parts that is supposed
+     * to go to MATTR, and puts it into the new object, which represents the structure that MATTR needs.
+     * Converts to json in the end.
+     *
+     * @return json data in a string.
+     */
 
     public String getFormattedJsonData() {
 
@@ -74,7 +70,6 @@ public class MattrObjectHead {
                 credential.addCred(credentials);
             }
         }
-        System.out.println(gson.toJson(credential));
         return gson.toJson(credential);
     }
 

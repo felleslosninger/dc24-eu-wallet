@@ -9,6 +9,8 @@ import java.util.List;
 /**
  * Holds the information from the entire payload of the oidc id token.
  *
+ * @Author Langbakk
+ * @Version 15.07.2024
  */
 
 public class TokenHead {
