@@ -44,7 +44,7 @@ public class OAuth2SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchanges ->
                         exchanges
-                                .pathMatchers("/", "/error", "/logout/callback", "/callback/**", "/Presentation/**").permitAll()
+                                .pathMatchers("/", "/error", "/logout/callback", "/test/**", "/callback/**", "/Presentation/**").permitAll()
                                 .anyExchange().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2

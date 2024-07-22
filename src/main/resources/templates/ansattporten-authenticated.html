@@ -85,6 +85,9 @@
         <p>ID-token:</p>
         <div class="token-container" th:text="${idtoken}"></div>
         <h4>Velkommen <span th:text="${name}"></span>!</h4>
+
+        <p>qrCode:</p>
+        <h4><img th:src="${qrCode}"></img></h4>
         <!-- Logout link -->
         <p><a href="/logout">Logg ut</a></p>
 </div>
