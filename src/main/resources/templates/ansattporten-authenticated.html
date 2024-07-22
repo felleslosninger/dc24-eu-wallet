@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Ansattporten - innlogging</title>
+    <meta charset="utf-8" />
+
+    <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e7eff9;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+        display: grid; 
+        place-items: center;
+        height: 100vh;
+        box-sizing: border-box;
+    }
+
+    .container {
+        text-align: center;
+        max-width: 800px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        background-color: white;
+        border-radius: 10px;
+    }
+
+    h1 {
+        color: #005a9c;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+    }
+
+    h4 {
+        color: #005a9c;
+        margin: 20px 0;
+    }
+
+    p {
+        margin: 20px 0;
+        color: #333;
+    }
+
+    a {
+        background-color: #008cba;
+        color: white;
+        padding: 15px 30px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        display: inline-block;
+        
+    }
+
+    a:hover, a:focus {
+        background-color: #005a9c;
+        transform: translateY(-3px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    div.token-container {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main container for the content of this page -->
+        <h1>Detaljer - Ansattporten innlogging</h1>
+        <!-- Welcome message displaying hte name of the user -->
+        <h4>Velkommen <span th:text="${name}"></span>!</h4>
+        <!-- Display the PID (personal identifier) of the user -->
+        <p>Du har logget på med ansattporten med pid <span style="font-weight:bold" th:text="${pid}"></span>.</p>
+        <!-- Display the ID token -->
+        <p>ID-token:</p>
+        <div class="token-container" th:text="${idtoken}"></div>
+        <h4>Velkommen <span th:text="${name}"></span>!</h4>
+
+        <p>qrCode:</p>
+        <h4><img th:src="${qrCode}"></img></h4>
+        <!-- Logout link -->
+        <p><a href="/logout">Logg ut</a></p>
+</div>
+
+</body>
+</html>
