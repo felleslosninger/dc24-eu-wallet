@@ -32,6 +32,9 @@ public class CredentialDTO {
     return cred != null && !cred.isEmpty() && cred.stream().allMatch(Cred::isValid);
   }
 
+  /**
+   * Represents a credential with subject, personal identifier, and authorization details.
+   */
   public static class Cred{
     @Expose
     private String sub;
@@ -76,6 +79,9 @@ public class CredentialDTO {
     }
   }
 
+  /**
+   * Represents the authorization details of a credential.
+   */
   public static class AuthorizationDetails {
     @Expose
     private String resource;
@@ -130,6 +136,9 @@ public class CredentialDTO {
     }
   }
 
+  /**
+   * Represents the reportees associated with the authorization.
+   */
   public static class Reportees{
     @Expose
     private List<String> rights;
