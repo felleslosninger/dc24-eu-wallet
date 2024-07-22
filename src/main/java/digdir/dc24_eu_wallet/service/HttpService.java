@@ -60,20 +60,6 @@ public class HttpService {
     }
   }
 
-  public Image getRequestedQR(String qrCodeUrl) throws IOException {
-    Image qrImage;
-    HttpGet get = new HttpGet(qrCodeUrl);
-    get.setHeader("Content-type", "image/jpg");
-    try(CloseableHttpResponse response = httpClient.execute(get)) {
-      qrImage = ImageIO.read(response.getEntity().getContent());
-      return qrImage;
-    }catch(IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-
-
   /**
    * Destroy the object when closing the application.
    *
