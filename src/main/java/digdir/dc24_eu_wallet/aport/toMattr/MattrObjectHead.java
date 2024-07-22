@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.AutorizationDetails;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
 import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
+import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import lombok.Getter;
 
 /**
@@ -24,7 +25,9 @@ public class MattrObjectHead {
     @Expose
     private final TokenHead token;
 
-    private Credential credential;
+    @Getter
+    private CredentialDTO credential;
+
 
     /**
      * Constructs MattrObjectHead.
@@ -33,7 +36,7 @@ public class MattrObjectHead {
      */
     public MattrObjectHead(TokenHead token) {
         this.token = token;
-        this.credential = new Credential();
+        this.credential = new CredentialDTO();
     }
 
     /**
@@ -48,31 +51,27 @@ public class MattrObjectHead {
 
         for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
             for (Reportee rep : ignored.getReportees()) {
-                Credential.Cred credentials = new Credential.Cred();
+                CredentialDTO.Cred credentials = new CredentialDTO.Cred();
                 credentials.setPid(token.getPid());
                 credentials.setSub(token.getSub());
 
-                Credential.Authorization_details authorizationDetails = new Credential.Authorization_details();
+                CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
                 authorizationDetails.setResource(ignored.getResource());
                 authorizationDetails.setType(ignored.getType());
                 authorizationDetails.setResource_name(ignored.getResource_name());
 
-                Credential.Reportees repo = new Credential.Reportees();
-                repo.setId(rep.getID());
-                repo.setAuthority(rep.getAuthority());
-                repo.setRights(rep.getRights());
-                repo.setName(rep.getName());
+                CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
+                reportees.setID(rep.getID());
+                reportees.setAuthority(rep.getAuthority());
+                reportees.setRights(rep.getRights());
+                reportees.setName(rep.getName());
 
-                authorizationDetails.addReportees(repo);
+                authorizationDetails.addReportees(reportees);
                 credentials.addAuthorization_details(authorizationDetails);
                 credential.addCred(credentials);
             }
         }
         return gson.toJson(credential);
-    }
-
-    public Credential getCredential(){
-        return credential;
     }
 
 }
