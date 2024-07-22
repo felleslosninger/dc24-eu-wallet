@@ -254,6 +254,14 @@ public class SendWebCred {
     return gson.fromJson(responseBody, EncryptedCredentialDTO.class);
   }
 
+
+  /**
+   * Sends an encrypted credential
+   *
+   * @param encryptedCredentialDTO DTO containing the encrypted credential data.
+   * @param holder the holder of the credential.
+   * @throws IOException if there is an I/O error during the operation.
+   */
   private void sendEncryptedCred(EncryptedCredentialDTO encryptedCredentialDTO, String holder) throws IOException {
     SendCredentialDTO.JweMessage jweMessage = new SendCredentialDTO.JweMessage();
 
@@ -286,6 +294,4 @@ public class SendWebCred {
     String sendMessage = gson.toJson(sendCredentialDTO);
     httpService.postRequest(url + "/core/v1/messaging/send", requestService.getJwt(), sendMessage);
   }
-
-
 }

@@ -14,12 +14,22 @@ public class EncryptTemplateDTO {
   private List<String> recipientDidUrls;
   private Payload payload;
 
+  /**
+   * Constructs an EncryptedTemplateDTO with the given parameters.
+   *
+   * @param senderDidUrl URL of the sender's DID (Decentralized Identifier)
+   * @param recipientDidUrls List of URLs of the recipients' DIDs
+   * @param payload The payload to be encrypted and sent
+   */
   public EncryptTemplateDTO(String senderDidUrl, List<String> recipientDidUrls, Payload payload) {
     this.senderDidUrl = senderDidUrl;
     this.recipientDidUrls = recipientDidUrls;
     this.payload = payload;
   }
 
+  /**
+   * Represents the payload of an encrypted message.
+   */
   public static class Payload {
     private String id;
     private String type;
@@ -75,19 +85,14 @@ public class EncryptTemplateDTO {
     public void setCreated_time(long created_time) {
       this.created_time = created_time;
     }
-
-
-
-
   }
 
-
-
-
+  /**
+   * Represents the body of the payload, containing credentials and domain information.
+   */
   public static class Body{
     private List<CredentialSignDTO.Credential> credentials = new ArrayList<>();
     private String domain;
-
 
     public List<CredentialSignDTO.Credential> getCredentials() {
       return credentials;
@@ -109,9 +114,6 @@ public class EncryptTemplateDTO {
       this.domain = domain;
     }
   }
-
-
-
 
   public String getSenderDidUrl() {
     return senderDidUrl;

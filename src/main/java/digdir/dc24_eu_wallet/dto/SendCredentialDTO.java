@@ -16,11 +16,20 @@ public class SendCredentialDTO {
   private String to;
   private JweMessage message;
 
+  /**
+   * Constructs a SendCredentialDTO with the given parameters.
+   *
+   * @param to The recipient of the credential
+   * @param message The JWE (JSON Web Encryption) message to be sent
+   */
   public SendCredentialDTO(String to, JweMessage message) {
     this.to = to;
     this.message = message;
   }
 
+  /**
+   * Represents a JSON Web Encryption (JWE) message.
+   */
   public static class JweMessage {
     @SerializedName("protected")
     private String protectedInfo;
@@ -80,10 +89,11 @@ public class SendCredentialDTO {
     public void setProtected(String protectedInfo) {
       this.protectedInfo = protectedInfo;
     }
-
-
   }
 
+  /**
+   * Represents a recipient of the JSON Web Encryption (JWE) message.
+   */
   public static class Recipient {
     private Header header;
 
@@ -106,6 +116,9 @@ public class SendCredentialDTO {
     }
   }
 
+  /**
+   * Represents the header of a recipient in the JSON Web Encryption (JWE) message.
+   */
   public static class Header {
     private String alg;
     private String kid;
@@ -145,6 +158,9 @@ public class SendCredentialDTO {
     }
   }
 
+  /**
+   * Represents the Ephemeral Public Key (EPK) used in the encryption process within the JWE header.
+   */
   public static class Epk {
     private String kty;
     private String crv;

@@ -67,6 +67,9 @@ public class PresentationDTO {
     this.presentation = presentation;
   }
 
+  /**
+   * Represents a presentation, which includes context, type, holder, and proofs.
+   */
   public static class Presentation{
     private List<String> context;
     private List<String> type;
@@ -106,6 +109,9 @@ public class PresentationDTO {
     }
   }
 
+  /**
+   * Represents a proof associated with a presentation or credential.
+   */
   public static class Proof{
     private String type;
     private String created;
