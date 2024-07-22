@@ -14,10 +14,14 @@ import java.util.List;
  */
 public class CredentialDTO {
   @Expose
-  private List<Cred> cred;
+  private List<Cred> cred = new ArrayList<>();
 
   public List<Cred> getCred() {
     return cred;
+  }
+
+  public void addCred(Cred cred) {
+    this.cred.add(cred);
   }
 
   public void setCred(List<Cred> cred) {
@@ -34,7 +38,7 @@ public class CredentialDTO {
     @Expose
     private String pid;
     @Expose
-    private List<AuthorizationDetails> authorization_details;
+    private List<AuthorizationDetails> authorization_details = new ArrayList<>();
 
     public String getSub() {
       return sub;
@@ -58,6 +62,10 @@ public class CredentialDTO {
 
     public void setAuthorization_details(List<AuthorizationDetails> authorization_details) {
       this.authorization_details = authorization_details;
+    }
+
+    public void addAuthorization_details(AuthorizationDetails authorizationDetail){
+      this.authorization_details.add(authorizationDetail);
     }
 
     public boolean isValid() {
