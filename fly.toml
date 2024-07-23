@@ -22,4 +22,4 @@ primary_region = 'ewr'
   cpus = 1
 
 [env]
-  NGROK_URL = '/callback'
+  NGROK_URL = 'https://dc24-eu-wallet-issuer-workflow.fly.dev/callback'
