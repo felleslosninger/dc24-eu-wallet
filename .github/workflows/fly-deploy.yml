@@ -1,12 +1,14 @@
-# See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
-
 name: Fly Deploy
 on:
   push:
     branches:
-      branches: [ "main", "kan-50-create-github-actions" ]
-    pull_request:
-      branches: [ "main", "kan-50-create-github-actions" ]
+      - "main"
+      - "kan-50-create-github-actions"
+  pull_request:
+    branches:
+      - "main"
+      - "kan-50-create-github-actions"
+
 jobs:
   deploy:
     name: Deploy app
