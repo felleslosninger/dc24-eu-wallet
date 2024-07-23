@@ -14,7 +14,7 @@
 	<name>dc24-eu-wallet</name>
 	<description>Wallet program for DigDir</description>
 	<properties>
-		<java.version>22</java.version>
+		<java.version>21</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -166,6 +166,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>MattrIssuer</finalName>
 	</build>
 
 </project>

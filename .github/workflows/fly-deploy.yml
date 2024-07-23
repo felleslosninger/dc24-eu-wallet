@@ -1,0 +1,38 @@
+# See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+
+name: Fly Deploy
+on:
+  push:
+    branches:
+      branches: [ "main", "kan-50-create-github-actions" ]
+    pull_request:
+      branches: [ "main", "kan-50-create-github-actions" ]
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    concurrency: deploy-group    # optional: ensure only one action runs at a time
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Rename env file
+        run: |
+          if [ -f src/main/resources/.env.example ]; then
+            mv src/main/resources/.env.example src/main/resources/.env
+            echo ".env file created from .env.example"
+          else
+            echo ".env.example file not found"
+          fi
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean install
+
