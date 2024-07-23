@@ -19,6 +19,9 @@ public class TokenPayload {
 
     private TokenHead tokenPayloadAsObject;
 
+    //Switch out with your own class from id porten
+    //private TokenHeadIdPorten tokenHeadIdPorten;
+
     private String payload;
 
     private OidcIdToken token;
@@ -38,7 +41,7 @@ public class TokenPayload {
      * @return TokenHead, which is the object representation of the payload
      * part of the token. This is in "plain text".
      */
-    public TokenHead getTokenAsObject(){
+    public String getTokenPayloadAsString(){
 
         String encodedToken = token.getTokenValue();
 
@@ -54,7 +57,10 @@ public class TokenPayload {
         }catch (UnsupportedEncodingException e){
             LoggerFactory.getLogger(TokenPayload.class).error("Error decoding token", e);
         }
+        return payload;
+    }
 
+    public TokenHead getTokenHeadAnsattporten(String payload){
         //Using tool Gson, we will read the decoded token into classes created
         //for containing the information in the token.
         Gson gson = new Gson();
@@ -65,4 +71,25 @@ public class TokenPayload {
 
         return tokenPayloadAsObject;
     }
+
+    /**
+     * Use your own class to parse into JSON, Return in your type of
+     * object representation of the json structure you get from
+     * id porten-
+     *
+     * @return
+
+
+    public TokenHeadIdPorten getTokenHeadIdPOrten(){
+        //Using tool Gson, we will read the decoded token into classes created
+        //for containing the information in the token.
+        Gson gson = new Gson();
+
+        //Parses from JSON into object. In this instance it will parse payload
+        //into class TokenHead, which is the topmost class of our token.
+        tokenPayloadAsObject = gson.fromJson(payload, TokenHeadIdPorten.class);
+
+        return tokenPayloadAsObject;
+    }
+    */
 }

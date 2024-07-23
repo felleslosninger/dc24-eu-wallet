@@ -105,7 +105,8 @@ public class PresentationController {
    */
   public String getJsonContentForMattr(OidcUser oidcUser){
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
-    MattrObjectHead head = new MattrObjectHead(credential.getTokenAsObject());
+    String token = credential.getTokenPayloadAsString();
+    MattrObjectHead head = new MattrObjectHead(credential.getTokenHeadAnsattporten(token));
     return head.getFormattedJsonData();
   }
 
