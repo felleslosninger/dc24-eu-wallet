@@ -37,10 +37,9 @@ public class TokenPayload {
     }
 
     /**
-     * Method that returns the object of the payload part of the token.
+     * Method that returns a string of the payload of the token of logged in user.
      *
-     * @return TokenHead, which is the object representation of the payload
-     * part of the token. This is in "plain text".
+     * @return string of the token payload part.
      */
     public String getTokenPayloadAsString(){
 
