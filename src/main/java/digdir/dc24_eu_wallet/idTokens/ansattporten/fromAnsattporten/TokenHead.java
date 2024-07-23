@@ -1,4 +1,4 @@
-package digdir.dc24_eu_wallet.aport.fromAnsattporten;
+package digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten;
 
 import lombok.Getter;
 import lombok.Setter;

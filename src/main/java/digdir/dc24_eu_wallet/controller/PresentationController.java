@@ -3,8 +3,8 @@ package digdir.dc24_eu_wallet.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenPayload;
-import digdir.dc24_eu_wallet.aport.toMattr.MattrObjectHead;
+import digdir.dc24_eu_wallet.idTokens.TokenPayload;
+import digdir.dc24_eu_wallet.idTokens.ansattporten.toMattr.MattrObjectHead;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.dto.PresentationRequestDTO;
 import digdir.dc24_eu_wallet.dto.PresentationResponseDTO;
@@ -105,7 +105,8 @@ public class PresentationController {
    */
   public String getJsonContentForMattr(OidcUser oidcUser){
     TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
-    MattrObjectHead head = new MattrObjectHead(credential.getTokenAsObject());
+    String token = credential.getTokenPayloadAsString();
+    MattrObjectHead head = new MattrObjectHead(credential.getTokenHeadAnsattporten(token));
     return head.getFormattedJsonData();
   }
 
