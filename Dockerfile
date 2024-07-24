@@ -5,9 +5,9 @@ FROM openjdk:22-slim-buster
 WORKDIR /usr/src/app
 
 # Copy only the built JAR file into the container
-COPY target/MattrIssuer.jar /usr/src/app
+COPY target/MattrIssuer.jar /usr/src/app/app.jar
 
 EXPOSE 8980
 
 # Run the jar file
-ENTRYPOINT ["java", "-jar", "MattrIssuer.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
