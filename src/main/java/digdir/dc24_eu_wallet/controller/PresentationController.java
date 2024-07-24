@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import digdir.dc24_eu_wallet.idTokens.TokenPayload;
 import digdir.dc24_eu_wallet.idTokens.ansattporten.toMattr.MattrObjectHead;
+import digdir.dc24_eu_wallet.idTokens.idporten.MattrObjectHeadIdPort;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.dto.PresentationRequestDTO;
 import digdir.dc24_eu_wallet.dto.PresentationResponseDTO;
@@ -29,7 +30,7 @@ import java.util.UUID;
  * Here we can send in JSON data and get a QR code in return. This is also linked to the
  * database and Mattr.
  *
- * @author Daniel Neset & Solveig Langbakk
+ * @author Daniel Neset, Solveig Langbakk & Elise Strand Bråtveit
  * @version 19.07.2024
  */
 @Controller
@@ -76,22 +77,29 @@ public class PresentationController {
   }
 
   /**
-   * Handles requests to the Ansattporten authentication URL ("/ansattporten_authentication").
+   * Handles requests to the Ansattporten and IDporten authentication URL ("/idporten_authenticatio").
    * Retrieves OIDC user information and adds it to the model.
    *
    * @param model the model to add attributes to.
    * @param oidcUser the authenticated OIDC user.
-   * @return the "ansattporten-authenticated" view name.
+   * @return the "idporten_authentication" view name.
    */
-  @GetMapping("/ansattporten_authentication")
+  @GetMapping("/idporten_authentication")
   public String user(Model model,
                      @AuthenticationPrincipal OidcUser oidcUser) {
     model.addAttribute("idtoken", oidcUser.getIdToken().getTokenValue());
     model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
     model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
     model.addAttribute("name", oidcUser.getFullName());
-    model.addAttribute("qrCode", getQR(oidcUser));
-    return "ansattporten-authenticated";
+    if (oidcUser.getUserInfo().getClaim("iss") == "https://test.ansattporten.no")
+    {
+      System.out.print("Her----------------------------------------------------------------------");
+    model.addAttribute("qrCode", getQR(oidcUser, 0));
+    } else {
+      model.addAttribute("qrCode", getQR(oidcUser, 1));
+    }
+
+    return "idporten_authentication";
   }
 
   /**
@@ -111,6 +119,22 @@ public class PresentationController {
   }
 
   /**
+   * Takes the token content from the logged in oidc user in ansattporten, and creates an object out of it
+   * that is used to format a new object, which is used to construct a json string on the correct format of
+   * the request MATTR need. The string will contain the information about the person that is supposed to et
+   * rights/accesses, as well as which rights/accesses that person should get.
+   *
+   * @param oidcUser logged in idporten oidc user
+   * @return string with JSON data ready to send to MATTR
+   */
+  public String getJsonContentForMattrIdPorten(OidcUser oidcUser){
+    TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
+    String token = credential.getTokenPayloadAsString();
+    MattrObjectHeadIdPort head = new MattrObjectHeadIdPort(credential.getTokenHeadIdPorten(token));
+    return head.getFormattedJsonDataIdPorten();
+  }
+
+  /**
    * Takes the relevant information MATTR needs for issuance from the id token of the logged in ansattporten user,
    * and creates a qr code that a user of the MATTR wallet can scan in order to get issued the different rights that
    * person has in ansattporten. The qr code will contain information about which person these rights/accesses should
@@ -119,15 +143,30 @@ public class PresentationController {
    * @param oidcUser logged in oidc user on ansattporten
    * @return url to qr code as string
    */
-  public String getQR(@AuthenticationPrincipal OidcUser oidcUser){
-    String qrCode = new String();
-    String jsoncontent = getJsonContentForMattr(oidcUser);
+  public String getQR(@AuthenticationPrincipal OidcUser oidcUser, int i){
 
+    String jsoncontent;
+    String qrCode = new String();
+
+    if (i ==0){
+   
+    jsoncontent = getJsonContentForMattr(oidcUser);
+
+        credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
+    }
+    else {
+        //Test
+    jsoncontent = getJsonContentForMattrIdPorten(oidcUser);
+
+   
     credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
+  
+
+    }
+    
 
     logger.info("New PostRequest to create a Presentation Request");
-    ResponseEntity<String> response;
-
+   
     if(credentialDTO.isValid()){
       logger.info("New PostRequest has a valid body.");
       String uniqueID = UUID.randomUUID().toString();

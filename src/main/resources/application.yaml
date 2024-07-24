@@ -2,12 +2,20 @@ spring:
   main:
     web-application-type: reactive
   application:
-    name: ansattporten-integration
+    name: idporten-integration
   security:
     oauth2:
       client:
         registration:
           testclient:
+            client-name: Logg inn med idporten
+            client-id: dc24_idporten_testclient
+            client-secret: ${IDPORTEN_CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/testclient"
+            scope: openid, profile, difitest:guardian
+            provider: idporten
+          testclientAnsatt:
             client-name: Logg inn med Ansattporten
             client-id: dc24_ansattporten_testclient
             client-secret: ${ANSATTPORTEN_CLIENT_SECRET}
@@ -16,7 +24,11 @@ spring:
             scope: openid, profile
             provider: ansattporten
         provider:
+          idporten:
+            issuer-uri: https://test.idporten.no
           ansattporten:
             issuer-uri: https://test.ansattporten.no
+          
+          
 server:
   port: 8980

@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.TokenHead;
+import digdir.dc24_eu_wallet.idTokens.idporten.TokenHeadIdPorten;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 
@@ -20,8 +22,8 @@ public class TokenPayload {
 
     private TokenHead tokenPayloadAsObject;
 
-    //Switch out with your own class from id porten
-    //private TokenHeadIdPorten tokenHeadIdPorten;
+   
+    private TokenHeadIdPorten tokenHeadIdPorten;
 
     private String payload;
 
@@ -71,6 +73,8 @@ public class TokenPayload {
         //for containing the information in the token.
         Gson gson = new Gson();
 
+        System.out.println("Payload: Ansatt " + payload);
+
         //Parses from JSON into object. In this instance it will parse payload
         //into class TokenHead, which is the topmost class of our token.
         tokenPayloadAsObject = gson.fromJson(payload, TokenHead.class);
@@ -78,22 +82,24 @@ public class TokenPayload {
         return tokenPayloadAsObject;
     }
 
-    /**
-     * Use your own class to parse into JSON, Return in your type of
-     * object representation of the json structure you get from
-     * id porten-
-     *
-     * @return
-    public TokenHeadIdPorten getTokenHeadIdPOrten(){
+    
+     /*  Use your own class to parse into JSON, Return in your type of
+     object representation of the json structure you get from
+     id porten-
+     
+     @return
+     */
+    public TokenHeadIdPorten getTokenHeadIdPorten(String payload){
         //Using tool Gson, we will read the decoded token into classes created
         //for containing the information in the token.
         Gson gson = new Gson();
+        System.out.println("Payload: Idporteb" + payload);
 
         //Parses from JSON into object. In this instance it will parse payload
         //into class TokenHead, which is the topmost class of our token.
         tokenHeadIdPorten = gson.fromJson(payload, TokenHeadIdPorten.class);
 
-        return tokenPayloadAsObject;
+        return tokenHeadIdPorten;
     }
-    */
+    
 }
