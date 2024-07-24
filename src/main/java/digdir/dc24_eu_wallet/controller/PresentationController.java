@@ -91,14 +91,10 @@ public class PresentationController {
     model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
     model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
     model.addAttribute("name", oidcUser.getFullName());
-    if (oidcUser.getUserInfo().getClaim("iss") == "https://test.ansattporten.no")
-    {
-      System.out.print("Her----------------------------------------------------------------------");
-    model.addAttribute("qrCode", getQR(oidcUser, 0));
-    } else {
-      model.addAttribute("qrCode", getQR(oidcUser, 1));
-    }
-
+    
+    
+    model.addAttribute("qrCode", getQR(oidcUser));
+    
     return "idporten_authentication";
   }
 
@@ -143,27 +139,15 @@ public class PresentationController {
    * @param oidcUser logged in oidc user on ansattporten
    * @return url to qr code as string
    */
-  public String getQR(@AuthenticationPrincipal OidcUser oidcUser, int i){
+  public String getQR(@AuthenticationPrincipal OidcUser oidcUser){
 
     String jsoncontent;
     String qrCode = new String();
 
-    if (i ==0){
-   
+    
     jsoncontent = getJsonContentForMattr(oidcUser);
-
-        credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
-    }
-    else {
-        //Test
-    jsoncontent = getJsonContentForMattrIdPorten(oidcUser);
-
-   
     credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
   
-
-    }
-    
 
     logger.info("New PostRequest to create a Presentation Request");
    

@@ -1,6 +1,8 @@
 package digdir.dc24_eu_wallet.idTokens.ansattporten.toMattr;
 
 
+import java.util.ArrayList;
+
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.AutorizationDetails;
@@ -48,30 +50,64 @@ public class MattrObjectHead {
      * @return json data in a string.
      */
     public String getFormattedJsonData() {
+        if(token.getIss()=="https://test.ansattporten.no"){
+            System.out.println("Her------------------AnsattPorten");
+            for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
+                for (Reportee rep : ignored.getReportees()) {
+                    CredentialDTO.Cred credentials = new CredentialDTO.Cred();
+                    credentials.setPid(token.getPid());
+                    credentials.setSub(token.getSub());
+    
+                    CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
+                    authorizationDetails.setResource(ignored.getResource());
+                    authorizationDetails.setType(ignored.getType());
+                    authorizationDetails.setResource_name(ignored.getResource_name());
+    
+                    CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
+                    reportees.setID(rep.getID());
+                    reportees.setAuthority(rep.getAuthority());
+                    reportees.setRights(rep.getRights());
+                    reportees.setName(rep.getName());
+    
+                    authorizationDetails.addReportees(reportees);
+                    credentials.addAuthorization_details(authorizationDetails);
+                    credential.addCred(credentials);
+                }
+            }
+            return gson.toJson(credential);
 
-        for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
-            for (Reportee rep : ignored.getReportees()) {
+        }else{
+                System.out.print("Her---------idporten ");
                 CredentialDTO.Cred credentials = new CredentialDTO.Cred();
-                credentials.setPid(token.getPid());
-                credentials.setSub(token.getSub());
+                credentials.setPid("234982849920");
+                credentials.setSub("enfefijifjeo");
+
 
                 CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
-                authorizationDetails.setResource(ignored.getResource());
-                authorizationDetails.setType(ignored.getType());
-                authorizationDetails.setResource_name(ignored.getResource_name());
+                ArrayList <String> listOfRights = new ArrayList<>();
+                listOfRights.add("Read");
+                listOfRights.add("Delete");
+
+                authorizationDetails.setResource("urn:idporten");
+                authorizationDetails.setType("idporten");
+                authorizationDetails.setResource_name("Vergemaal");
 
                 CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
-                reportees.setID(rep.getID());
-                reportees.setAuthority(rep.getAuthority());
-                reportees.setRights(rep.getRights());
-                reportees.setName(rep.getName());
+                reportees.setID("8398598395");
+                reportees.setAuthority("Statsforvalteren");
+                reportees.setRights(listOfRights);
+                reportees.setName("Vergemaal for verge");
 
                 authorizationDetails.addReportees(reportees);
                 credentials.addAuthorization_details(authorizationDetails);
                 credential.addCred(credentials);
-            }
+
+      
+                return gson.toJson(credential);
+
         }
-        return gson.toJson(credential);
+
+        
     }
 
 }
