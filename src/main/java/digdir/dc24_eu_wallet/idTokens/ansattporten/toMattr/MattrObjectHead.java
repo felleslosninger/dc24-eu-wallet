@@ -1,11 +1,11 @@
-package digdir.dc24_eu_wallet.aport.toMattr;
+package digdir.dc24_eu_wallet.idTokens.ansattporten.toMattr;
 
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import digdir.dc24_eu_wallet.aport.fromAnsattporten.AutorizationDetails;
-import digdir.dc24_eu_wallet.aport.fromAnsattporten.Reportee;
-import digdir.dc24_eu_wallet.aport.fromAnsattporten.TokenHead;
+import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.AutorizationDetails;
+import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.Reportee;
+import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.TokenHead;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import lombok.Getter;
 
