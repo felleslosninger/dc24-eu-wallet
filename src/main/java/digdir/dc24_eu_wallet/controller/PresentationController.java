@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import digdir.dc24_eu_wallet.idTokens.TokenPayload;
 import digdir.dc24_eu_wallet.idTokens.ansattporten.toMattr.MattrObjectHead;
-import digdir.dc24_eu_wallet.idTokens.idporten.MattrObjectHeadIdPort;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.dto.PresentationRequestDTO;
 import digdir.dc24_eu_wallet.dto.PresentationResponseDTO;
@@ -99,12 +98,12 @@ public class PresentationController {
   }
 
   /**
-   * Takes the token content from the logged in oidc user in ansattporten, and creates an object out of it
+   * Takes the token content from the logged in oidc user in ansattporten or Idporten, and creates an object out of it
    * that is used to format a new object, which is used to construct a json string on the correct format of
    * the request MATTR need. The string will contain the information about the person that is supposed to et
    * rights/accesses, as well as which rights/accesses that person should get.
    *
-   * @param oidcUser logged in ansattporten oidc user
+   * @param oidcUser logged in ansattporten or Idportenoidc user
    * @return string with JSON data ready to send to MATTR
    */
   public String getJsonContentForMattr(OidcUser oidcUser){
@@ -114,29 +113,15 @@ public class PresentationController {
     return head.getFormattedJsonData();
   }
 
-  /**
-   * Takes the token content from the logged in oidc user in ansattporten, and creates an object out of it
-   * that is used to format a new object, which is used to construct a json string on the correct format of
-   * the request MATTR need. The string will contain the information about the person that is supposed to et
-   * rights/accesses, as well as which rights/accesses that person should get.
-   *
-   * @param oidcUser logged in idporten oidc user
-   * @return string with JSON data ready to send to MATTR
-   */
-  public String getJsonContentForMattrIdPorten(OidcUser oidcUser){
-    TokenPayload credential = new TokenPayload(oidcUser.getIdToken());
-    String token = credential.getTokenPayloadAsString();
-    MattrObjectHeadIdPort head = new MattrObjectHeadIdPort(credential.getTokenHeadIdPorten(token));
-    return head.getFormattedJsonDataIdPorten();
-  }
+ 
 
   /**
-   * Takes the relevant information MATTR needs for issuance from the id token of the logged in ansattporten user,
+   * Takes the relevant information MATTR needs for issuance from the id token of the logged in ansattporten user or Idport user,
    * and creates a qr code that a user of the MATTR wallet can scan in order to get issued the different rights that
-   * person has in ansattporten. The qr code will contain information about which person these rights/accesses should
+   * person has in ansattporten or Idporten. The qr code will contain information about which person these rights/accesses should
    * be assigned to, as well as which rights/accesses it is about.
    *
-   * @param oidcUser logged in oidc user on ansattporten
+   * @param oidcUser logged in oidc user on ansattporten or Idporten
    * @return url to qr code as string
    */
   public String getQR(@AuthenticationPrincipal OidcUser oidcUser){

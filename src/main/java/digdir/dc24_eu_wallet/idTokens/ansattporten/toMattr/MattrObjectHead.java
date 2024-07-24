@@ -16,7 +16,7 @@ import lombok.Getter;
  * get from the TokenHead object, and after that it will be used by GSON to transform into a JSON string based on the
  * objects structure.
  *
- * @author Langbakk & Neset
+ * @author Langbakk, Neset & Bråtveit
  * @version 17.07.2024
  */
 public class MattrObjectHead {
@@ -50,8 +50,7 @@ public class MattrObjectHead {
      * @return json data in a string.
      */
     public String getFormattedJsonData() {
-        if(token.getIss()=="https://test.ansattporten.no"){
-            System.out.println("Her------------------AnsattPorten");
+        if(token.getIss().contains("https://test.ansattporten.no")){
             for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
                 for (Reportee rep : ignored.getReportees()) {
                     CredentialDTO.Cred credentials = new CredentialDTO.Cred();
@@ -77,10 +76,9 @@ public class MattrObjectHead {
             return gson.toJson(credential);
 
         }else{
-                System.out.print("Her---------idporten ");
                 CredentialDTO.Cred credentials = new CredentialDTO.Cred();
-                credentials.setPid("234982849920");
-                credentials.setSub("enfefijifjeo");
+                credentials.setPid(token.getPid());
+                credentials.setSub(token.getSub());
 
 
                 CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
@@ -93,7 +91,7 @@ public class MattrObjectHead {
                 authorizationDetails.setResource_name("Vergemaal");
 
                 CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
-                reportees.setID("8398598395");
+                reportees.setID("0000000000");
                 reportees.setAuthority("Statsforvalteren");
                 reportees.setRights(listOfRights);
                 reportees.setName("Vergemaal for verge");
@@ -111,3 +109,4 @@ public class MattrObjectHead {
     }
 
 }
+
