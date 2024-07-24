@@ -26,13 +26,13 @@ public class SendWebCred {
   private final HttpService httpService;
   private final RequestService requestService;
   Gson gson = new Gson();
-  @Value("${MATTR_TENANT_URL}")
+  @Value("${mattr.tenant.url}")
   private String url;
-  @Value("${DID_WEB}")
+  @Value("${did.web}")
   private String didWeb;
-  @Value("${DOMAIN}")
+  @Value("${domain}")
   private String domain;
-  @Value("${DID_WEB_EXTENSION}")
+  @Value("${did.web-extension}")
   private String didWebExt;
 
 

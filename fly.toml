@@ -1,8 +1,3 @@
-# fly.toml app configuration file generated for dc24-eu-wallet-issuer-workflow on 2024-07-23T08:49:27+02:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = 'dc24-eu-wallet-issuer-workflow'
 primary_region = 'ewr'
 
