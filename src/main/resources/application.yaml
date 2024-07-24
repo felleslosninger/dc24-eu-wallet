@@ -20,6 +20,7 @@ spring:
             issuer-uri: https://test.ansattporten.no
 server:
   port: 8980
+  address: 0.0.0.0
 
 mattr:
   audience: ${MATTR_AUDIENCE:default_audience_value}
