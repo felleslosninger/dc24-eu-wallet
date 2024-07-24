@@ -1,4 +1,4 @@
-package digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten;
+package digdir.dc24_eu_wallet.idTokens.fromAnsattporten;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +17,7 @@ public class TokenHead {
     @Setter
     @Getter
     private String sub;
+
     private ArrayList<String> amr;
     @Setter
     @Getter

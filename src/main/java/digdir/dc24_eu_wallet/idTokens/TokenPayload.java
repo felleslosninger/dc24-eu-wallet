@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
-import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.TokenHead;
+import digdir.dc24_eu_wallet.idTokens.fromAnsattporten.TokenHead;
 
 
 import org.slf4j.LoggerFactory;
