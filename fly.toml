@@ -35,3 +35,6 @@ primary_region = 'ewr'
     interval = "15s"
     restart_limit = 6
     timeout = "2s"
+
+[[env]]
+  MATTR_ISSUER="data"
