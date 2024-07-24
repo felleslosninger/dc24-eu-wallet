@@ -8,16 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AnsattportenIntegrationControllerTest {
 
-    private AnsattportenIntegrationController ansattportenIntegrationController;
-
     @BeforeEach
     void setUp() {
-        ansattportenIntegrationController = new AnsattportenIntegrationController();
+
     }
 
     @AfterEach
     void tearDown() {
-        ansattportenIntegrationController = null;
     }
 
     @Test

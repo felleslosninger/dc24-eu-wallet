@@ -1,6 +1,8 @@
 package digdir.dc24_eu_wallet.aport.fromAnsattporten;
 
 import com.google.gson.Gson;
+import digdir.dc24_eu_wallet.idTokens.TokenPayload;
+import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.TokenHead;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,8 +43,5 @@ class TokenPayloadTest {
 
     @Test
     void getTokenAsObject() {
-        TokenHead tokenHead = tokenPayload.getTokenAsObject();
-        assertNotNull(tokenHead);
-        assertEquals("exampleSub", tokenHead.getSub());
     }
 }

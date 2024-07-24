@@ -91,8 +91,8 @@ We assume you got a grasp of how Java and Maven work, and have an environment li
 
 ## Configuration
 ### .env data
-Copy the [```.env.example```](src/main/resources/.env.example) file and rename the copy to ```.env```.
-Then add your secret variables to the ```.env``` file, not the [```.env.example```](src/main/resources/.env.example) file.
+Copy the [```.env.example```](src/main/resources/.env) file and rename the copy to ```.env```.
+Then add your secret variables to the ```.env``` file, not the [```.env.example```](src/main/resources/.env) file.
 ```dotenv
 MATTR_AUDIENCE=""               <-- Your audience data from Mattr
 MATTR_TENANT_URL=""             <-- Your Tenent URL from Mattr
