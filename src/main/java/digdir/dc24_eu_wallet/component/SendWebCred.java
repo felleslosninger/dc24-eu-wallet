@@ -24,7 +24,6 @@ import java.util.*;
  */
 @Component
 public class SendWebCred {
-
   public static final Logger logger = LoggerFactory.getLogger(SendWebCred.class);
 
   private final HttpService httpService;
@@ -95,7 +94,6 @@ public class SendWebCred {
    * @return Return a list of CredentialPost.CredentialSubjects
    */
   private List<CredentialCardDTO.CredentialSubject> createSubjects(CredentialDTO credentialDTO, String walletDID){
-
     List<CredentialCardDTO.CredentialSubject> subjectContainers = new ArrayList<>();
 
     for (CredentialDTO.Cred cred: credentialDTO.getCred()) {
@@ -137,7 +135,6 @@ public class SendWebCred {
    * @return Return a List of CredentialPost that are ready to Signed.
    */
   private List<CredentialCardDTO> createWebCards(List<CredentialCardDTO.CredentialSubject> credentialSubjects){
-
     List<CredentialCardDTO> credentialCardDTOS = new ArrayList<>();
 
     for (CredentialCardDTO.CredentialSubject subject: credentialSubjects) {
@@ -201,7 +198,6 @@ public class SendWebCred {
    * @return Return a EncryptedPost object that will be sent to the wallet.
    */
   private List<EncryptTemplateDTO> encryptWebCred(List<CredentialSignDTO> credentialSignDTOS, String holder){
-
     List<EncryptTemplateDTO> encryptTemplateDTOS = new ArrayList<>();
 
       LinkedList<CredentialSignDTO> fifo = new LinkedList<>(credentialSignDTOS);
