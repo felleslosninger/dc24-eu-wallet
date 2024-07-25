@@ -1,9 +1,11 @@
 package digdir.dc24_eu_wallet.component;
 
-import com.google.gson.Gson;
 import digdir.dc24_eu_wallet.dto.*;
 import digdir.dc24_eu_wallet.service.HttpService;
 import digdir.dc24_eu_wallet.service.RequestService;
+
+import com.google.gson.Gson;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,14 @@ import java.util.*;
  */
 @Component
 public class SendWebCred {
+
   public static final Logger logger = LoggerFactory.getLogger(SendWebCred.class);
+
   private final HttpService httpService;
   private final RequestService requestService;
+
   Gson gson = new Gson();
+
   @Value("${MATTR_TENANT_URL}")
   private String url;
   @Value("${DID_WEB}")
@@ -34,7 +40,6 @@ public class SendWebCred {
   private String domain;
   @Value("${DID_WEB_EXTENSION}")
   private String didWebExt;
-
 
   /**
    * Constructs an SendWebCred with the required services.
@@ -47,7 +52,6 @@ public class SendWebCred {
     this.httpService = httpService;
     this.requestService = requestService;
   }
-
 
   /**
    * This method is a center point that's handle creating Web credentials from
@@ -79,7 +83,6 @@ public class SendWebCred {
       sendEncryptedCred(encryptedCredentialDTO, walletDID);
     }
   }
-
 
   /**
    * This CreateSubjects method reformat the CredentialDTO to a List of CredentialPost.CredentialSubject
@@ -124,9 +127,7 @@ public class SendWebCred {
       subjectContainers.add(subject);
     }
     return subjectContainers;
-
   }
-
 
   /**
    * Create multiple Web Credential Card with the specific subject
@@ -136,6 +137,7 @@ public class SendWebCred {
    * @return Return a List of CredentialPost that are ready to Signed.
    */
   private List<CredentialCardDTO> createWebCards(List<CredentialCardDTO.CredentialSubject> credentialSubjects){
+
     List<CredentialCardDTO> credentialCardDTOS = new ArrayList<>();
 
     for (CredentialCardDTO.CredentialSubject subject: credentialSubjects) {
@@ -148,7 +150,7 @@ public class SendWebCred {
 
       CredentialCardDTO.Payload payload = new CredentialCardDTO.Payload();
       payload.setName("Ansattporten Credential");
-      payload.setDescription(subject.getAuthorization_details().get(0).getReportees().get(0).getName());
+      payload.setDescription(subject.getAuthorization_details().getFirst().getReportees().getFirst().getName());
       payload.setType(List.of("AnsattportenCredential"));
 
       CredentialCardDTO.CredentialBranding branding = new CredentialCardDTO.CredentialBranding();
@@ -172,7 +174,6 @@ public class SendWebCred {
     return credentialCardDTOS;
   }
 
-
   /**
    * Sign all the Web Credentials from the Object CredentialPost.
    *
@@ -192,7 +193,6 @@ public class SendWebCred {
     return credentialSignDTOS;
   }
 
-
   /**
    * Encrypt all the signed Web Credentials.
    *
@@ -204,11 +204,7 @@ public class SendWebCred {
 
     List<EncryptTemplateDTO> encryptTemplateDTOS = new ArrayList<>();
 
-    LinkedList<CredentialSignDTO> fifo = new LinkedList<CredentialSignDTO>();
-
-    for (CredentialSignDTO cred: credentialSignDTOS) {
-      fifo.add(cred);
-    }
+      LinkedList<CredentialSignDTO> fifo = new LinkedList<>(credentialSignDTOS);
 
     while(!fifo.isEmpty()){
       String uniqueID = UUID.randomUUID().toString();
@@ -235,10 +231,8 @@ public class SendWebCred {
       EncryptTemplateDTO encryptTemplateDTO = new EncryptTemplateDTO(didWebExt, Collections.singletonList(holder), payload);
       encryptTemplateDTOS.add(encryptTemplateDTO);
     }
-
    return encryptTemplateDTOS;
   }
-
 
   /**
    * Gets the data that will be encrypted and encrypt it with Mattr.
@@ -253,7 +247,6 @@ public class SendWebCred {
 
     return gson.fromJson(responseBody, EncryptedCredentialDTO.class);
   }
-
 
   /**
    * Sends an encrypted credential
@@ -271,21 +264,7 @@ public class SendWebCred {
     jweMessage.setTag(encryptedCredentialDTO.getJwe().getTag());
 
     for (EncryptedCredentialDTO.Recipient recipient: encryptedCredentialDTO.getJwe().getRecipients()) {
-      SendCredentialDTO.Header header = new SendCredentialDTO.Header();
-      SendCredentialDTO.Recipient rep = new SendCredentialDTO.Recipient();
-
-      header.setAlg(recipient.getHeader().getAlg());
-      header.setKid(recipient.getHeader().getKid());
-      header.setSkid(recipient.getHeader().getSkid());
-
-      SendCredentialDTO.Epk epk = new SendCredentialDTO.Epk();
-      epk.setKty(recipient.getHeader().getEpk().getKty());
-      epk.setCrv(recipient.getHeader().getEpk().getCrv());
-      epk.setX(recipient.getHeader().getEpk().getX());
-      header.setEpk(epk);
-
-      rep.setHeader(header);
-      rep.setEncryptedKey(recipient.getEncryptedKey());
+      SendCredentialDTO.Recipient rep = getRecipient(recipient);
 
       jweMessage.addRecipients(rep);
     }
@@ -293,5 +272,24 @@ public class SendWebCred {
     SendCredentialDTO sendCredentialDTO = new SendCredentialDTO(holder, jweMessage);
     String sendMessage = gson.toJson(sendCredentialDTO);
     httpService.postRequest(url + "/core/v1/messaging/send", requestService.getJwt(), sendMessage);
+  }
+
+  private static SendCredentialDTO.Recipient getRecipient(EncryptedCredentialDTO.Recipient recipient) {
+    SendCredentialDTO.Header header = new SendCredentialDTO.Header();
+    SendCredentialDTO.Recipient rep = new SendCredentialDTO.Recipient();
+
+    header.setAlg(recipient.getHeader().getAlg());
+    header.setKid(recipient.getHeader().getKid());
+    header.setSkid(recipient.getHeader().getSkid());
+
+    SendCredentialDTO.Epk epk = new SendCredentialDTO.Epk();
+    epk.setKty(recipient.getHeader().getEpk().getKty());
+    epk.setCrv(recipient.getHeader().getEpk().getCrv());
+    epk.setX(recipient.getHeader().getEpk().getX());
+    header.setEpk(epk);
+
+    rep.setHeader(header);
+    rep.setEncryptedKey(recipient.getEncryptedKey());
+    return rep;
   }
 }
