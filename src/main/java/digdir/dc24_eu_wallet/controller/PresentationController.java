@@ -102,7 +102,7 @@ public class PresentationController {
    * the request MATTR need. The string will contain the information about the person that is supposed to et
    * rights/accesses, as well as which rights/accesses that person should get.
    *
-   * @param oidcUser logged in ansattporten or Idportenoidc user
+   * @param oidcUser logged in ansattporten or Idporten oidc user
    * @return string with JSON data ready to send to MATTR
    */
   public String getJsonContentForMattr(OidcUser oidcUser){
