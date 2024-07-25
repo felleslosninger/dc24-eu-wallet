@@ -78,14 +78,6 @@ public class TokenPayload {
 
         return tokenPayloadAsObject;
     }
-
-    
-     /*  Use your own class to parse into JSON, Return in your type of
-     object representation of the json structure you get from
-     id porten-
-     
-     @return
-     */
    
     
 }
