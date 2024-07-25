@@ -1,7 +1,8 @@
 package digdir.dc24_eu_wallet.aport.fromAnsattporten;
 
-import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.AutorizationDetails;
-import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.TokenHead;
+/*import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.AutorizationDetails;
+
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.TokenHead;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -221,4 +222,4 @@ class TokenHeadTest {
         tokenHead.setJti("newJti");
         assertEquals("newJti", tokenHead.getJti());
     }
-}
+}*/

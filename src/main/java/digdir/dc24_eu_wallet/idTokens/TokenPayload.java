@@ -2,11 +2,10 @@ package digdir.dc24_eu_wallet.idTokens;
 
 import com.google.gson.Gson;
 
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.TokenHead;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
-
-import digdir.dc24_eu_wallet.idTokens.fromAnsattporten.TokenHead;
-
 
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;

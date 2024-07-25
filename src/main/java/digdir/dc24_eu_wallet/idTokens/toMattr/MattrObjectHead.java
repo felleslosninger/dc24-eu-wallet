@@ -5,10 +5,11 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
-import digdir.dc24_eu_wallet.idTokens.fromAnsattporten.AutorizationDetails;
-import digdir.dc24_eu_wallet.idTokens.fromAnsattporten.Reportee;
-import digdir.dc24_eu_wallet.idTokens.fromAnsattporten.TokenHead;
+
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.AutorizationDetails;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.Reportee;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.TokenHead;
 import lombok.Getter;
 
 /**
@@ -50,12 +51,12 @@ public class MattrObjectHead {
      * @return json data in a string.
      */
     public String getFormattedJsonData() {
-        if(token.getIss().contains("https://test.ansattporten.no")){
+        if(token.iss().contains("https://test.ansattporten.no")){
             for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
                 for (Reportee rep : ignored.getReportees()) {
                     CredentialDTO.Cred credentials = new CredentialDTO.Cred();
-                    credentials.setPid(token.getPid());
-                    credentials.setSub(token.getSub());
+                    credentials.setPid(token.pid());
+                    credentials.setSub(token.sub());
     
                     CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
                     authorizationDetails.setResource(ignored.getResource());
@@ -77,8 +78,8 @@ public class MattrObjectHead {
 
         }else{
                 CredentialDTO.Cred credentials = new CredentialDTO.Cred();
-                credentials.setPid(token.getPid());
-                credentials.setSub(token.getSub());
+                credentials.setPid(token.pid());
+                credentials.setSub(token.sub());
 
 
                 CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
