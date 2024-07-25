@@ -93,7 +93,7 @@ public class SendWebCred {
    * @param credentialDTO A list of all credentials, taken from ChallengerAndCred
    * @return Return a list of CredentialPost.CredentialSubjects
    */
-  private List<CredentialCardDTO.CredentialSubject> createSubjects(CredentialDTO credentialDTO, String walletDID){
+  private List<CredentialCardDTO.CredentialSubject> createSubjects(CredentialDTO credentialDTO, String walletDID) {
     List<CredentialCardDTO.CredentialSubject> subjectContainers = new ArrayList<>();
 
     for (CredentialDTO.Cred cred: credentialDTO.getCred()) {
@@ -134,7 +134,7 @@ public class SendWebCred {
    * @param credentialSubjects A list of credentialSubjects;
    * @return Return a List of CredentialPost that are ready to Signed.
    */
-  private List<CredentialCardDTO> createWebCards(List<CredentialCardDTO.CredentialSubject> credentialSubjects){
+  private List<CredentialCardDTO> createWebCards(List<CredentialCardDTO.CredentialSubject> credentialSubjects) {
     List<CredentialCardDTO> credentialCardDTOS = new ArrayList<>();
 
     for (CredentialCardDTO.CredentialSubject subject: credentialSubjects) {
@@ -197,7 +197,7 @@ public class SendWebCred {
    * @param holder The wallet DID.
    * @return Return a EncryptedPost object that will be sent to the wallet.
    */
-  private List<EncryptTemplateDTO> encryptWebCred(List<CredentialSignDTO> credentialSignDTOS, String holder){
+  private List<EncryptTemplateDTO> encryptWebCred(List<CredentialSignDTO> credentialSignDTOS, String holder) {
     List<EncryptTemplateDTO> encryptTemplateDTOS = new ArrayList<>();
 
       LinkedList<CredentialSignDTO> fifo = new LinkedList<>(credentialSignDTOS);

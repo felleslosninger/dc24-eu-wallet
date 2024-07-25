@@ -1,7 +1,9 @@
 package digdir.dc24_eu_wallet.controller;
 
 import digdir.dc24_eu_wallet.service.RequestService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
