@@ -101,15 +101,15 @@ class AutorizationDetailsTest {
 
     @Test
     void getID() {
-        autorizationDetails.setID("testID");
-        assertEquals("testID", autorizationDetails.getID());
+        autorizationDetails.setId("testID");
+        assertEquals("testID", autorizationDetails.getId());
     }
 
     @Test
     void setID() {
-        assertNull(autorizationDetails.getID());
-        autorizationDetails.setID("newID");
-        assertEquals("newID", autorizationDetails.getID());
+        assertNull(autorizationDetails.getId());
+        autorizationDetails.setId("newID");
+        assertEquals("newID", autorizationDetails.getId());
     }
 
     @Test
