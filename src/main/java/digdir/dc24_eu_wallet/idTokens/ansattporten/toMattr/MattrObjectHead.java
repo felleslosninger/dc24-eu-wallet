@@ -1,12 +1,13 @@
 package digdir.dc24_eu_wallet.idTokens.ansattporten.toMattr;
 
-
-import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.AutorizationDetails;
 import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.Reportee;
 import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.TokenHead;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
+
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+
 import lombok.Getter;
 
 /**
@@ -18,7 +19,6 @@ import lombok.Getter;
  * @version 17.07.2024
  */
 public class MattrObjectHead {
-
     Gson gson = new Gson();
 
     @Getter
@@ -27,7 +27,6 @@ public class MattrObjectHead {
 
     @Getter
     private CredentialDTO credential;
-
 
     /**
      * Constructs MattrObjectHead.
@@ -48,7 +47,6 @@ public class MattrObjectHead {
      * @return json data in a string.
      */
     public String getFormattedJsonData() {
-
         for (AutorizationDetails ignored : token.getAuthorizationDetails()) {
             for (Reportee rep : ignored.getReportees()) {
                 CredentialDTO.Cred credentials = new CredentialDTO.Cred();
@@ -73,5 +71,4 @@ public class MattrObjectHead {
         }
         return gson.toJson(credential);
     }
-
 }
