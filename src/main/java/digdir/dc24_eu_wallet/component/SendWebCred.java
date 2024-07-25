@@ -210,7 +210,7 @@ public class SendWebCred {
       payload.setType("https://mattr.global/schemas/verifiable-credential/offer/Direct");
       payload.setTo(Collections.singletonList(holder));
       payload.setFrom(didWeb);
-      payload.setCreated_time(System.currentTimeMillis() / 1000);
+      payload.setCreatedTime(System.currentTimeMillis() / 1000);
 
       EncryptTemplateDTO.Body body = new EncryptTemplateDTO.Body();
 
