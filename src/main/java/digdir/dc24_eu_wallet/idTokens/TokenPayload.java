@@ -70,7 +70,6 @@ public class TokenPayload {
         //for containing the information in the token.
         Gson gson = new Gson();
 
-        System.out.println("Payload: GetTokenhead " + payload);
 
         //Parses from JSON into object. In this instance it will parse payload
         //into class TokenHead, which is the topmost class of our token.
