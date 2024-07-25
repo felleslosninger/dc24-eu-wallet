@@ -1,6 +1,6 @@
 package digdir.dc24_eu_wallet.aport.fromAnsattporten;
 
-import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.Reportee;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.Reportee;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten;
+package digdir.dc24_eu_wallet.idTokens.fromDigdirporten;
 
 /**
  * Holds information from the Reportees field in the payload

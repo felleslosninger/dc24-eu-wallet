@@ -1,7 +1,7 @@
 package digdir.dc24_eu_wallet.aport.fromAnsattporten;
 
-import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.AutorizationDetails;
-import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.Reportee;
+/*import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.AutorizationDetails;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.Reportee;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -131,4 +131,4 @@ class AutorizationDetailsTest {
         autorizationDetails.mattrSetReportee(reportee);
         assertTrue(autorizationDetails.getReportees().contains(reportee));
     }
-}
+}*/

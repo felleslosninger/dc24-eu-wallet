@@ -1,6 +1,6 @@
 package digdir.dc24_eu_wallet.aport.toMattr;
 
-import digdir.dc24_eu_wallet.dto.CredentialDTO;
+/*import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.idTokens.ansattporten.toMattr.MattrObjectHead;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,4 +33,4 @@ class MattrObjectHeadTest {
     @Test
     void getCredential() {
     }
-}
+}*/

@@ -2,10 +2,11 @@ package digdir.dc24_eu_wallet.idTokens;
 
 import com.google.gson.Gson;
 
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.TokenHead;
+
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
-import digdir.dc24_eu_wallet.idTokens.ansattporten.fromAnsattporten.TokenHead;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 
@@ -20,9 +21,7 @@ public class TokenPayload {
 
     private TokenHead tokenPayloadAsObject;
 
-    //Switch out with your own class from id porten
-    //private TokenHeadIdPorten tokenHeadIdPorten;
-
+ 
     private String payload;
 
     private OidcIdToken token;
@@ -71,29 +70,13 @@ public class TokenPayload {
         //for containing the information in the token.
         Gson gson = new Gson();
 
+
         //Parses from JSON into object. In this instance it will parse payload
         //into class TokenHead, which is the topmost class of our token.
         tokenPayloadAsObject = gson.fromJson(payload, TokenHead.class);
 
         return tokenPayloadAsObject;
     }
-
-    /**
-     * Use your own class to parse into JSON, Return in your type of
-     * object representation of the json structure you get from
-     * id porten-
-     *
-     * @return
-    public TokenHeadIdPorten getTokenHeadIdPOrten(){
-        //Using tool Gson, we will read the decoded token into classes created
-        //for containing the information in the token.
-        Gson gson = new Gson();
-
-        //Parses from JSON into object. In this instance it will parse payload
-        //into class TokenHead, which is the topmost class of our token.
-        tokenHeadIdPorten = gson.fromJson(payload, TokenHeadIdPorten.class);
-
-        return tokenPayloadAsObject;
-    }
-    */
+   
+    
 }
