@@ -108,19 +108,19 @@ public class SendWebCred {
 
         authorizationDetails.setResource(authDetails.getResource());
         authorizationDetails.setType(authDetails.getType());
-        authorizationDetails.setResource_name(authDetails.getResource_name());
+        authorizationDetails.setResourceName(authDetails.getResource_name());
 
         for (CredentialDTO.Reportees repo: authDetails.getReportees()) {
           CredentialCardDTO.Reportees reportees = new CredentialCardDTO.Reportees();
 
-          reportees.setID(repo.getID());
+          reportees.setId(repo.getID());
           reportees.setAuthority(repo.getAuthority());
           reportees.setName(repo.getName());
           reportees.setRights(repo.getRights());
 
           authorizationDetails.addReportees(reportees);
         }
-        subject.addAuthorization_details(authorizationDetails);
+        subject.addAuthorizationDetails(authorizationDetails);
       }
       subjectContainers.add(subject);
     }
@@ -147,7 +147,7 @@ public class SendWebCred {
 
       CredentialCardDTO.Payload payload = new CredentialCardDTO.Payload();
       payload.setName("Ansattporten Credential");
-      payload.setDescription(subject.getAuthorization_details().getFirst().getReportees().getFirst().getName());
+      payload.setDescription(subject.getAuthorizationDetails().getFirst().getReportees().getFirst().getName());
       payload.setType(List.of("AnsattportenCredential"));
 
       CredentialCardDTO.CredentialBranding branding = new CredentialCardDTO.CredentialBranding();
