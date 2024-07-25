@@ -1,4 +1,5 @@
 package digdir.dc24_eu_wallet.dto;
+
 import lombok.Getter;
 import lombok.Setter;
 

@@ -103,12 +103,12 @@ public class SendWebCred {
       subject.setSub(cred.getSub());
       subject.setPid(cred.getPid());
 
-      for (CredentialDTO.AuthorizationDetails authDetails: cred.getAuthorization_details()) {
+      for (CredentialDTO.AuthorizationDetails authDetails: cred.getAuthorizationDetails()) {
         CredentialCardDTO.AuthorizationDetails authorizationDetails = new CredentialCardDTO.AuthorizationDetails();
 
         authorizationDetails.setResource(authDetails.getResource());
         authorizationDetails.setType(authDetails.getType());
-        authorizationDetails.setResourceName(authDetails.getResource_name());
+        authorizationDetails.setResourceName(authDetails.getResourceName());
 
         for (CredentialDTO.Reportees repo: authDetails.getReportees()) {
           CredentialCardDTO.Reportees reportees = new CredentialCardDTO.Reportees();

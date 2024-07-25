@@ -58,7 +58,7 @@ public class MattrObjectHead {
                 CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
                 authorizationDetails.setResource(ignored.getResource());
                 authorizationDetails.setType(ignored.getType());
-                authorizationDetails.setResource_name(ignored.getResource_name());
+                authorizationDetails.setResourceName(ignored.getResource_name());
 
                 CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
                 reportees.setID(rep.getID());
@@ -67,7 +67,7 @@ public class MattrObjectHead {
                 reportees.setName(rep.getName());
 
                 authorizationDetails.addReportees(reportees);
-                credentials.addAuthorization_details(authorizationDetails);
+                credentials.addAuthorizationDetails(authorizationDetails);
                 credential.addCred(credentials);
             }
         }
