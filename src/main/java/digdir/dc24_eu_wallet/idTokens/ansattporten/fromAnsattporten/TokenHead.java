@@ -12,45 +12,22 @@ import java.util.List;
  * @Author Langbakk
  * @Version 15.07.2024
  */
+@Getter
+@Setter
 public class TokenHead {
-
-    @Setter
-    @Getter
     private String sub;
     private ArrayList<String> amr;
-    @Setter
-    @Getter
     private String iss;
-    @Setter
-    @Getter
     private String pid;
-    @Setter
-    @Getter
     private String locale;
-    @Setter
-    @Getter
     private String nonce;
-    @Setter
-    @Getter
     private String aud;
-    @Setter
-    @Getter
     private String acr;
     private List<AutorizationDetails> authorization_details;
-    @Setter
-    @Getter
     private long authTime;
-    @Setter
-    @Getter
     private String name;
-    @Setter
-    @Getter
     private long exp;
-    @Setter
-    @Getter
     private long iat;
-    @Setter
-    @Getter
     private String jti;
 
   /**
@@ -58,8 +35,8 @@ public class TokenHead {
    * contain several elements.
    *
    */
-  public TokenHead(){
-        amr = new ArrayList<String>();
+  public TokenHead() {
+        amr = new ArrayList<>();
         authorization_details = new ArrayList<>();
     }
 
@@ -67,15 +44,11 @@ public class TokenHead {
     return amr;
   }
 
-  public void setAmr(ArrayList<String> amr) {
-    this.amr = amr;
-  }
-
-    public List<AutorizationDetails> getAuthorizationDetails() {
+  public List<AutorizationDetails> getAuthorizationDetails() {
     return authorization_details;
   }
 
-  public void setAuthorizationDetails(List<AutorizationDetails> authorization_details) {
-    this.authorization_details = authorization_details;
+  public void setAuthorizationDetails(List<AutorizationDetails> authorizationDetails) {
+    this.authorization_details = authorizationDetails;
   }
 }
