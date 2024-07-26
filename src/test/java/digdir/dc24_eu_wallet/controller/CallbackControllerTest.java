@@ -2,13 +2,13 @@ package digdir.dc24_eu_wallet.controller;
 
 import digdir.dc24_eu_wallet.component.SendWebCred;
 import digdir.dc24_eu_wallet.service.ChallengersService;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 
 class CallbackControllerTest {
 

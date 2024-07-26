@@ -3,10 +3,10 @@ package digdir.dc24_eu_wallet.controller;
 import digdir.dc24_eu_wallet.service.ChallengersService;
 import digdir.dc24_eu_wallet.service.HttpService;
 import digdir.dc24_eu_wallet.service.RequestService;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 class PresentationControllerTest {
 

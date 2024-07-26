@@ -2,14 +2,13 @@ package digdir.dc24_eu_wallet.idTokens.toMattr;
 
 import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.AutorizationDetails;
 import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.TokenHead;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MattrObjectHeadTest {
 
