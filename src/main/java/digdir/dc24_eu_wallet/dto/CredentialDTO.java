@@ -21,10 +21,20 @@ public class CredentialDTO {
   @Expose
   private List<Cred> cred = new ArrayList<>();
 
+  /**
+   * Adds a credential to the list.
+   *
+   * @param cred The credential to be added
+   */
   public void addCred(Cred cred) {
     this.cred.add(cred);
   }
 
+  /**
+   * Checks if the CredentialDTO is valid.
+   *
+   * @return true if the credential list is not empty and all credentials are valid, otherwise false.
+   */
   public boolean isValid() {
     return cred != null && !cred.isEmpty() && cred.stream().allMatch(Cred::isValid);
   }
@@ -42,10 +52,20 @@ public class CredentialDTO {
     @Expose
     private List<AuthorizationDetails> authorizationDetails = new ArrayList<>();
 
+    /**
+     * Adds authorization details to the credential.
+     *
+     * @param authorizationDetail The authorization detail to be added
+     */
       public void addAuthorizationDetails(AuthorizationDetails authorizationDetail) {
         this.authorizationDetails.add(authorizationDetail);
     }
 
+    /**
+     * Checks if the credential is valid.
+     *
+     * @return true if subject and pid are not empty and all authorization details are valid, otherwise false
+     */
     public boolean isValid() {
         return sub != null && !sub.isEmpty() && pid != null && !pid.isEmpty() &&
               authorizationDetails != null && !authorizationDetails.isEmpty() &&
@@ -68,10 +88,20 @@ public class CredentialDTO {
     @Expose
     private List<Reportees> reportees = new ArrayList<>();
 
+    /**
+     * Adds a reportee to the authorization details.
+     *
+     * @param reportees The reportee to be added
+     */
     public void addReportees(Reportees reportees) {
       this.reportees.add(reportees);
     }
 
+    /**
+     * Checks if the authorization details are valid.
+     *
+     * @return true if resource, type, and resourceName are not empty and all reportees are valid, otherwise false
+     */
     public boolean isValid() {
       return resource != null && !resource.isEmpty() &&
               type != null && !type.isEmpty() &&
@@ -100,14 +130,29 @@ public class CredentialDTO {
     @Expose
     private String name;
 
+    /**
+     * Gets the ID of the reportee.
+     *
+     * @return The ID of the reportee
+     */
       public String getID() {
       return id;
     }
 
+    /**
+     * Sets the ID of the reportee.
+     *
+     * @param id The ID to be set
+     */
     public void setID(String id) {
       this.id = id;
     }
 
+    /**
+     * Checks if the reportee is valid.
+     *
+     * @return true if rights, authority, id, and name are not empty, otherwise false
+     */
       public boolean isValid() {
       return rights != null && !rights.isEmpty() &&
               authority != null && !authority.isEmpty() &&

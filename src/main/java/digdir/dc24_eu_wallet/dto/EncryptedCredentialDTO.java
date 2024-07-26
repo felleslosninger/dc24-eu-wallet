@@ -17,7 +17,7 @@ import java.util.List;
 public class EncryptedCredentialDTO {
   private Jwe jwe;
 
-    /**
+  /**
    * Represents th JSON Web Encryption (JWE) structure.
    */
   @Getter
