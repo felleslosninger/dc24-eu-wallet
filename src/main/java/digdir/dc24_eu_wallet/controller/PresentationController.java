@@ -72,6 +72,7 @@ public class PresentationController {
    */
   @GetMapping("/")
   public String index(){
+    System.out.println("test: " + ngrok);
     return "index";
   }
 
