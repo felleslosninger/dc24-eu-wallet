@@ -45,14 +45,29 @@ public class SendCredentialDTO {
     private String iv;
     private String tag;
 
+    /**
+     * Adds a recipient to the list of recipients.
+     *
+     * @param recipient The Recipient object to be added to the list
+     */
       public void addRecipients(Recipient recipient) {
         this.recipients.add(recipient);
     }
 
+    /**
+     * Gets the protected information.
+     *
+     * @return The protected information as a String
+     */
       public String getProtected() {
         return protectedInfo;
     }
 
+    /**
+     * Sets the protected information.
+     *
+     * @param protectedInfo The protected information to set
+     */
     public void setProtected(String protectedInfo) {
         this.protectedInfo = protectedInfo;
     }
