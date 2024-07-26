@@ -38,7 +38,7 @@ jobs:
           [build]
 
           [env]
-            MATTR_AUDIENCE="${{ secrets.FLYV1 }}"
+            ANSATTPORTEN_CLIENT_SECRET="${{ secrets.ANSATTPORTEN_CLIENT_SECRET }}"
 
           [http_service]
             internal_port = 8980
