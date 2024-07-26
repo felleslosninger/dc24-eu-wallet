@@ -1,17 +1,16 @@
 package digdir.dc24_eu_wallet.service;
 
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.client5.http.fluent.Request;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import org.apache.hc.client5.http.fluent.Request;
-
 
 import java.io.IOException;
 import java.util.Date;

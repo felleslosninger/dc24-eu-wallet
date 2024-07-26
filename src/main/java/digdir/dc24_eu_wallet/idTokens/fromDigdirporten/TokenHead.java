@@ -23,8 +23,8 @@ public record TokenHead(
     String name,
     long exp,
     long iat,
-    String jti
-) {
+    String jti)
+{
 
     /**
      * Constructs the token payload object. Initializes lists for parts that
@@ -39,10 +39,20 @@ public record TokenHead(
         }
     }
 
+    /**
+     * Gets the list of Authentication Methods References.
+     *
+     * @return A list of AMR values
+     */
     public List<String> getAmr() {
         return amr;
     }
 
+    /**
+     * Gets the list of authorization details.
+     *
+     * @return A list of AuthorizationDetails objects
+     */
     public List<AutorizationDetails> getAuthorizationDetails() {
         return authorization_details;
     }

@@ -26,7 +26,7 @@ class EncryptTemplateDTOTest {
         payload.setId("testId");
         payload.setType("testType");
         payload.setTo(Arrays.asList("testTo1", "testTo2"));
-        payload.setCreated_time(3);
+        payload.setCreatedTime(3);
 
         encryptTemplateDTO = new EncryptTemplateDTO(senderDidUrl, recipientDidUrls, payload);
     }
@@ -73,7 +73,7 @@ class EncryptTemplateDTOTest {
         payload.setId("newId");
         payload.setType("newType");
         payload.setTo(Arrays.asList("newTo1", "newTo2"));
-        payload.setCreated_time(3);
+        payload.setCreatedTime(3);
         encryptTemplateDTO.setPayload(newPayload);
         assertEquals(newPayload, encryptTemplateDTO.getPayload());
     }

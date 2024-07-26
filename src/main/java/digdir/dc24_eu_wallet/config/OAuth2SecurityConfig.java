@@ -2,7 +2,6 @@ package digdir.dc24_eu_wallet.config;
 
 import java.util.function.Consumer;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -28,8 +27,12 @@ public class OAuth2SecurityConfig {
     /**
      * For managing client registrations.
      */
-    @Autowired
-    private ReactiveClientRegistrationRepository clientRegistrationRepository;
+    private final ReactiveClientRegistrationRepository clientRegistrationRepository;
+
+    // Constructor injection
+    public OAuth2SecurityConfig(ReactiveClientRegistrationRepository clientRegistrationRepository) {
+        this.clientRegistrationRepository = clientRegistrationRepository;
+    }
 
     /**
      * Configures the security filter chain, which defines how HTTP requests are handled based on
@@ -41,7 +44,7 @@ public class OAuth2SecurityConfig {
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
-                .csrf(csrf -> csrf.disable())
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges ->
                         exchanges
                                 .pathMatchers("/", "/error", "/logout/callback", "/test/**", "/callback/**", "/Presentation/**").permitAll()
@@ -65,7 +68,6 @@ public class OAuth2SecurityConfig {
      */
     private ServerOAuth2AuthorizationRequestResolver authorizationRequestResolver(
             ReactiveClientRegistrationRepository clientRegistrationRepository) {
-
         DefaultServerOAuth2AuthorizationRequestResolver authorizationRequestResolver = new DefaultServerOAuth2AuthorizationRequestResolver(clientRegistrationRepository);
         authorizationRequestResolver.setAuthorizationRequestCustomizer(authorizationRequestCustomizer());
         return  authorizationRequestResolver;

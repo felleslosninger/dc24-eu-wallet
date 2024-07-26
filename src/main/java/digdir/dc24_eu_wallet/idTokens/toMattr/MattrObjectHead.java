@@ -1,15 +1,15 @@
 package digdir.dc24_eu_wallet.idTokens.toMattr;
 
+import digdir.dc24_eu_wallet.dto.CredentialDTO;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.AutorizationDetails;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.Reportee;
+import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.TokenHead;
 
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
-import digdir.dc24_eu_wallet.dto.CredentialDTO;
-import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.AutorizationDetails;
-import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.Reportee;
-import digdir.dc24_eu_wallet.idTokens.fromDigdirporten.TokenHead;
 import lombok.Getter;
 
 /**
@@ -21,7 +21,6 @@ import lombok.Getter;
  * @version 17.07.2024
  */
 public class MattrObjectHead {
-
     Gson gson = new Gson();
 
     @Getter
@@ -30,8 +29,7 @@ public class MattrObjectHead {
 
     @Getter
     private CredentialDTO credential;
-
-
+    
     /**
      * Constructs MattrObjectHead.
      *
@@ -61,7 +59,7 @@ public class MattrObjectHead {
                     CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
                     authorizationDetails.setResource(ignored.getResource());
                     authorizationDetails.setType(ignored.getType());
-                    authorizationDetails.setResource_name(ignored.getResource_name());
+                    authorizationDetails.setResourceName(ignored.getResource_name());
     
                     CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
                     reportees.setID(rep.getID());
@@ -70,44 +68,44 @@ public class MattrObjectHead {
                     reportees.setName(rep.getName());
     
                     authorizationDetails.addReportees(reportees);
-                    credentials.addAuthorization_details(authorizationDetails);
+                    credentials.addAuthorizationDetails(authorizationDetails);
                     credential.addCred(credentials);
                 }
             }
-            return gson.toJson(credential);
-
-        }else{
-                CredentialDTO.Cred credentials = new CredentialDTO.Cred();
-                credentials.setPid(token.pid());
-                credentials.setSub(token.sub());
-
-
-                CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
-                ArrayList <String> listOfRights = new ArrayList<>();
-                listOfRights.add("Read");
-                listOfRights.add("Delete");
-
-                authorizationDetails.setResource("urn:idporten");
-                authorizationDetails.setType("idporten");
-                authorizationDetails.setResource_name("Vergemaal");
-
-                CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
-                reportees.setID("0000000000");
-                reportees.setAuthority("Statsforvalteren");
-                reportees.setRights(listOfRights);
-                reportees.setName("Vergemaal for verge");
-
-                authorizationDetails.addReportees(reportees);
-                credentials.addAuthorization_details(authorizationDetails);
-                credential.addCred(credentials);
-
-      
-                return gson.toJson(credential);
-
+        } else {
+            CredentialDTO.Cred credentials = getCred();
+            credential.addCred(credentials);
         }
-
-        
+        return gson.toJson(credential);
     }
 
-}
+    /**
+     * Creates and returns a CredentialDTO.Cred object populated with token information and predefined authorization details.
+     *
+     * @return A populated CredentialDTO.Cred object
+     */
+    private CredentialDTO.Cred getCred() {
+        CredentialDTO.Cred credentials = new CredentialDTO.Cred();
+        credentials.setPid(token.pid());
+        credentials.setSub(token.sub());
 
+        CredentialDTO.AuthorizationDetails authorizationDetails = new CredentialDTO.AuthorizationDetails();
+        ArrayList <String> listOfRights = new ArrayList<>();
+        listOfRights.add("Read");
+        listOfRights.add("Delete");
+
+        authorizationDetails.setResource("urn:idporten");
+        authorizationDetails.setType("idporten");
+        authorizationDetails.setResourceName("Vergemaal");
+
+        CredentialDTO.Reportees reportees = new CredentialDTO.Reportees();
+        reportees.setID("0000000000");
+        reportees.setAuthority("Statsforvalteren");
+        reportees.setRights(listOfRights);
+        reportees.setName("Vergemaal for verge");
+
+        authorizationDetails.addReportees(reportees);
+        credentials.addAuthorizationDetails(authorizationDetails);
+        return credentials;
+    }
+}

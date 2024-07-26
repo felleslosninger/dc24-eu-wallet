@@ -1,6 +1,7 @@
 package digdir.dc24_eu_wallet.service;
 
 import jakarta.annotation.PreDestroy;
+
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;

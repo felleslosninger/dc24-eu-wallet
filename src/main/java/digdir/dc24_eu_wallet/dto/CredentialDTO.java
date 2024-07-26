@@ -2,6 +2,9 @@ package digdir.dc24_eu_wallet.dto;
 
 import com.google.gson.annotations.Expose;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,22 +15,26 @@ import java.util.List;
  * @author Daniel Neset
  * @version 16.07.2024
  */
+@Setter
+@Getter
 public class CredentialDTO {
   @Expose
   private List<Cred> cred = new ArrayList<>();
 
-  public List<Cred> getCred() {
-    return cred;
-  }
-
+  /**
+   * Adds a credential to the list.
+   *
+   * @param cred The credential to be added
+   */
   public void addCred(Cred cred) {
     this.cred.add(cred);
   }
 
-  public void setCred(List<Cred> cred) {
-    this.cred = cred;
-  }
-
+  /**
+   * Checks if the CredentialDTO is valid.
+   *
+   * @return true if the credential list is not empty and all credentials are valid, otherwise false.
+   */
   public boolean isValid() {
     return cred != null && !cred.isEmpty() && cred.stream().allMatch(Cred::isValid);
   }
@@ -35,102 +42,70 @@ public class CredentialDTO {
   /**
    * Represents a credential with subject, personal identifier, and authorization details.
    */
-  public static class Cred{
+  @Setter
+  @Getter
+  public static class Cred {
     @Expose
     private String sub;
     @Expose
     private String pid;
     @Expose
-    private List<AuthorizationDetails> authorization_details = new ArrayList<>();
+    private List<AuthorizationDetails> authorizationDetails = new ArrayList<>();
 
-    public String getSub() {
-      return sub;
+    /**
+     * Adds authorization details to the credential.
+     *
+     * @param authorizationDetail The authorization detail to be added
+     */
+      public void addAuthorizationDetails(AuthorizationDetails authorizationDetail) {
+        this.authorizationDetails.add(authorizationDetail);
     }
 
-    public void setSub(String sub) {
-      this.sub = sub;
-    }
-
-    public String getPid() {
-      return pid;
-    }
-
-    public void setPid(String pid) {
-      this.pid = pid;
-    }
-
-    public List<AuthorizationDetails> getAuthorization_details() {
-      return authorization_details;
-    }
-
-    public void setAuthorization_details(List<AuthorizationDetails> authorization_details) {
-      this.authorization_details = authorization_details;
-    }
-
-    public void addAuthorization_details(AuthorizationDetails authorizationDetail){
-      this.authorization_details.add(authorizationDetail);
-    }
-
+    /**
+     * Checks if the credential is valid.
+     *
+     * @return true if subject and pid are not empty and all authorization details are valid, otherwise false
+     */
     public boolean isValid() {
-      return sub != null && !sub.isEmpty() &&
-              pid != null && !pid.isEmpty() &&
-              authorization_details != null && !authorization_details.isEmpty() &&
-              authorization_details.stream().allMatch(AuthorizationDetails::isValid);
+        return sub != null && !sub.isEmpty() && pid != null && !pid.isEmpty() &&
+              authorizationDetails != null && !authorizationDetails.isEmpty() &&
+              authorizationDetails.stream().allMatch(AuthorizationDetails::isValid);
     }
   }
 
   /**
    * Represents the authorization details of a credential.
    */
+  @Setter
+  @Getter
   public static class AuthorizationDetails {
     @Expose
     private String resource;
     @Expose
     private String type;
     @Expose
-    private String resource_name;
+    private String resourceName;
     @Expose
     private List<Reportees> reportees = new ArrayList<>();
 
-    public String getResource() {
-      return resource;
-    }
-
-    public void setResource(String resource) {
-      this.resource = resource;
-    }
-
-    public String getType() {
-      return type;
-    }
-
-    public void setType(String type) {
-      this.type = type;
-    }
-
-    public String getResource_name() {
-      return resource_name;
-    }
-
-    public void setResource_name(String resource_name) {
-      this.resource_name = resource_name;
-    }
-
-    public List<Reportees> getReportees() {
-      return reportees;
-    }
-
-    public void setReportees(List<Reportees> reportees) {
-      this.reportees = reportees;
-    }
+    /**
+     * Adds a reportee to the authorization details.
+     *
+     * @param reportees The reportee to be added
+     */
     public void addReportees(Reportees reportees) {
       this.reportees.add(reportees);
     }
 
+    /**
+     * Checks if the authorization details are valid.
+     *
+     * @return true if resource, type, and resourceName are not empty and all reportees are valid, otherwise false
+     */
     public boolean isValid() {
       return resource != null && !resource.isEmpty() &&
               type != null && !type.isEmpty() &&
-              resource_name != null && !resource_name.isEmpty() &&
+              resourceName != null && !resourceName.isEmpty() &&
               reportees != null && !reportees.isEmpty() &&
               reportees.stream().allMatch(Reportees::isValid);
     }
@@ -139,54 +114,50 @@ public class CredentialDTO {
   /**
    * Represents the reportees associated with the authorization.
    */
-  public static class Reportees{
+  public static class Reportees {
+    @Setter
+    @Getter
     @Expose
     private List<String> rights;
+    @Setter
+    @Getter
     @Expose
     private String authority;
     @Expose
     private String id;
+    @Setter
+    @Getter
     @Expose
     private String name;
 
-    public List<String> getRights() {
-      return rights;
-    }
-
-    public void setRights(List<String> rights) {
-      this.rights = rights;
-    }
-
-    public String getAuthority() {
-      return authority;
-    }
-
-    public void setAuthority(String authority) {
-      this.authority = authority;
-    }
-
-    public String getID() {
+    /**
+     * Gets the ID of the reportee.
+     *
+     * @return The ID of the reportee
+     */
+      public String getID() {
       return id;
     }
 
-    public void setID(String ID) {
-      this.id = ID;
+    /**
+     * Sets the ID of the reportee.
+     *
+     * @param id The ID to be set
+     */
+    public void setID(String id) {
+      this.id = id;
     }
 
-    public String getName() {
-      return name;
-    }
-
-    public void setName(String name) {
-      this.name = name;
-    }
-
-    public boolean isValid() {
+    /**
+     * Checks if the reportee is valid.
+     *
+     * @return true if rights, authority, id, and name are not empty, otherwise false
+     */
+      public boolean isValid() {
       return rights != null && !rights.isEmpty() &&
               authority != null && !authority.isEmpty() &&
               id != null && !id.isEmpty() &&
               name != null && !name.isEmpty();
     }
   }
-
 }

@@ -1,11 +1,13 @@
 package digdir.dc24_eu_wallet.controller;
 
-import com.google.gson.Gson;
 import digdir.dc24_eu_wallet.component.SendWebCred;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.dto.PresentationDTO;
 import digdir.dc24_eu_wallet.entities.Challengers;
 import digdir.dc24_eu_wallet.service.ChallengersService;
+
+import com.google.gson.Gson;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,9 @@ import java.io.IOException;
 @RequestMapping("callback")
 public class CallbackController {
   public static final Logger logger = LoggerFactory.getLogger(CallbackController.class);
+
   Gson gson = new Gson();
+
   private final ChallengersService challengersService;
   private final SendWebCred sendWebCred;
 
@@ -38,7 +42,7 @@ public class CallbackController {
    * @param sendWebCred The service used to send the Web Credentials.
    */
   @Autowired
-  public CallbackController(ChallengersService challengersService, SendWebCred sendWebCred){
+  public CallbackController(ChallengersService challengersService, SendWebCred sendWebCred) {
     this.challengersService = challengersService;
     this.sendWebCred = sendWebCred;
   }
@@ -56,22 +60,24 @@ public class CallbackController {
   public ResponseEntity<PresentationDTO> postCallback(@RequestBody PresentationDTO presentationDTO) throws IOException {
     String holder = presentationDTO.getHolder();
     String challenger = presentationDTO.getChallengeId();
+
     ResponseEntity<PresentationDTO> response;
 
-    if((holder.isEmpty() || holder.isBlank())){
+    if ((holder.isEmpty() || holder.isBlank())) {
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }else if((challenger.isEmpty() || challenger.isBlank())){
+    } else if((challenger.isEmpty() || challenger.isBlank())){
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }else{
+    } else {
       logger.info("Callback from Mattr with challengerId: {}", presentationDTO.getChallengeId());
       logger.info("Fetch object from database with the same ChallengerId: {}", presentationDTO.getChallengeId());
+
       Challengers challengers = challengersService.getRecord(presentationDTO.getChallengeId());
       CredentialDTO credentialDTO = gson.fromJson(challengers.getJsonData(), CredentialDTO.class);
+
       sendWebCred.createAndSendCredentials(presentationDTO.getHolder(), credentialDTO);
+
       response = new ResponseEntity<>(HttpStatus.OK);
     }
-
     return response;
   }
-
 }
