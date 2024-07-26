@@ -58,6 +58,8 @@ public class CallbackController {
     String challenger = presentationDTO.getChallengeId();
     ResponseEntity<PresentationDTO> response;
 
+    System.out.println(gson.toJson(presentationDTO));
+
     if((holder.isEmpty() || holder.isBlank())){
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }else if((challenger.isEmpty() || challenger.isBlank())){
