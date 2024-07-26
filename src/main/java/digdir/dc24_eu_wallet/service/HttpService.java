@@ -1,7 +1,6 @@
 package digdir.dc24_eu_wallet.service;
 
 import jakarta.annotation.PreDestroy;
-
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -11,6 +10,7 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.springframework.stereotype.Service;
+
 
 import java.io.IOException;
 
@@ -24,6 +24,7 @@ import java.io.IOException;
  */
 @Service
 public class HttpService {
+
   private final CloseableHttpClient httpClient;
 
   /**
@@ -48,7 +49,8 @@ public class HttpService {
     post.setHeader("Authorization", "Bearer " + token);
     post.setEntity(new StringEntity(body, ContentType.create("application/json", "UTF-8")));
     try (CloseableHttpResponse response = httpClient.execute(post)) {
-        return EntityUtils.toString(response.getEntity(), "UTF-8");
+      String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+      return responseBody;
     } catch (ParseException e) {
       throw new RuntimeException(e);
     }
@@ -63,4 +65,5 @@ public class HttpService {
   public void close() throws IOException {
     httpClient.close();
   }
+
 }
