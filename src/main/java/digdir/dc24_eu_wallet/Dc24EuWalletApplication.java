@@ -21,6 +21,12 @@ public class Dc24EuWalletApplication implements CommandLineRunner {
 	private String mattrTenantUrl;
 	@Value("${mattr.issuer}")
 	private String mattrIssuer;
+	@Value("${mattr.client.secret}")
+	private String mattrClientSecret;
+	@Value("${mattr.client.id}")
+	private String mattrClientId;
+	@Value("${ansattporten.client.secret}")
+	private String ansattportenClientSecret;
 	@Value("${ngrok.url}")
 	private String ngrokUrl;
 	@Value("${did.web}")
@@ -47,6 +53,9 @@ public class Dc24EuWalletApplication implements CommandLineRunner {
 		logger.info("MATTR_AUDIENCE: {}", mattrAudience);
 		logger.info("MATTR_TENANT_URL: {}", mattrTenantUrl);
 		logger.info("MATTR_ISSUER: {}", mattrIssuer);
+		logger.info("MATTR_CLIENT_SECRET: {}", mattrClientSecret);
+		logger.info("MATTR_CLIENT_ID: {}", mattrClientId);
+		logger.info("ANSATTPORTEN_CLIENT_SECRET: {}", ansattportenClientSecret);
 		logger.info("NGROK_URL: {}", ngrokUrl);
 		logger.info("DID_WEB: {}", didWeb);
 		logger.info("TEMPLATE_ID: {}", templateId);
