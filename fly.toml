@@ -17,10 +17,3 @@ primary_region = 'ewr'
   cpu_kind = 'shared'
   cpus = 1
 
-[[services]]
-  http_checks = []
-  internal_port = 8980
-  protocol = "tcp"
-
-[[env]]
-  MATTR_ISSUER="data"
