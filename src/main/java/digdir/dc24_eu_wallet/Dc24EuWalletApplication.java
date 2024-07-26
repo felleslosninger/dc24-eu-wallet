@@ -25,7 +25,7 @@ public class Dc24EuWalletApplication implements CommandLineRunner {
 	private String mattrClientSecret;
 	@Value("${mattr.client.id}")
 	private String mattrClientId;
-	@Value("${ansattporten.client.secret}")
+	@Value("${ansattporten}")
 	private String ansattportenClientSecret;
 	@Value("${ngrok.url}")
 	private String ngrokUrl;
