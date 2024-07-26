@@ -270,6 +270,12 @@ public class SendWebCred {
     httpService.postRequest(url + "/core/v1/messaging/send", requestService.getJwt(), sendMessage);
   }
 
+  /**
+   * Converts an EncryptedCredentialDTO.Recipient to a SendCredentialDTO to a SendCredentialDTO.Recipient.
+   *
+   * @param recipient The EncryptedCredentialDTO.Recipient object to be converted
+   * @return The converted SendCredentialDTO.Recipient object
+   */
   private static SendCredentialDTO.Recipient getRecipient(EncryptedCredentialDTO.Recipient recipient) {
     SendCredentialDTO.Header header = new SendCredentialDTO.Header();
     SendCredentialDTO.Recipient rep = new SendCredentialDTO.Recipient();
