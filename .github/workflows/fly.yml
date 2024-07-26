@@ -36,9 +36,9 @@ jobs:
         run: |
           cat <<EOT > fly.toml
           app = "dc24-eu-wallet-issuer-workflow"
+          primary_region = 'ewr'
 
           [build]
-            image = "registry.fly.io/${{ secrets.FLY_APP_NAME }}:latest"
 
           [env]
             MATTR_AUDIENCE="${{ secrets.FLYV1 }}"
