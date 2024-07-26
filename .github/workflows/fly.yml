@@ -29,9 +29,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: Setup Flyctl
-        uses: superfly/flyctl-actions/setup-flyctl@master
-
       - name: Create fly.toml
         run: |
           cat <<EOT > fly.toml
@@ -51,6 +48,9 @@ jobs:
             min_machines_running = 0
             processes = ["app"]
           EOT
+
+      - name: Setup Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy with Flyctl
         run: flyctl deploy --remote-only
