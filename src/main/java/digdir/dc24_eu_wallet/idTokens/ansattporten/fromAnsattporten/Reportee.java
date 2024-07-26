@@ -17,6 +17,9 @@ public class Reportee {
     private String ID;
     private String Name;
 
+    /**
+     * Initializes a new instance of Reportee.
+     */
     public Reportee() {
         // Left empty for flexible instantiation
     }
