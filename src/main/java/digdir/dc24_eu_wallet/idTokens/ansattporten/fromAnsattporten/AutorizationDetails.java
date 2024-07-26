@@ -24,10 +24,18 @@ public class AutorizationDetails {
     private String id;
     private String name;
 
+    /**
+     * Initializes a new instance of AuthorizationDetails.
+     */
     public AutorizationDetails() {
         // Left empty for flexible instantiation
     }
 
+    /**
+     * Sets the reportee for the authorization details.
+     *
+     * @param reportee The Reportee object to be added to the list of reportees.
+     */
     public void mattrSetReportee(Reportee reportee) {
         this.reportees = new ArrayList<>();
         //ArrayList <Reportee>reportees = new ArrayList<>();
