@@ -49,6 +49,11 @@ public class CredentialCardDTO {
     private String pid;
     private List<AuthorizationDetails> authorizationDetails = new ArrayList<>();
 
+    /**
+     * Adds authorization details to the credential.
+     *
+     * @param authorizationDetails The authorization details to be added
+     */
     public void addAuthorizationDetails(AuthorizationDetails authorizationDetails) {
       this.authorizationDetails.add(authorizationDetails);
     }
@@ -65,6 +70,11 @@ public class CredentialCardDTO {
     private String resourceName;
     private List<Reportees> reportees = new ArrayList<>();
 
+    /**
+     * Adds a reportee to the list of reportees.
+     *
+     * @param reportees The reportee to be added
+     */
     public void addReportees(Reportees reportees) {
       this.reportees.add(reportees);
     }
