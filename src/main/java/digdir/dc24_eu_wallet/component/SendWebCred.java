@@ -72,6 +72,7 @@ public class SendWebCred {
     List<CredentialSignDTO> credentialSignDTOs = signWebCredentials(credentialCardDTOS);
 
     logger.info("4) Gather all the Web Credentials in a object that will be encrypted");
+    logger.info("4) Gather all the Web Credentials in a object that will be encrypted");
     List<EncryptTemplateDTO> encryptPosts = encryptWebCred(credentialSignDTOs, walletDID);
 
     for (EncryptTemplateDTO post: encryptPosts) {
@@ -113,7 +114,7 @@ public class SendWebCred {
         for (CredentialDTO.Reportees repo: authDetails.getReportees()) {
           CredentialCardDTO.Reportees reportees = new CredentialCardDTO.Reportees();
 
-          reportees.setId(repo.getID());
+          reportees.setID(repo.getID());
           reportees.setAuthority(repo.getAuthority());
           reportees.setName(repo.getName());
           reportees.setRights(repo.getRights());
@@ -147,7 +148,7 @@ public class SendWebCred {
 
       CredentialCardDTO.Payload payload = new CredentialCardDTO.Payload();
       payload.setName("Ansattporten Credential");
-      payload.setDescription(subject.getAuthorizationDetails().getFirst().getReportees().getFirst().getName());
+      payload.setDescription(subject.getAuthorizationDetails().get(0).getReportees().get(0).getName());
       payload.setType(List.of("AnsattportenCredential"));
 
       CredentialCardDTO.CredentialBranding branding = new CredentialCardDTO.CredentialBranding();
@@ -291,7 +292,7 @@ public class SendWebCred {
     header.setEpk(epk);
 
     rep.setHeader(header);
-    rep.setEncryptedKey(recipient.getEncryptedKey());
+    rep.setEncrypted_key(recipient.getEncrypted_key());
     return rep;
   }
 }

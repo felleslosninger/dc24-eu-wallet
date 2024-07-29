@@ -49,8 +49,10 @@ public class HttpService {
     post.setHeader("Content-type", "application/json");
     post.setHeader("Authorization", "Bearer " + token);
     post.setEntity(new StringEntity(body, ContentType.create("application/json", "UTF-8")));
+    System.out.println(body);
     try (CloseableHttpResponse response = httpClient.execute(post)) {
       String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+      System.out.println(responseBody);
       return responseBody;
     } catch (ParseException e) {
       throw new RuntimeException(e);
