@@ -46,9 +46,6 @@ jobs:
             auto_start_machines = true
             min_machines_running = 0
             processes = ["app"]
-          [[services]]
-            internal_port = 8980
-            protocol = "tcp"
           
           EOT
 
