@@ -33,7 +33,7 @@ jobs:
         run: |
           cat <<EOT > fly.toml
           app = "dc24-eu-wallet-issuer-workflow"
-          primary_region = 'ewr'
+          primary_region = 'arn'
 
           [build]
 
