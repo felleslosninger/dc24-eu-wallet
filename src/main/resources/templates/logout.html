@@ -1,64 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Ansattporten integration demo</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/static/style.css">
+	<meta charset="UTF-8">
+	<title>Ansattporten Integration Demo</title>
+	<link rel="stylesheet" href="/css/logout.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+		html {
+			height: 100%;
+		}
 
-    
-<style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #e7eff9;
-        margin-top: 6%;
-        padding: 20px;
-        color: #333;
-        height: 100vh;
-        box-sizing: border-box;
-    }
-
-    .container {
-        display: grid; 
-        place-items: center;
-        
-    }
-
-
-    h1 {
-        color: #005a9c;
-        margin-bottom: 20px;
-        font-size: 5.8rem;
-        padding-bottom: 1%;
-    }
+		body {
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			margin: 0;
+			padding: 0 20px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			background-color: #F0F2F5;
+			color: #1E2B3C;
+			transition: background-color 0.3s, color 0.3s;
+			font-size: 1rem;
+		}
 
 
-    a {
-        background-color: #008cba;
-        color: white;
-        padding: 15px 30px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: transform 0.3s ease, background-color 0.3s ease;
-        display: inline-block;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        font-size: 2rem;
-    }
+		h1 {
+			color: #1E2B3C;
+			margin-bottom: 20px;
+			font-size: 1rem;
+		}
 
-    a:hover, a:focus {
-        background-color: #005a9c;
-        transform: translateY(-3px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    }
-</style>
+		a {
+			background-color: #1667A1;
+			color: white;
+			padding: 15px 30px;
+			text-decoration: none;
+			border-radius: 5px;
+			font-weight: bold;
+			transition: transform 0.3s ease, background-color 0.3s ease;
+			display: inline-block;
+			font-size: 1rem;
+		}
+
+        a:hover, a:focus {
+			background-color: #1667A1;
+			transform: translateY(-3px);
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+		}
+
+        .dark-mode-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #0056b3;
+        }
+
+        .dark-mode {
+            background-color: #1E2B3C;
+            color: #F0F2F5;
+        }
+
+        .dark-mode h1, .dark-mode p, .dark-mode a {
+            color: #F0F2F5;
+        }
+
+        .dark-mode a {
+            background-color: #0062B8;
+        }
+
+        .dark-mode a:hover {
+            background-color: #004A8F;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.875em;
+        }
+
+        .dark-mode footer {
+            color: #aaa;
+        }
+
+        .dark-mode-toggle i {
+            color: rgb(255, 255, 255);
+        }
+
+        .dark-mode .dark-mode-toggle i {
+            color: white;
+        }
+
+        #back-button {
+            display: inline-block;
+            background-color: #007BFF; /* Blå farge */
+            color: #ffffff; /* Hvit tekst */
+            padding: 10px 20px; /* Polstring */
+            text-decoration: none; /* Ingen understrekning */
+            border-radius: 5px; /* Runde hjørner */
+            font-size: 1em; /* Tekststørrelse */
+            font-weight: bold; /* Fet skrift */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Overgangseffekter */
+        }
+
+        #back-button:hover, #back-button:focus {
+            background-color: #0056b3; /* Mørkere blå farge ved hover/fokus */
+            transform: translateY(-3px); /* Løft knappen litt opp */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Skyggeeffekt */
+        }
+
+        #back-button:active {
+            transform: translateY(1px); /* Trykk knappen litt ned */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Mindre skyggeeffekt */
+        }
+
+	</style>
+	<script>
+		function toggleDarkMode() {
+			document.body.classList.toggle('dark-mode');
+			const icon = document.querySelector('.dark-mode-toggle i');
+			if (document.body.classList.contains('dark-mode')) {
+				icon.classList.remove('fa-moon');
+				icon.classList.add('fa-sun');
+				localStorage.setItem('darkMode', 'enabled');
+			} else {
+				icon.classList.remove('fa-sun');
+				icon.classList.add('fa-moon');
+				localStorage.setItem('darkMode', 'disabled');
+			}
+		}
+
+		function loadDarkModePreference() {
+			const darkMode = localStorage.getItem('darkMode');
+			const icon = document.querySelector('.dark-mode-toggle i');
+			if (darkMode === 'enabled') {
+				document.body.classList.add('dark-mode');
+				icon.classList.remove('fa-moon');
+				icon.classList.add('fa-sun');
+			} else {
+				document.body.classList.remove('dark-mode');
+				icon.classList.remove('fa-sun');
+				icon.classList.add('fa-moon');
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', loadDarkModePreference);
+	</script>
 </head>
 <body>
-    <div class="container">
-        <!-- Main content container -->
-        <h1>Ansattporten utlogging</h1>
-        <!-- Link to navigate back to the home page -->
-        <a href="/">Tilbake</a>
-    </div>
+	<button class="dark-mode-toggle" onclick="toggleDarkMode()">
+		<i class="fas fa-moon"></i>
+	</button>
+		<h1>... Ansattporten Utlogging</h1>
+        <a href="/" id="back-button">Tilbake</a>	
 </body>
 </html>
