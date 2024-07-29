@@ -99,6 +99,7 @@ MATTR_TENANT_URL=""             <-- Your Tenent URL from Mattr
 MATTR_ISSUER=""                 <-- Your auth url from Mattr
 MATTR_CLIENT_SECRET=""          <-- Your client secret from Mattr
 MATTR_CLIENT_ID=""              <-- Your client id from Mattr
+IDPORTEN_CLIENT_SECRET=""       <-- Your "idporten" client secret
 ANSATTPORTEN_CLIENT_SECRET=""   <-- Your "ansattporten" client secret
 
 NGROK_URL="/callback"           <-- The callback URL

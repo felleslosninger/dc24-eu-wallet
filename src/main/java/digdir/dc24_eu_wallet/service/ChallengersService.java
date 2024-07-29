@@ -2,6 +2,7 @@ package digdir.dc24_eu_wallet.service;
 
 import digdir.dc24_eu_wallet.entities.Challengers;
 import digdir.dc24_eu_wallet.repository.ChallengersRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ChallengersService {
-
   private final ChallengersRepository challengersRepository;
 
   /**
@@ -23,7 +23,7 @@ public class ChallengersService {
    * @param challengersRepository The repository handling airport operations.
    */
   @Autowired
-  public ChallengersService(ChallengersRepository challengersRepository){
+  public ChallengersService(ChallengersRepository challengersRepository) {
     this.challengersRepository = challengersRepository;
   }
 
@@ -32,17 +32,16 @@ public class ChallengersService {
    *
    * @param challengers The {@link Challengers} to be added.
    */
-  public void saveChallenger(Challengers challengers){
+  public void saveChallenger(Challengers challengers) {
     challengersRepository.save(challengers);
   }
-
 
   /**
    * Retrieves a challenger from the database based on the ChallengerId.
    *
    * @return Return a {@link Challengers} entity.
    */
-  public Challengers getRecord(String challengerId){
+  public Challengers getRecord(String challengerId) {
     return challengersRepository.findChallengersByChallenger(challengerId);
   }
 

@@ -2,6 +2,9 @@ package digdir.dc24_eu_wallet.entities;
 
 import jakarta.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * This entity represents a challenger.
  * It contains a unique id, unique challenger id and
@@ -10,67 +13,45 @@ import jakarta.persistence.*;
  * @author Daniel Neset
  * @version 12.07.2024
  */
+@Setter
+@Getter
 @Entity
 public class Challengers {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-  @Column(nullable = false, unique = true)
-  private String challenger;
-  @Column(nullable = false, length = 65535, columnDefinition = "TEXT")
-  private String jsonData;
 
-  /**
-   * Get the unique id.
-   *
-   * @return Return the unique id.
-   */
-  public long getId() {
-    return id;
-  }
+    /**
+     * -- GETTER --
+     *  Get the unique id.
+     * <p>
+     *
+     * -- SETTER --
+     *  Set the unique id.
+     *
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-  /**
-   * Set the unique id.
-   *
-   * @param id The unique id to be set.
-   */
-  public void setId(long id) {
-    this.id = id;
-  }
+    /**
+     * -- GETTER --
+     *  Get the unique challenger.
+     * <p>
+     *
+     * -- SETTER --
+     *  Set the unique challenger.
+     *
+     */
+    @Column(nullable = false, unique = true)
+    private String challenger;
 
-  /**
-   * Get the unique challenger.
-   *
-   * @return Return the unique challenger.
-   */
-  public String getChallenger() {
-    return challenger;
-  }
-
-  /**
-   * Set the unique challenger.
-   *
-   * @param challenger The unique challenger to be set.
-   */
-  public void setChallenger(String challenger) {
-    this.challenger = challenger;
-  }
-
-  /**
-   * Get the Json string.
-   *
-   * @return Return the json string.
-   */
-  public String getJsonData() {
-    return jsonData;
-  }
-
-  /**
-   * Set the Json string.
-   *
-   * @param jsonData Set the json string.
-   */
-  public void setJsonData(String jsonData) {
-    this.jsonData = jsonData;
-  }
+    /**
+     * -- GETTER --
+     *  Get the Json string.
+     * <p>
+     *
+     * -- SETTER --
+     *  Set the Json string.
+     *
+     */
+    @Column(nullable = false, length = 65535, columnDefinition = "TEXT")
+    private String jsonData;
 }

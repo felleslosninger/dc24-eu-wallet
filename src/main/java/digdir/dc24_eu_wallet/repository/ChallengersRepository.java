@@ -1,6 +1,7 @@
 package digdir.dc24_eu_wallet.repository;
 
 import digdir.dc24_eu_wallet.entities.Challengers;
+
 import org.springframework.data.repository.CrudRepository;
 
 /**
