@@ -80,7 +80,7 @@ public class SendCredentialDTO {
   @Getter
   public static class Recipient {
     private Header header;
-    private String encryptedKey;
+    private String encrypted_key;
   }
 
   /**

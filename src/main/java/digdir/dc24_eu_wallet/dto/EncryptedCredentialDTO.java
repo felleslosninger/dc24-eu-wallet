@@ -38,10 +38,9 @@ public class EncryptedCredentialDTO {
   @Setter
   @Getter
   public static class Recipient {
-
     // Getters
     private Header header;
-    private String encryptedKey;
+    private String encrypted_key;
   }
 
   /**
