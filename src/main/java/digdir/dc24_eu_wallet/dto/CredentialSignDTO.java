@@ -103,10 +103,10 @@ public class CredentialSignDTO {
   @Setter
   @Getter
   public static class Reportees {
-    private List<String> rights;
-    private String authority;
-    private String id;
-    private String name;
+    private List<String> Rights;
+    private String Authority;
+    private String ID;
+    private String Name;
   }
 
   /**
