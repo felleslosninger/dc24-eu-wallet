@@ -19,11 +19,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Rename env file
+      - name: Create .env file
         run: |
-          if [ -f src/main/resources/.env.example ]; then
-            mv src/main/resources/.env.example src/main/resources/.env
-          fi
+          cat <<EOF > src/main/resources/.env
+          MATTR_AUDIENCE=""
+          MATTR_TENANT_URL=""
+          MATTR_ISSUER=""
+          MATTR_CLIENT_SECRET=""
+          MATTR_CLIENT_ID=""
+          IDPORTEN_CLIENT_SECRET=""
+          ANSATTPORTEN_CLIENT_SECRET=""
+          NGROK_URL=""
+          DID_WEB=""
+          TEMPLATE_ID=""
+          DOMAIN=""
+          DID_WEB_EXTENSION=""
+          EOF
 
       - name: Echo .env file (for debugging purposes)
         run: cat src/main/resources/.env
