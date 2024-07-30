@@ -10,7 +10,7 @@ spring:
           testclient:
             client-name: Logg inn med Ansattporten
             client-id: dc24_ansattporten_testclient
-            client-secret: ${ANSATTPORTEN_CLIENT_SECRET:local}
+            client-secret: ${ANSATTPORTEN_CLIENT_SECRET}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/testclient"
             scope: openid, profile
@@ -20,27 +20,5 @@ spring:
             issuer-uri: https://test.ansattporten.no
 server:
   port: 8980
-  address: 0.0.0.0
-
-ansattporten: ${ANSATTPORTEN_CLIENT_SECRET:local}
-
-mattr:
-  audience: ${MATTR_AUDIENCE:default_audience_value}
-  tenant:
-    url: ${MATTR_TENANT_URL:default_tenant_url}
-  issuer: ${MATTR_ISSUER:default_issuer_value}
-  client:
-    secret: ${MATTR_CLIENT_SECRET:default_client_secret}
-    id: ${MATTR_CLIENT_ID:default_client_id}
-did:
-  web: ${DID_WEB:default_did_web}
-  web-extension: ${DID_WEB_EXTENSION:default_did_web_extension}
-domain: ${DOMAIN:default_domain}
-
-ngrok:
-  url: ${NGROK_URL:local}
-
-template:
-  id: ${TEMPLATE_ID:upsi}
-
+  address: 127.0.0.1
 

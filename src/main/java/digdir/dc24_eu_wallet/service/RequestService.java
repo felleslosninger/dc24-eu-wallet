@@ -38,10 +38,10 @@ public class RequestService {
      * @param clientSecret the client secret for authentication.
      * @param clientId the client ID for authentication.
      */
-    public RequestService(@Value("${mattr.audience}") String audienceUrl,
-                          @Value("${mattr.issuer}") String mattrUrl,
-                          @Value("${mattr.client.secret}") String clientSecret,
-                          @Value("${mattr.client.id}") String clientId) {
+    public RequestService(@Value("${MATTR_AUDIENCE}") String audienceUrl,
+                          @Value("${MATTR_ISSUER}") String mattrUrl,
+                          @Value("${MATTR_CLIENT_SECRET}") String clientSecret,
+                          @Value("${MATTR_CLIENT_ID}") String clientId) {
         this.audienceUrl = audienceUrl;
         this.mattrUrl = mattrUrl;
         this.clientSecret = clientSecret;

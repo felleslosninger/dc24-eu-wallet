@@ -41,13 +41,13 @@ public class PresentationController {
   private CredentialDTO credentialDTO;
   private final RequestService requestService;
   Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-  @Value("${mattr.tenant.url}")
+  @Value("${MATTR_TENANT_URL}")
   private String url;
-  @Value("${ngrok.url}")
+  @Value("${NGROK_URL}")
   private String ngrok;
-  @Value("${did.web}")
+  @Value("${DID_WEB}")
   private String didWeb;
-  @Value("${template.id}")
+  @Value("${TEMPLATE_ID}")
   private String templateId;
 
   /**
