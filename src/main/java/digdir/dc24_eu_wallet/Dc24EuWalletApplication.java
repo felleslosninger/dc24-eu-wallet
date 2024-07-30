@@ -18,6 +18,4 @@ public class Dc24EuWalletApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Dc24EuWalletApplication.class, args);
 	}
-
 }
-

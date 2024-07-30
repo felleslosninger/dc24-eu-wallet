@@ -27,7 +27,9 @@ import java.io.IOException;
 @RequestMapping("callback")
 public class CallbackController {
   public static final Logger logger = LoggerFactory.getLogger(CallbackController.class);
+
   Gson gson = new Gson();
+
   private final ChallengersService challengersService;
   private final SendWebCred sendWebCred;
 
@@ -56,24 +58,24 @@ public class CallbackController {
   public ResponseEntity<PresentationDTO> postCallback(@RequestBody PresentationDTO presentationDTO) throws IOException {
     String holder = presentationDTO.getHolder();
     String challenger = presentationDTO.getChallengeId();
+
     ResponseEntity<PresentationDTO> response;
 
-    System.out.println(gson.toJson(presentationDTO));
-
-    if((holder.isEmpty() || holder.isBlank())){
+    if ((holder.isEmpty() || holder.isBlank())) {
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }else if((challenger.isEmpty() || challenger.isBlank())){
+    } else if((challenger.isEmpty() || challenger.isBlank())){
       response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }else{
+    } else {
       logger.info("Callback from Mattr with challengerId: {}", presentationDTO.getChallengeId());
       logger.info("Fetch object from database with the same ChallengerId: {}", presentationDTO.getChallengeId());
+
       Challengers challengers = challengersService.getRecord(presentationDTO.getChallengeId());
       CredentialDTO credentialDTO = gson.fromJson(challengers.getJsonData(), CredentialDTO.class);
+
       sendWebCred.createAndSendCredentials(presentationDTO.getHolder(), credentialDTO);
+
       response = new ResponseEntity<>(HttpStatus.OK);
     }
-
     return response;
   }
-
 }
