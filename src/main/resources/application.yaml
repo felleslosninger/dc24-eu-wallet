@@ -20,5 +20,4 @@ spring:
             issuer-uri: https://test.ansattporten.no
 server:
   port: 8980
-  address: 127.0.0.1
 
