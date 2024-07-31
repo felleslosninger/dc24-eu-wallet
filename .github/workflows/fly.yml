@@ -3,11 +3,9 @@ on:
   push:
     branches:
       - "main"
-      - "kan-50-create-github-actions"
   pull_request:
     branches:
       - "main"
-      - "kan-50-create-github-actions"
 
 jobs:
   deploy:
