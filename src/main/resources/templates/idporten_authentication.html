@@ -174,7 +174,7 @@
 
         <p>qrCode:</p>
         <h4><img th:src="'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' +${qrCode}"></img></h4>
-        <h4><a th:href="${qrCode}">Link to credentials</a></h4>
+        <a id="deepLinkAnchor" th:href="${deepLink}">Open MATTR Wallet</a>
         <!-- Logout link -->
         <p><a href="/logout">Logg ut</a></p>
     </div>

@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.UUID;
 
 /**
@@ -87,12 +88,16 @@ public class PresentationController {
   @GetMapping("/idporten_authentication")
   public String user(Model model,
                      @AuthenticationPrincipal OidcUser oidcUser) {
+    String qrCode = getQR(oidcUser);
+    String encodedDeepLink = "global.mattr.wallet://accept/" + Base64.getUrlEncoder().withoutPadding().encodeToString(qrCode.getBytes());
     model.addAttribute("idtoken", oidcUser.getIdToken().getTokenValue());
     model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
     model.addAttribute("name", oidcUser.getFullName());
     model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
+    model.addAttribute("qrCode", qrCode);
+    model.addAttribute("deepLink", encodedDeepLink);
 
-    model.addAttribute("qrCode", getQR(oidcUser));
+
 
     return "idporten_authentication";
   }
