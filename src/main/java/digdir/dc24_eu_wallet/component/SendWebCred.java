@@ -147,7 +147,7 @@ public class SendWebCred {
       post.setIncludeId(true);
 
       CredentialCardDTO.Payload payload = new CredentialCardDTO.Payload();
-      payload.setName("Ansattporten Credential");
+      payload.setName("Verifiable Credential");
       payload.setDescription(subject.getAuthorizationDetails().get(0).getReportees().get(0).getName());
       payload.setType(List.of("AnsattportenCredential"));
 

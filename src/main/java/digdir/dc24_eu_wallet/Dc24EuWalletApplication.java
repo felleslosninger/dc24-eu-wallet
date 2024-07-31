@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Dc24EuWalletApplication {
 
+
 	/**
 	 * Main method to start the Spring Boot application.
 	 *

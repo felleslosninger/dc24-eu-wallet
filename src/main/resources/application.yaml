@@ -28,7 +28,7 @@ spring:
             issuer-uri: https://test.idporten.no
           ansattporten:
             issuer-uri: https://test.ansattporten.no
-          
-          
+
+
 server:
   port: 8980
