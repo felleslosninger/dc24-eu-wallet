@@ -1,15 +1,27 @@
-app = 'dc24-eu-wallet-issuer-workflow'
-primary_region = 'arn'
+app = "dc24-eu-wallet-issuer-workflow"
+primary_region = "arn"
 
 [http_service]
 internal_port = 8980
 force_https = true
-auto_stop_machines = true
+auto_stop_machines = false  # Ensure machines don't auto-stop
 auto_start_machines = true
-min_machines_running = 0
-processes = ['app']
+min_machines_running = 1    # Ensure at least one machine is always running
+processes = ["app"]
+
+[[services]]
+internal_port = 8980
+protocol = "tcp"
+
+[[services.ports]]
+handlers = ["http"]
+port = 80
+
+[[services.ports]]
+handlers = ["tls", "http"]
+port = 443
 
 [[vm]]
-memory = '1gb'
-cpu_kind = 'shared'
+memory = "1gb"
+cpu_kind = "shared"
 cpus = 1

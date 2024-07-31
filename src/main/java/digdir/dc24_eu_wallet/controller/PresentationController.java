@@ -89,8 +89,8 @@ public class PresentationController {
                      @AuthenticationPrincipal OidcUser oidcUser) {
     model.addAttribute("idtoken", oidcUser.getIdToken().getTokenValue());
     model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
-    model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
     model.addAttribute("name", oidcUser.getFullName());
+    model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
 
     model.addAttribute("qrCode", getQR(oidcUser));
 
@@ -174,7 +174,7 @@ public class PresentationController {
       logger.info("Making request");
       response = httpService.postRequest(url + "/v2/credentials/web-semantic/presentations/requests", requestService.getJwt(), body);
       PresentationResponseDTO presentationResponseDTO = gson.fromJson(response, PresentationResponseDTO.class);
-      response = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + presentationResponseDTO.getDidcommUri();
+      response = presentationResponseDTO.getDidcommUri();
     } catch (IOException ioException) {
       logger.warn("Cannot create Presentation Request!");
     }
