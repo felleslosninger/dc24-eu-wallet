@@ -27,6 +27,31 @@ h1 {
     font-weight: 700;
 }
 
+#login-button {
+    display: inline-block;
+    background-color: #007BFF; /* Blå farge */
+    color: #ffffff; /* Hvit tekst */
+    padding: 10px 20px; /* Polstring */
+    text-decoration: none; /* Ingen understrekning */
+    border-radius: 5px; /* Runde hjørner */
+    font-size: 1em; /* Tekststørrelse */
+    font-weight: bold; /* Fet skrift */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Overgangseffekter */
+    max-width: 75%;
+    width: 20em;
+}
+
+#login-button:hover, #login-button:focus {
+    background-color: #0056b3; /* Mørkere blå farge ved hover/fokus */
+    transform: translateY(-3px); /* Løft knappen litt opp */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Skyggeeffekt */
+}
+
+#login-button:active {
+    transform: translateY(1px); /* Trykk knappen litt ned */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Mindre skyggeeffekt */
+}
+
 p {
     text-align: center;
     margin: 1em 0;
@@ -45,8 +70,10 @@ a {
     font-size: 1em;
 }
 
-a:hover {
-    background-color: #0056b3;
+a:hover, a:focus {
+    background-color: #1667A1;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .dark-mode-toggle {
@@ -97,7 +124,7 @@ footer {
 }
 
 .dark-mode-toggle i {
-    color: yellow;
+    color: rgb(255, 255, 255);
 }
 
 .dark-mode .dark-mode-toggle i {
