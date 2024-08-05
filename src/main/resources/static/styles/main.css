@@ -5,7 +5,6 @@
 }
 
 html, body {
-    height: 100%;
     width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -20,8 +19,12 @@ html, body {
     font-size: 16px;
 }
 
+body {
+    width: 90%;
+}
+
 h1 {
-    font-size: 2.5em;
+    font-size: 3em;
     text-align: center;
     margin: 0.5em 0;
     font-weight: 700;
@@ -34,11 +37,31 @@ h1 {
     padding: 10px 20px; /* Polstring */
     text-decoration: none; /* Ingen understrekning */
     border-radius: 5px; /* Runde hjørner */
-    font-size: 1em; /* Tekststørrelse */
+    font-size: 2.5em; /* Tekststørrelse */
     font-weight: bold; /* Fet skrift */
     transition: background-color 0.3s ease, transform 0.3s ease; /* Overgangseffekter */
     max-width: 75%;
-    width: 20em;
+    width: 10em;
+    height: 2em;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#back-button {
+    display: inline-block;
+    background-color: #007BFF; /* Blå farge */
+    color: #ffffff; /* Hvit tekst */
+    padding: 10px 20px; /* Polstring */
+    text-decoration: none; /* Ingen understrekning */
+    border-radius: 5px; /* Runde hjørner */
+    font-size: 2.5em; /* Tekststørrelse */
+    font-weight: bold; /* Fet skrift */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Overgangseffekter */
+    max-width: 75%;
+    width: 10em;
+    height: 2em;
+    text-align: center;
+    margin-top: 50px;
 }
 
 #login-button:hover, #login-button:focus {
@@ -67,7 +90,9 @@ a {
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    font-size: 1em;
+    font-size: 2em;
+    width: 10em;
+
 }
 
 a:hover, a:focus {
@@ -95,9 +120,13 @@ a:hover, a:focus {
     background-color: #0056b3;
 }
 
-.dark-mode {
+.dark-mode{
     background-color: #1E2B3C;
     color: #F0F2F5;
+}
+
+.dark-mode html{
+    background-color: #1E2B3C;
 }
 
 .dark-mode h1, .dark-mode p, .dark-mode a {
@@ -129,4 +158,40 @@ footer {
 
 .dark-mode .dark-mode-toggle i {
     color: white;
+}
+
+.dark-mode .container {
+    background-color: #2C3E50; /* Lysere gråblå farge */
+}
+
+
+.container {
+    text-align: center;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    background-color: white;
+    border-radius: 10px;
+    margin: 20px;
+    max-width: 100%;
+}
+
+.image-container{
+
+    margin: 10px;
+    padding: 20px;
+    background-color: white;
+    display: inline-block;
+    border-width: 10px;
+    border-radius: 10px;
+}
+
+.index-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+span {
+    font-weight: bold;
 }

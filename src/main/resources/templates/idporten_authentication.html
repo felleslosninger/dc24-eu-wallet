@@ -1,185 +1,32 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Ansattporten - innlogging</title>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Ansattporten - innlogging</title>
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" media="all" href="../static/styles/main.css" th:href="@{/styles/main.css}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Demo innlogging</h1>
+            <h2>
+                <span th:text="${name == null or name.isEmpty() ? 'Velkommen!' : 'Velkommen ' + name + '!'}"></span>
+            </h2>
+            <p>Du kan hente ut bevis ved å scanne qr-koden under, eller åpne i MATTR wallet</p>
+            <p>Du har logget på med pid <span th:text="${pid}"></span>.</p>
 
-        html, body {
-            height: 100%;
-            width: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #f4f4f9;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
-            font-size: 16px;
-        }
+            <div class="image-container">
+                <img style="width: 90%;" th:src="'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=' +${qrCode}"></img>
+            </div>
+            <a id="deepLinkAnchor" th:href="${deepLink}">Open MATTR Wallet</a>
+            <p><a href="/logout">Logg ut</a></p>
+        </div>
 
-        .token-container {
-            word-wrap: break-word; /* For IE */
-            overflow-wrap: break-word; /* For modern browsers */
-            white-space: pre-wrap; /* Preserve whitespace and wrap as necessary */
-            overflow: hidden; /* Hide overflow */
-            text-overflow: ellipsis; /* Add ellipsis (...) for overflowed text */
-            max-width: 100%; /* Ensure it doesn't exceed the container width */
-        }
-
-        .container {
-            text-align: center;
-            max-width: 800px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            background-color: white;
-            border-radius: 10px;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            text-align: center;
-            margin: 0.5em 0;
-            font-weight: 700;
-        }
-
-        h4 {
-            color: #1E2B3C;
-            margin: 20px 0;
-        }
-
-        p {
-            text-align: center;
-            margin: 1em 0;
-            font-size: 1em;
-            color: #666;
-        }
-
-        a {
-            display: inline-block;
-            background-color: #007BFF;
-            color: #ffffff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            font-size: 1em;
-        }
-
-        a:hover {
-            background-color: #0056b3;
-        }
-
-        .dark-mode-toggle {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 10px 15px;
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .dark-mode-toggle:hover {
-            background-color: #0056b3;
-        }
-
-        .dark-mode {
-            background-color: #1E2B3C;
-            color: #F0F2F5;
-        }
-
-        .dark-mode h1, .dark-mode p, .dark-mode a {
-            color: #F0F2F5;
-        }
-
-        .dark-mode a {
-            background-color: #0062B8;
-        }
-
-        .dark-mode a:hover {
-            background-color: #004A8F;
-        }
-
-        .dark-mode .container {
-            background-color: #2C3E50; /* Lysere gråblå farge */
-        }
-
-        .dark-mode h4 {
-            color: #F0F2F5; /* Hvit eller lysegrå farge */
-        }
-
-        .dark-mode-toggle i {
-            color: rgb(255, 255, 255);
-        }
-
-        .dark-mode .dark-mode-toggle i {
-            color: white;
-        }
-    </style> 
-    <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.dark-mode-toggle i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                localStorage.setItem('darkMode', 'enabled');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-                localStorage.setItem('darkMode', 'disabled');
-            }
-        }
-
-        function loadDarkModePreference() {
-            const darkMode = localStorage.getItem('darkMode');
-            const icon = document.querySelector('.dark-mode-toggle i');
-            if (darkMode === 'enabled') {
-                document.body.classList.add('dark-mode');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                document.body.classList.remove('dark-mode');
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', loadDarkModePreference);
-    </script>
-</head>
-<body>
-    <div class="container">
-        <!-- Main container for the content of this page -->
-        <h1>Detaljer - Ansattporten innlogging</h1>
-        <!-- Welcome message displaying the name of the user -->
-        <h4>Velkommen <span th:text="${name}"></span>!</h4>
-        <!-- Display the PID (personal identifier) of the user -->
-        <p>Du har logget på med ansattporten med pid <span style="font-weight:bold" th:text="${pid}"></span>.</p>
-
-        <p>qrCode:</p>
-        <h4><img th:src="'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' +${qrCode}"></img></h4>
-        <a id="deepLinkAnchor" th:href="${deepLink}">Open MATTR Wallet</a>
-        <!-- Logout link -->
-        <p><a href="/logout">Logg ut</a></p>
-    </div>
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-        <i class="fas fa-moon"></i>
-    </button>
-</body>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </body>
 </html>

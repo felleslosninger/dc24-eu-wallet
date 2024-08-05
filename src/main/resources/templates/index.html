@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ansattporten integration demo</title>
-    <link rel="stylesheet" type="text/css" media="all"
-          href="../static/styles/main.css" th:href="@{/styles/main.css}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script type="text/javascript" th:src="@{/js/index.js}"></script>
-</head>
-<body>
-    <h1>Ansattporten integrasjon</h1>
-    <p><a href="/idporten_authentication" id="login-button">Logg inn</a></p>
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
-        <i class="fas fa-moon"></i>
-    </button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Demo integration</title>
+        <link rel="stylesheet" type="text/css" media="all" href="../static/styles/main.css" th:href="@{/styles/main.css}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    </head>
+    <body>
+        <div class="container index-container">
+            <h1>Demo integrasjon</h1>
+            <h2>Logg in for å få bevis i Mattr lommebok</h2>
+            <p>
+                <a href="/idporten_authentication" id="login-button">Logg inn</a>
+            </p>
+        </div>
 
-</body>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </body>
 </html>
