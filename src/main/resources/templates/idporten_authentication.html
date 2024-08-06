@@ -21,7 +21,7 @@
             <div class="image-container">
                 <img style="width: 90%;" th:src="'https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=' +${qrCode}"></img>
             </div>
-            <a id="deepLinkAnchor" th:href="${deepLink}">Open MATTR Wallet</a>
+            <p><a id="deepLinkAnchor" th:href="${deepLink}">Open MATTR Wallet</a></p>
             <p><a href="/logout">Logg ut</a></p>
         </div>
 
