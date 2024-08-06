@@ -147,23 +147,24 @@ public class SendWebCred {
       post.setIncludeId(true);
 
       CredentialCardDTO.Payload payload = new CredentialCardDTO.Payload();
-      payload.setName("Ansattporten Credential");
+      payload.setName("Verifiable Credential");
       payload.setDescription(subject.getAuthorizationDetails().get(0).getReportees().get(0).getName());
       payload.setType(List.of("AnsattportenCredential"));
 
       CredentialCardDTO.CredentialBranding branding = new CredentialCardDTO.CredentialBranding();
-      branding.setBackgroundColor("#0a0090");
-      branding.setWatermarkImageUrl("https://www.freeiconspng.com/thumbs/awesome-face-png/awesome-face-png-1.png");
+      branding.setBackgroundColor("#dddddd");
+      branding.setWatermarkImageUrl("https://mattrlabs.s3.ap-southeast-2.amazonaws.com/silvereye/KVoEvxt_d3FKyeA-pc73H.png");
 
       CredentialCardDTO.Issuer issuer = new CredentialCardDTO.Issuer();
       issuer.setId(didWeb);
       issuer.setName("Digdir Business Institute");
+      issuer.setLogoUrl("https://www.digdir.no/profiles/sogn/themes/sogn_theme/img/logo/logo_sogn.svg");
       issuer.setIconUrl("https://i.vimeocdn.com/portrait/45096260_640x640");
 
       payload.setCredentialSubject(subject);
       payload.setCredentialBranding(branding);
       payload.setIssuer(issuer);
-      payload.setExpirationDate("2025-02-01T08:12:38.156Z");
+      payload.setExpirationDate("2026-02-01T08:12:38.156Z");
 
       post.setPayload(payload);
 

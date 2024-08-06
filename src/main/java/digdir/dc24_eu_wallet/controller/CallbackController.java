@@ -1,13 +1,11 @@
 package digdir.dc24_eu_wallet.controller;
 
+import com.google.gson.Gson;
 import digdir.dc24_eu_wallet.component.SendWebCred;
 import digdir.dc24_eu_wallet.dto.CredentialDTO;
 import digdir.dc24_eu_wallet.dto.PresentationDTO;
 import digdir.dc24_eu_wallet.entities.Challengers;
 import digdir.dc24_eu_wallet.service.ChallengersService;
-
-import com.google.gson.Gson;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,7 @@ public class CallbackController {
    * @param sendWebCred The service used to send the Web Credentials.
    */
   @Autowired
-  public CallbackController(ChallengersService challengersService, SendWebCred sendWebCred) {
+  public CallbackController(ChallengersService challengersService, SendWebCred sendWebCred){
     this.challengersService = challengersService;
     this.sendWebCred = sendWebCred;
   }

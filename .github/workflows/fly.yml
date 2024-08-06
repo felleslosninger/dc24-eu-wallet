@@ -1,0 +1,56 @@
+name: Fly Deploy
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    concurrency: deploy-group    # optional: ensure only one action runs at a time
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          cat <<EOF > src/main/resources/.env
+          MATTR_AUDIENCE=""
+          MATTR_TENANT_URL=""
+          MATTR_ISSUER=""
+          MATTR_CLIENT_SECRET=""
+          MATTR_CLIENT_ID=""
+          IDPORTEN_CLIENT_SECRET=""
+          ANSATTPORTEN_CLIENT_SECRET=""
+          NGROK_URL=""
+          DID_WEB=""
+          TEMPLATE_ID=""
+          DOMAIN=""
+          DID_WEB_EXTENSION=""
+          EOF
+
+      - name: Echo .env file (for debugging purposes)
+        run: cat src/main/resources/.env
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn clean install
+
+      - name: Setup Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy with Flyctl
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLYV1 }}

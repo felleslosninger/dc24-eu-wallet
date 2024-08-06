@@ -1,65 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ansattporten integration demo</title>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Demo integration</title>
+        <link rel="stylesheet" type="text/css" media="all" href="../static/styles/main.css" th:href="@{/styles/main.css}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    </head>
+    <body>
+        <div class="container index-container">
+            <h1>Demo integrasjon</h1>
+            <h2>Logg in for å få bevis i Mattr lommebok</h2>
+            <p>
+                <a href="/idporten_authentication" id="login-button">Logg inn</a>
+            </p>
+        </div>
 
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e7eff9;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            box-sizing: border-box;
-            text-align: center; /* Sentrerer tekst og elementer */
-            transition: opacity 0.5s ease-in-out; /* Myk overgangseffekt for siden */
-        }
-    
-        h1 {
-            color: #005a9c;
-            margin: 0;
-            margin-bottom: 40px; /* Reduserer avstanden til knappen */
-            font-size: 5.8rem;
-            position: relative; /* Endrer til relative for å beholde i normalt dokumentflyt */
-            top: -20%; /* Justerer posisjonen for å være nærmere knappen */
-        }
-    
-        p {
-            margin: 0; /* Fjerner standard marg */
-            position: relative; /* Endrer til relative for å beholde i normalt dokumentflyt */
-            top: -20%; /* Justerer posisjonen for å være nærmere h1 */
-        }
-    
-        a {
-            background-color: #008cba;
-            color: white;
-            font-size: 20px;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            display: inline-block;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Legger til skygge for bedre utseende */
-            font-size: 2rem;
-        }
-    
-        a:hover, a:focus {
-            background-color: #005a9c;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); /* Forsterker skyggeeffekten ved hover */
-        }
-    </style>
-</head>
-<body>
-<!-- Main heading of the page -->
-<h1>Ansattporten integrasjon</h1>
-<p><a href="/idporten_authentication">Logg inn</a></p>
-</body>
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </body>
 </html>

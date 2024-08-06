@@ -1,64 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ansattporten integration demo</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/static/style.css">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Ansattporten Integration Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" media="all" href="../static/styles/main.css" th:href="@{/styles/main.css}" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<script type="text/javascript" th:src="@{/js/index.js}"></script>
+	</head>
+	<body>
+		<button class="dark-mode-toggle" onclick="toggleDarkMode()">
+			<i class="fas fa-moon"></i>
+		</button>
 
-    
-<style>
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #e7eff9;
-        margin-top: 6%;
-        padding: 20px;
-        color: #333;
-        height: 100vh;
-        box-sizing: border-box;
-    }
-
-    .container {
-        display: grid; 
-        place-items: center;
-        
-    }
-
-
-    h1 {
-        color: #005a9c;
-        margin-bottom: 20px;
-        font-size: 5.8rem;
-        padding-bottom: 1%;
-    }
-
-
-    a {
-        background-color: #008cba;
-        color: white;
-        padding: 15px 30px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: transform 0.3s ease, background-color 0.3s ease;
-        display: inline-block;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        font-size: 2rem;
-    }
-
-    a:hover, a:focus {
-        background-color: #005a9c;
-        transform: translateY(-3px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    }
-</style>
-</head>
-<body>
-    <div class="container">
-        <!-- Main content container -->
-        <h1>Ansattporten utlogging</h1>
-        <!-- Link to navigate back to the home page -->
-        <a href="/">Tilbake</a>
-    </div>
-</body>
+		<div class="container index-container">
+			<h1>Du er no logget ut!</h1>
+			<p>
+				<a href="/" id="back-button">Gå tilbake</a>
+			</p>
+		</div>
+	</body>
 </html>

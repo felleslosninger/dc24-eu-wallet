@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.UUID;
 
 /**
@@ -87,13 +88,17 @@ public class PresentationController {
   @GetMapping("/idporten_authentication")
   public String user(Model model,
                      @AuthenticationPrincipal OidcUser oidcUser) {
+    String qrCode = getQR(oidcUser);
+    String encodedDeepLink = "global.mattr.wallet://accept/" + Base64.getUrlEncoder().withoutPadding().encodeToString(qrCode.getBytes());
     model.addAttribute("idtoken", oidcUser.getIdToken().getTokenValue());
     model.addAttribute("pid", oidcUser.getUserInfo().getClaim("pid"));
-    model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
     model.addAttribute("name", oidcUser.getFullName());
-    
-    model.addAttribute("qrCode", getQR(oidcUser));
-    
+    model.addAttribute("authorizationdetails", oidcUser.getUserInfo().getClaim("authorization_details"));
+    model.addAttribute("qrCode", qrCode);
+    model.addAttribute("deepLink", encodedDeepLink);
+
+
+
     return "idporten_authentication";
   }
 
@@ -131,7 +136,7 @@ public class PresentationController {
     CredentialDTO credentialDTO = gson.fromJson(jsoncontent, CredentialDTO.class);
 
     logger.info("New PostRequest to create a Presentation Request");
-   
+
     if (credentialDTO.isValid()){
       logger.info("New PostRequest has a valid body.");
       String uniqueID = UUID.randomUUID().toString();
@@ -174,7 +179,7 @@ public class PresentationController {
       logger.info("Making request");
       response = httpService.postRequest(url + "/v2/credentials/web-semantic/presentations/requests", requestService.getJwt(), body);
       PresentationResponseDTO presentationResponseDTO = gson.fromJson(response, PresentationResponseDTO.class);
-      response = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + presentationResponseDTO.getDidcommUri();
+      response = presentationResponseDTO.getDidcommUri();
     } catch (IOException ioException) {
       logger.warn("Cannot create Presentation Request!");
     }
